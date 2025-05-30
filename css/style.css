@@ -209,7 +209,6 @@ nav ul li a:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
     gap: 30px;
     margin-top: 40px;
 }
