@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
     menuToggle.style.display = 'none';
     document.querySelector('header').appendChild(menuToggle);
-    
     // Verificar tamanho da tela e alternar menu
     function checkScreenSize() {
         if (window.innerWidth <= 768) {
@@ -38,6 +37,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Atualizar ano do footer
-    document.querySelector('.footer-bottom p').innerHTML = 
-        `&copy; ${new Date().getFullYear()} Ronins Rugby. Todos os direitos reservados.`;
+    document.querySelector('.copyright').innerHTML = `&copy; ${new Date().getFullYear()} Ronins Rugby. Todos os direitos reservados.`;
+});
+
+const incrFont = document.getElementById('incrFont');
+const decrFont = document.getElementById('decrFont');
+let fontSize = 1;
+console.log(document.body.children)
+decrFont.addEventListener("click", () => {
+    fontSize -= 0.2;
+    if (fontSize < 0.8) {
+        fontSize = 0.8;
+    }
+    document.querySelector("html").style.fontSize = `${fontSize}em`;
+});
+
+
+
+incrFont.addEventListener("click", () => {
+    fontSize += 0.2;
+    if (fontSize > 1.8) {
+        fontSize = 1.8;
+    }
+    document.querySelector("html").style.fontSize = `${fontSize}em`;
 });
