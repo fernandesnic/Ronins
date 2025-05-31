@@ -26,8 +26,13 @@ body {
     margin: 0 auto;
 }
 
-h1, h2, h3, h4 {
-    font-family: 'Oswald', sans-serif;
+h1, h2 {
+    font-family: "Ceviche One", system-ui;;
+    font-weight: 500;
+}
+
+h3, h4 {
+    font-family: 'Oswald', sans-serif, system-ui;;
     font-weight: 500;
     color: var(--title-color);
 }
@@ -36,26 +41,27 @@ h1, h2, h3, h4 {
     display: inline-block;
     background-color: var(--title-color);
     color: var(--secondary-color);
+    border: solid 2px var(--title-color);
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s;
-    border:none;
     cursor: pointer;
 }
 
 .btn:hover {
     background-color: var(--secondary-color);
-    color: var(--primary-color);
+    color: var(--title-color);
 }
 
 .btn.dark{
     background-color: var(--secondary-color);
     color: var(--primary-color);
+    border: solid 2px var(--secondary-color);
 }
 
 .btn.dark:hover{
-    background-color: var(--title-color);
+    background-color: var(--primary-color);
     color: var(--secondary-color);
 }
 
@@ -116,7 +122,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: var(--btn-hover-color);
+    color: var(--primary-color);
 }
 
 /* Hero Section */
@@ -224,8 +230,9 @@ nav ul li a:hover {
 
 /* Products Grid */
 .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 30px;
     margin-top: 40px;
 }
@@ -240,9 +247,9 @@ nav ul li a:hover {
 }
 
 .product-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: contain;
+    width: 9.75rem;
+    height: 9.75rem;
+    object-fit: cover;
     margin-bottom: 15px;
 }
 
@@ -306,8 +313,16 @@ footer h4{
     margin-bottom: 30px;
 }
 
+.footer-logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .footer-logo img {
     height: 60px;
+    width:fit-content;
 }
 
 .footer-links ul {
@@ -335,6 +350,17 @@ footer h4{
 
 /* Responsividade */
 @media (max-width: 768px) {
+    .products-grid {
+        /* display: block; */
+        gap: 20px;
+    }
+
+    .product-card img {
+        width: 17rem;
+        height: 17rem;
+        object-fit: cover;
+    }
+
     .content-grid,
     .contact-grid {
         grid-template-columns: 1fr;
@@ -344,15 +370,13 @@ footer h4{
         grid-template-columns: 1fr;
     }
     
-    nav ul {
+    nav ul{
         display: none;
     }
     
     .hero-content h2 {
         font-size: 2rem;
     }
-}
 
-@media (prefers-color-scheme: dark){
     
 }

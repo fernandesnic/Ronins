@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     menuToggle.className = 'menu-toggle';
     menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
     menuToggle.style.display = 'none';
+    
     document.querySelector('header').appendChild(menuToggle);
     // Verificar tamanho da tela e alternar menu
     function checkScreenSize() {
@@ -40,20 +41,25 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.copyright').innerHTML = `&copy; ${new Date().getFullYear()} Ronins Rugby. Todos os direitos reservados.`;
 });
 
+// Codigo para aumentar e diminuir a fonte
 const incrFont = document.getElementById('incrFont');
 const decrFont = document.getElementById('decrFont');
+// Incializa uma variavel para usar como referencia para o tamanho do texto
 let fontSize = 1;
-console.log(document.body.children)
+
 decrFont.addEventListener("click", () => {
+    // Quando o botão de diminuir fonte for clicado
+    // ele diminui a variavel de referencia, até no minimo 0.8
     fontSize -= 0.2;
     if (fontSize < 0.8) {
         fontSize = 0.8;
     }
+
+    // E então aplica ao html
     document.querySelector("html").style.fontSize = `${fontSize}em`;
 });
 
-
-
+// O mesmo do anterior com o efeito contrario
 incrFont.addEventListener("click", () => {
     fontSize += 0.2;
     if (fontSize > 1.8) {
