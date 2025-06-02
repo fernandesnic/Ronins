@@ -59,7 +59,7 @@ decrFont.addEventListener("click", () => {
     document.querySelector("html").style.fontSize = `${fontSize}em`;
 });
 
-// O mesmo do anterior com o efeito contrario
+// O mesmo do anterior com o efeito contrário
 incrFont.addEventListener("click", () => {
     fontSize += 0.2;
     if (fontSize > 1.8) {

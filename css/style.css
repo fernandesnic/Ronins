@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-:root{
+:root {
     --primary-color: rgb(124, 124, 124);
     --secondary-color: #000000;
     --title-color: rgb(255, 255, 255);
@@ -26,13 +26,17 @@ body {
     margin: 0 auto;
 }
 
-h1, h2 {
-    font-family: "Ceviche One", system-ui;;
+h1,
+h2 {
+    font-family: "Ceviche One", system-ui;
+    ;
     font-weight: 500;
 }
 
-h3, h4 {
-    font-family: 'Oswald', sans-serif, system-ui;;
+h3,
+h4 {
+    font-family: 'Oswald', sans-serif, system-ui;
+    ;
     font-weight: 500;
     color: var(--title-color);
 }
@@ -54,13 +58,13 @@ h3, h4 {
     color: var(--title-color);
 }
 
-.btn.dark{
+.btn.dark {
     background-color: var(--secondary-color);
     color: var(--primary-color);
     border: solid 2px var(--secondary-color);
 }
 
-.btn.dark:hover{
+.btn.dark:hover {
     background-color: var(--primary-color);
     color: var(--secondary-color);
 }
@@ -84,9 +88,9 @@ h3, h4 {
 
 /* Header */
 header {
-    
+
     background-color: var(--secondary-color);
-    box-shadow: 0px 5px 10px rgba(0,0,0,0.5);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
     position: fixed;
     width: 100%;
     z-index: 1000;
@@ -118,7 +122,7 @@ nav ul li a {
     color: var(--title-color);
     font-weight: 600;
     transition: color 0.3s;
-    
+
 }
 
 nav ul li a:hover {
@@ -127,7 +131,7 @@ nav ul li a:hover {
 
 /* Hero Section */
 #home {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://th.bing.com/th/id/OIP.Pixq9eppCBGpifpmTPXgFwAAAA?rs=1&pid=ImgDetMain');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('https://th.bing.com/th/id/OIP.Pixq9eppCBGpifpmTPXgFwAAAA?rs=1&pid=ImgDetMain');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -188,7 +192,7 @@ nav ul li a:hover {
 .image-content img {
     width: 100%;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Players Grid */
@@ -203,7 +207,7 @@ nav ul li a:hover {
     background: var(--primary-color);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
 }
 
@@ -243,7 +247,7 @@ nav ul li a:hover {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .product-card img {
@@ -302,7 +306,7 @@ footer {
     padding: 50px 0 20px;
 }
 
-footer h4{
+footer h4 {
     margin-bottom: 20px;
 }
 
@@ -313,7 +317,7 @@ footer h4{
     margin-bottom: 30px;
 }
 
-.footer-logo{
+.footer-logo {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -322,7 +326,7 @@ footer h4{
 
 .footer-logo img {
     height: 60px;
-    width:fit-content;
+    width: fit-content;
 }
 
 .footer-links ul {
@@ -341,10 +345,25 @@ footer h4{
     color: var(--primary-color);
 }
 
+/*Ícones Instagram e Facebook*/
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.footer-social {
+    font-size: 24px;
+    display: flex;
+    gap: 20px;
+}
+
 .copyright {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.9rem;
 }
 
@@ -365,18 +384,18 @@ footer h4{
     .contact-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .footer-content {
         grid-template-columns: 1fr;
     }
-    
-    nav ul{
+
+    nav ul {
         display: none;
     }
-    
+
     .hero-content h2 {
         font-size: 2rem;
     }
 
-    
+
 }
