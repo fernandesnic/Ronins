@@ -61,9 +61,30 @@ decrFont.addEventListener("click", () => {
 
 // O mesmo do anterior com o efeito contrario
 incrFont.addEventListener("click", () => {
-    fontSize += 0.2;
+    fontSize += 0.1;
     if (fontSize > 1.8) {
         fontSize = 1.8;
     }
     document.querySelector("html").style.fontSize = `${fontSize}em`;
 });
+
+//Codigo de alto contraste
+const highContrast = document.getElementById('highContrast');
+const root = document.querySelector(':root');
+let highContrastOn = false;
+highContrast.addEventListener("click", () => {
+    if (highContrastOn == false) {
+        highContrastOn = true;
+        root.style.setProperty('--bg-color1', 'black')
+        root.style.setProperty('--text-color', 'white')
+        root.style.setProperty('--border-color', 'white')
+        root.style.setProperty('--title-color', 'yellow')
+
+    }else{
+        highContrastOn = false;
+        root.style.setProperty('--bg-color1', 'rgb(20,20,20)')
+        root.style.setProperty('--text-color', 'rgb(158, 158, 158)')
+        root.style.setProperty('--border-color', 'transparent')
+        root.style.setProperty('--title-color', 'white')
+    }
+})
