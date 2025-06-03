@@ -97,6 +97,16 @@ h4 {
     color: var(--secondary-color);
 }
 
+a{
+    text-decoration: none;
+    color: var(--title-color);
+    transition: color 0.3s;
+    font-weight: bold;
+}
+
+a:hover{
+    color: var(--text-color);
+}
 
 /* Acessibilidade */
 #acessibilidade{
@@ -105,7 +115,7 @@ h4 {
     align-items: start;
     justify-items: end;
     position:fixed;
-    top: 20vh;
+    top: 30vh;
     right: 0;
     transform: translateX(50%);
     z-index: 1000;  
