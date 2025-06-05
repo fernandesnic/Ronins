@@ -1,0 +1,471 @@
+/* Reset e Estilos Globais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #7c7c7c;
+  --secondary-color: #000000;
+  --title-color: #ffffff;
+  --btn-color: #1a3e72;
+  --btn-hover-color: #0d2a4d;
+
+  --font-primary: 'Montserrat', sans-serif;
+  --font-title: 'Oswald', sans-serif;
+}
+
+body {
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  color: var(--primary-color);
+  background-color: #f9f9f9; 
+}
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-title);
+  font-weight: 500;
+  color: var(--title-color);
+}
+
+/* Botões */
+.btn,
+.btn-outline {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn {
+  background-color: var(--title-color);
+  color: var(--secondary-color);
+  border: none;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.btn.dark {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.btn.dark:hover {
+  background-color: var(--title-color);
+  color: var(--secondary-color);
+}
+
+.btn-outline {
+  border: 2px solid var(--btn-hover-color);
+  background-color: transparent;
+  color: var(--secondary-color);
+  padding: 8px 16px;
+}
+
+.btn-outline:hover {
+  background-color: var(--btn-hover-color);
+  color: #fff;
+}
+
+/* Header */
+header {
+  background-color: var(--secondary-color);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  height: 100px;
+}
+
+.header-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.logo-absolute {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+
+.logo-absolute img {
+  height: 80px;
+  display: block;
+}
+
+/* Menu */
+.menu ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu ul li a {
+  color: var(--title-color);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+  display: inline-block;
+  padding: 10px;
+}
+
+.menu ul li a:hover {
+  color: var(--btn-hover-color);
+}
+
+/* Menu Hamburguer */
+
+.hamburguer {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 35px;
+  z-index: 1100;
+}
+
+.hamburguer span {
+  display: block;
+  height: 3px;
+  background: var(--title-color);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .hamburguer {
+    display: flex;
+  }
+
+  .menu ul {
+    display: none;
+    flex-direction: column;
+    background-color: var(--secondary-color);
+    position: absolute;
+    top: 100px;
+    right: 0;
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .menu ul.active {
+    display: flex;
+  }
+
+  .menu ul li {
+    text-align: center;
+    padding: 10px 0;
+  }
+}
+
+
+
+
+/* Estilo do nav para ocupar as 6 colunas seguintes */
+nav {
+    grid-column: span 6;
+}
+
+nav ul {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 blocos iguais */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: var(--title-color);
+    font-weight: 600;
+    font-size: 1.8rem !important;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: var(--btn-hover-color);
+}
+
+
+
+/* Hero Section */
+#home {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://th.bing.com/th/id/OIP.Pixq9eppCBGpifpmTPXgFwAAAA?rs=1&pid=ImgDetMain');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--primary-color);
+    padding-top: 80px;
+}
+
+.hero-content {
+    padding: 2rem;
+
+}
+
+.hero-content h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: var(--title-color);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+/* Sections */
+.section {
+    padding: 80px 0;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.section.dark-bg {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    color: var(--title-color);
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+}
+
+.text-content p {
+    margin-bottom: 20px;
+}
+
+.image-content img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Players Grid */
+.players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.player-card {
+    background: var(--primary-color);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.player-card:hover {
+    transform: translateY(-10px);
+}
+
+.player-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.player-card h4 {
+    margin: 15px;
+    color: var(--secondary-color);
+}
+
+.player-card p {
+    margin: 0 15px 15px;
+    font-size: 0.9rem;
+    color: var(--title-color);
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.product-card {
+    background: var(--primary-color);
+    color: var(--title-color);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.product-card h4 {
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+}
+
+.product-card p {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Contact Section */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+.contact-info h3 {
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+}
+
+.contact-info p {
+    margin-bottom: 15px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    color: var(--title-color)
+}
+
+.social-links img {
+    height: 30px;
+    transition: transform 0.3s;
+}
+
+.social-links img:hover {
+    transform: scale(1.1);
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 50px 0 20px;
+}
+
+footer h4{
+    margin-bottom: 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-logo img {
+    height: 60px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links ul li a {
+    color: var(--title-color);
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.footer-links ul li a:hover {
+    color: var(--primary-color);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.9rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .content-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    nav ul {
+        display: none;
+    }
+    
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (prefers-color-scheme: dark){
+    
+}
+
+/* para a transição do header (diminuir ao rolar) */
+header {
+  transition: all 0.3s ease;
+}
+
+header.scrolled {
+  height: 60px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.logo-absolute img {
+  transition: height 0.3s ease;
+}
+
+header.scrolled .logo-absolute img {
+  height: 50px;
+}
