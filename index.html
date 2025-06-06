@@ -121,40 +121,8 @@
                     modalidade no país.</p>
 
                 <h3>Nossos Jogadores</h3>
-                <div class="cards-container">
+                <div id="player-container" class="cards-container">
                     <!-- Jogador 1 -->
-                    <div class="card player">
-                        <img src="https://crosstalk.cell.com/hs-fs/hubfs/Images/Jennifer%20Levine/New%20Insights%20into%20pandas,/6990634-panda-hug.jpg?width=2560&height=1600&name=6990634-panda-hug.jpg" alt="Jogador 1">
-                        <div class="card-content">
-                            <h4>Nome do Jogador</h4>
-                            <p>Posição/Função</p>
-                            <p>Breve descrição ou história inspiradora</p>
-                        </div>
-                    </div>
-                    <div class="card player">
-                        <img src="https://share.america.gov/wp-content/uploads/sites/155/2024/06/PPORT_panda_title-24150501902831.jpg" alt="Jogador 2">
-                        <div class="card-content">
-                            <h4>Nome do Jogador</h4>
-                            <p>Posição/Função</p>
-                            <p>Breve descrição ou história inspiradora</p>
-                        </div>
-                    </div>
-                    <div class="card player">
-                        <img src="https://s4.static.brasilescola.uol.com.br/img/2019/09/panda.jpg" alt="Jogador 3">
-                        <div class="card-content">
-                            <h4>Nome do Jogador</h4>
-                            <p>Posição/Função</p>
-                            <p>Breve descrição ou história inspiradora</p>
-                        </div>
-                    </div>
-                    <div class="card player">
-                        <img src="https://content.nationalgeographic.pt/medio/import/attachment/revistas/185/Pandas/11_pandas.jpg" alt="Jogador 4">
-                        <div class="card-content">
-                            <h4>Nome do Jogador</h4>
-                            <p>Posição/Função</p>
-                            <p>Breve descrição ou história inspiradora</p>
-                        </div>
-                    </div>
                     <!-- Repetir para outros jogadores -->
                 </div>
             </div>
@@ -273,7 +241,23 @@
             </div>
         </div>
     </footer>
+
+    <!-- Plugin de acessibilidade/Libras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+
+    <!-- Link dos scripts nosso -->
     <script src="js/script.js" defer></script>
+    <script src="js/acessibilidade.js" defer></script>
+    <script src="js/jogadores.js" defer></script>
 </body>
 
 </html>

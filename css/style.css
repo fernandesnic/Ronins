@@ -8,8 +8,8 @@
 
 :root{
     --primary-color: rgb(0, 0, 0);
-    --bg-color1: rgb(20, 20, 20);
-    --bg-color2: rgb(12, 12, 12);
+    --bg-color1: rgb(27, 27, 27);
+    --bg-color2: rgb(19, 19, 19);
     --title-color: rgb(255, 255, 255);
     --text-color: rgb(158, 158, 158);
     --border-color: rgb(255, 255, 255, 0)
@@ -115,7 +115,7 @@ a:hover{
     align-items: start;
     justify-items: end;
     position:fixed;
-    top: 30vh;
+    top: 25vh;
     right: 0;
     transform: translateX(50%);
     z-index: 1000;  
@@ -124,7 +124,7 @@ a:hover{
 
 #acessibilidade > span{
     font-size: 2rem;
-    padding: 20px;
+    padding: 10px;
     background-color: var(--primary-color);
     color: var(--title-color);
     border-radius: 5px 0 0 5px;
@@ -143,9 +143,10 @@ a:hover{
     border: solid 3px var(--border-color);
 }
 
-#acessibilidade:hover{
+#acessibilidade.active{
     transform: translateX(10px);
 }
+
 
 /* #acessibilidade > .btn{
     height: 1rem;
@@ -160,6 +161,7 @@ header {
     position: fixed;
     width: 100%;
     z-index: 1000;
+    border-bottom: solid 3px var(--border-color);
 }
 
 .logo {
