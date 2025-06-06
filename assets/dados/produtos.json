@@ -1,0 +1,26 @@
+[
+    {
+        "imagem":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm2Qx8YYYGenxcsRtWqRknEzoAJv6eg4vJXg&s",
+        "nome":"Nome do produto",
+        "descricao":"Descrição do produto",
+        "preco":"Preço do produto"
+    },
+    {
+        "imagem":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzDHtOWotXBxdcmsZ5vRHVGcYHcrdpQ79NBdotLai6Zq7pwQtUq6gtodUe2gqI9lsUi8Y&usqp=CAU",
+        "nome":"Nome do produto",
+        "descricao":"Descrição do produto",
+        "preco":"Preço do produto"
+    },
+    {
+        "imagem":"https://imagenes.elpais.com/resizer/v2/GI3PMQY6R6G2FUUFOUP4WP4KDE.jpg?auth=46bd0b31ad88c9b4fc9961cc11d23749cfaf54425f6e19b8b5603828592a4dc6&width=1960&height=1470&smart=true",
+        "nome":"Nome do produto",
+        "descricao":"Descrição do produto",
+        "preco":"Preço do produto"
+    },
+    {
+        "imagem":"https://cms.bbcearth.com/sites/default/files/inline-images/panda5.jpg",
+        "nome":"Nome do produto",
+        "descricao":"Descrição do produto",
+        "preco":"Preço do produto"
+    }
+]
