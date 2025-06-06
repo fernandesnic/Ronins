@@ -17,10 +17,7 @@ let fontSize = 1;
 decrFont.addEventListener("click", () => {
     // Quando o botão de diminuir fonte for clicado
     // ele diminui a variavel de referencia, até no minimo 0.8
-    fontSize -= 0.1;
-    if (fontSize < 0.8) {
-        fontSize = 0.8;
-    }
+    fontSize = Math.max(fontSize - 0.1, 0.8);
 
     // E então aplica ao html
     document.querySelector("html").style.fontSize = `${fontSize}em`;
@@ -28,10 +25,7 @@ decrFont.addEventListener("click", () => {
 
 // O mesmo do anterior com o efeito contrário
 incrFont.addEventListener("click", () => {
-    fontSize += 0.1;
-    if (fontSize > 1.8) {
-        fontSize = 1.8;
-    }
+    fontSize = Math.min(fontSize + 0.1, 1.8);
     document.querySelector("html").style.fontSize = `${fontSize}em`;
 });
 
