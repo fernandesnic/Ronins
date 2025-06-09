@@ -12,11 +12,14 @@
     --bg-color2: rgb(19, 19, 19);
     --title-color: rgb(255, 255, 255);
     --text-color: rgb(158, 158, 158);
-    --border-color: rgb(255, 255, 255, 0)
+    --border-color: rgb(255, 255, 255, 0);
+
+    --font-primary: 'Montserrat', sans-serif;
+    --font-title: 'Trade Winds', sans-serif;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-primary);
     line-height: 1.6;
     color: var(--text-color);
     transition: font-size 0.2s ease-out;
@@ -35,14 +38,12 @@ body {
 
 
 h1, h2 {
-    font-family: "Ceviche One", system-ui;;
+    font-family: var(--font-title);
     font-weight: 500;
 }
 
-h3,
-h4 {
-    font-family: 'Oswald', sans-serif, system-ui;
-    ;
+h3, h4 {
+    font-family: var(--font-primary);
     font-weight: 500;
     color: var(--title-color);
 }
@@ -113,13 +114,17 @@ a:hover{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
-    justify-items: end;
+    justify-items: start;
     position:fixed;
     top: 25vh;
-    right: 0;
-    transform: translateX(50%);
+    left: 0;
+    transform: translateX(-50%);
     z-index: 1000;  
-    transition: transform 0.3s ease-out;
+    transition: 0.3s ease-out;
+    opacity: 30%;
+    &:hover{
+        opacity: 100%;
+    }
 }
 
 #acessibilidade > span{
@@ -127,7 +132,7 @@ a:hover{
     padding: 10px;
     background-color: var(--primary-color);
     color: var(--title-color);
-    border-radius: 5px 0 0 5px;
+    border-radius: 0 5px 5px 0;
     border: solid 3px var(--border-color);
     cursor: pointer;
     min-height: 0;
@@ -139,12 +144,15 @@ a:hover{
     gap: 15px;
     padding: 20px;
     background-color: var(--primary-color);
-    border-radius: 0 5px 5px 5px;
+    border-radius: 0 0 5px 0;
     border: solid 3px var(--border-color);
 }
 
+
+
 #acessibilidade.active{
-    transform: translateX(10px);
+    transform: translateX(0);
+    opacity: 100%;
 }
 
 /* Header */
@@ -155,6 +163,7 @@ header {
   width: 100%;
   z-index: 1000;
   height: 100px;
+  font-family: var(--font-title);
 }
 
 .header-grid {
@@ -346,6 +355,20 @@ nav ul li a:hover {
     margin-bottom: 50px;
     font-size: 2.5rem;
     color: var(--title-color);
+}
+
+.cta{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Products Section */
+.products-grid {
+    display: grid;
 }
 
 .content-grid {

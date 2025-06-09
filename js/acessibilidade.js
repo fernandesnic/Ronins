@@ -1,11 +1,12 @@
 // Codigo pro menu de acessibilidade aparecer
 const acessContainer = document.querySelector('#acessibilidade');
-const acessBtn = acessContainer.querySelector('span');
+const acessBtn = acessContainer.querySelector('#mainBtn');
 acessBtn.addEventListener("click", ()=>{
     acessContainer.classList.toggle('active');
+    console.log("oi");
 })
 
-
+console.log("thau");
 
 
 // Codigo para aumentar e diminuir a fonte
