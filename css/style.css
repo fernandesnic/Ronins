@@ -6,14 +6,25 @@
 
 }
 
+/*Variáveis para cores e fontes*/
 :root{
-    --primary-color: rgb(0, 0, 0);
-    --bg-color1: rgb(27, 27, 27);
-    --bg-color2: rgb(19, 19, 19);
-    --title-color: rgb(255, 255, 255);
-    --text-color: rgb(158, 158, 158);
+    /*Modo claro*/
+    --primary-color: rgb(245, 249, 240);
+    --bg-color1: rgb(230, 232, 226);
+    --bg-color2: rgb(207, 207, 200);
+    --title-color: rgb(22, 21, 22);
+    --text-color: rgb(94, 93, 93);
     --border-color: rgb(255, 255, 255, 0);
 
+    /*Modo escuro*/
+    --dark-primary-color: rgb(0, 0, 0);
+    --dark-bg-color1: rgb(27, 27, 27);
+    --dark-bg-color2: rgb(19, 19, 19);
+    --dark-title-color: rgb(255, 255, 255);
+    --dark-text-color: rgb(158, 158, 158);
+    --dark-border-color: rgb(255, 255, 255, 0);
+
+    /*Definição das fontes principais*/
     --font-primary: 'Montserrat', sans-serif;
     --font-title: 'Trade Winds', sans-serif;
 }
@@ -35,11 +46,14 @@ body {
     font-size: 1.5rem;
 }
 
-
-
 h1, h2 {
     font-family: var(--font-title);
     font-weight: 500;
+}
+
+#jog {
+    margin-top: 1rem;
+    text-align: center;
 }
 
 h3, h4 {
@@ -50,9 +64,9 @@ h3, h4 {
 
 .btn {
     display: inline-block;
-    background-color: var(--title-color);
-    color: var(--primary-color);
-    border: solid 2px var(--title-color);
+    background-color: var(--bg-color2);
+    color: var(--text-color);
+    /* border: solid 2px var(--title-color); */
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
@@ -72,31 +86,11 @@ h3, h4 {
     border: solid 2px var(--border-color);
 }
 
-/* .btn.dark:hover{
-    background-color: var(--color1);
-} */
 
 .btn.dark:hover{
     background-color: var(--text-color);
     color: var(--primary-color);
 }
-
-
-/* 
-.btn-outline {
-    display: inline-block;
-    border: 2px solid var(--btn-hover-color);
-    color: var(--secondary-color);
-    padding: 8px 16px;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.btn-outline:hover {
-    background-color: var(--btn-hover-color);
-    color: var(--secondary-color);
-} */
 
 a{
     text-decoration: none;
@@ -147,8 +141,6 @@ a:hover{
     border-radius: 0 0 5px 0;
     border: solid 3px var(--border-color);
 }
-
-
 
 #acessibilidade.active{
     transform: translateX(0);
@@ -531,7 +523,7 @@ footer h4 {
 .copyright {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
     font-size: 0.9rem;
 }
 
