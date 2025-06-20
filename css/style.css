@@ -16,17 +16,19 @@
     --text-color: rgb(94, 93, 93);
     --border-color: rgb(255, 255, 255, 0);
 
-    /*Modo escuro*/
-    --dark-primary-color: rgb(0, 0, 0);
-    --dark-bg-color1: rgb(27, 27, 27);
-    --dark-bg-color2: rgb(19, 19, 19);
-    --dark-title-color: rgb(255, 255, 255);
-    --dark-text-color: rgb(158, 158, 158);
-    --dark-border-color: rgb(255, 255, 255, 0);
-
     /*Definição das fontes principais*/
     --font-primary: 'Montserrat', sans-serif;
     --font-title: 'Trade Winds', sans-serif;
+}
+
+/* Modo escuro */
+.dark-mode {
+    --primary-color: rgb(0, 0, 0);
+    --bg-color1: rgb(27, 27, 27);
+    --bg-color2: rgb(19, 19, 19);
+    --title-color: rgb(255, 255, 255);
+    --text-color: rgb(158, 158, 158);
+    --border-color: rgb(255, 255, 255, 0);
 }
 
 body {
@@ -64,7 +66,7 @@ h3, h4 {
 
 .btn {
     display: inline-block;
-    background-color: var(--bg-color2);
+    background-color: var(--bg-color1);
     color: var(--text-color);
     /* border: solid 2px var(--title-color); */
     padding: 10px 20px;
@@ -76,7 +78,7 @@ h3, h4 {
 }
 
 .btn:hover {
-    background-color: var(--bg-color1);
+    background-color: var(--bg-color2);
     color: var(--title-color);
 }
 
@@ -194,6 +196,31 @@ header.scrolled {
 
 header.scrolled .logo-absolute img {
   height: 50px;
+}
+
+/* Botão de modo escuro/modo claro */
+#theme-switch {
+    margin-top: 0.75em;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    padding: 0;
+    border: none;
+}
+
+#theme-switch span:last-child {
+    /* Oculta o ícone de sol no tema claro */
+    display: none;
+}
+
+.dark-mode #theme-switch span:first-child {
+    /* Oculta o ícone de lua no tema escuro */
+    display: none;
+}
+
+.dark-mode #theme-switch span:last-child {
+    /* Exibe o ícone de sol no modo escuro */
+    display: block;
 }
 
 /* Menu */
