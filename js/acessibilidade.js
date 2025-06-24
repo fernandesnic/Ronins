@@ -1,3 +1,5 @@
+const body = document.querySelector("body")
+
 // Codigo pro menu de acessibilidade aparecer
 const acessContainer = document.querySelector('#acessibilidade');
 const acessBtn = acessContainer.querySelector('#mainBtn');
@@ -31,24 +33,19 @@ incrFont.addEventListener("click", () => {
 });
 
 //Codigo de alto contraste
-const highContrast = document.getElementById('highContrast');
-const root = document.querySelector(':root');
+const highContrast = document.getElementById('highContrast'); //Botão de alto contraste
 let highContrastOn = false;
+
 highContrast.addEventListener("click", () => {
     if (highContrastOn == false) {
         highContrastOn = true;
-        root.style.setProperty('--bg-color1', 'black')
-        root.style.setProperty('--bg-color2', 'black')
-        root.style.setProperty('--text-color', 'white')
-        root.style.setProperty('--border-color', 'white')
-        root.style.setProperty('--title-color', 'yellow')
-
-    }else{
+        body.classList.toggle('high-contrast')
+        console.log("Alto contraste ativado"); 
+    } else {
         highContrastOn = false;
-        root.style.setProperty('--bg-color1', 'rgb(27, 27, 27)')
-        root.style.setProperty('--bg-color2', 'rgb(19, 19, 19)')
-        root.style.setProperty('--text-color', 'rgb(158, 158, 158)')
-        root.style.setProperty('--border-color', 'transparent')
-        root.style.setProperty('--title-color', 'white')
+        body.classList.toggle('high-contrast')
+        console.log("De volta às cores padrão");
+        
+        }
     }
-})
+)

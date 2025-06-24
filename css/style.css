@@ -31,6 +31,16 @@
     --border-color: rgb(255, 255, 255, 0);
 }
 
+/* Modo de alto contraste */
+.high-contrast {
+    --primary-color: black;
+    --bg-color1: black;
+    --bg-color2: black;
+    --title-color: yellow;
+    --text-color: white;
+    --border-color: white;
+}
+
 body {
     font-family: var(--font-primary);
     line-height: 1.6;
