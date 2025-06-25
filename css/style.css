@@ -3,8 +3,23 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
 }
+
+/* Importação de fontes locais */
+@font-face {
+    font-family: 'ITC Officina Serif Std Book';
+    font-style: normal;
+    font-weight: normal;
+    src: local('ITC Officina Serif Std Book'), url('../assets/fontes/itc-officina-serif-std-book-58703733c9fd5.woff') format('woff');
+    }
+
+    @font-face {
+    font-family: 'Lemon/Milk Regular';
+    font-style: normal;
+    font-weight: normal;
+    size-adjust: 85%;
+    src: local('Lemon/Milk Regular'), url('../assets/fontes/LemonMilk.woff') format('woff');
+    }
 
 /*Variáveis para cores e fontes*/
 :root{
@@ -17,8 +32,10 @@
     --border-color: rgb(255, 255, 255, 0);
 
     /*Definição das fontes principais*/
-    --font-primary: 'Montserrat', sans-serif;
-    --font-title: 'Trade Winds', sans-serif;
+    --font-primary: 'ITC Officina Serif Std Book'; 
+    --font-title: 'Lemon/Milk Regular';
+    /* --font-primary: 'Montserrat', sans-serif;
+    --font-title: 'Trade Winds', sans-serif; */
 }
 
 /* Modo escuro */
@@ -181,13 +198,29 @@ header {
 
 .logo-absolute {
   position: absolute;
-  top: 10px;
-  left: 20px;
+  top: 0.5em;
+  left: 5em;
 }
 
 .logo-absolute img {
   height: 80px;
   display: block;
+}
+
+.logo-absolute a:last-child{
+    display: none;
+    /* Oculta a logo branca do header no modo claro */
+}
+
+.dark-mode .logo-absolute a:last-child{
+    display: block;
+    /* Exibe a logo branca no modo escuro */
+}
+
+.dark-mode .logo-absolute a:first-child{
+    display: none;
+    /* Oculta a logo preta no modo escuro */
+    /* Provavelmente tem um jeito melhor de alternar imagens com JS, mas não sei como fazer isso */
 }
 
 /* para a transição do header (diminuir ao rolar) */
@@ -279,7 +312,20 @@ header.scrolled .logo-absolute img {
   transition: all 0.3s ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1500px) {
+  
+    header {
+        transition: none;
+    }
+    
+    header.scrolled {
+        height: 100px;
+    }
+
+    header.scrolled .logo-absolute img {
+        height: 80px;
+    }
+  
   .hamburguer {
     display: flex;
   }
@@ -339,9 +385,10 @@ nav ul li a:hover {
 
 /* Hero Section */
 #home {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('https://th.bing.com/th/id/OIP.Pixq9eppCBGpifpmTPXgFwAAAA?rs=1&pid=ImgDetMain');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('../assets/photos/Paulista 2025 - Erick 2.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -352,19 +399,19 @@ nav ul li a:hover {
 
 .hero-content {
     padding: 2rem;
-
 }
 
 .hero-content h2 {
     font-size: 3rem;
     margin-bottom: 20px;
     text-transform: uppercase;
-    color: var(--title-color);
+    color: white;
 }
 
 .hero-content p {
     font-size: 1.5rem;
     margin-bottom: 30px;
+    color: white;
 }
 
 /* Sections */
@@ -524,6 +571,18 @@ footer h4 {
 .footer-logo img {
     height: 150px;
     width:fit-content;
+}
+
+.footer-logo img:last-child {
+    display: none;
+}
+
+.dark-mode .footer-logo img:last-child{
+    display: block;
+}
+
+.dark-mode .footer-logo img:first-child{
+    display: none;
 }
 
 .footer-links ul {
