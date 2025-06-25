@@ -1,7 +1,20 @@
-const produtosContainer = document.querySelector("#produtos-container");
+export function produtos(){
+    const content = `
+        <section id="produtos" class="section dark-bg">
+            <div class="container">
+                <h2>Nossos Produtos</h2>
+                <p>Adquira nossos produtos e ajude a manter o time em atividade:</p>
+                <div id="produtos-container" class="cards-container">
+                    
+                </div>
+            </div>
+        </section>
+    `
+    return content
+}
 
-
-async function adicionarProdutos(){
+export async function adicionarProdutos(){
+    const produtosContainer = document.querySelector("#produtos-container");
     const arquivo = await fetch("./assets/dados/produtos.json");
     const dados = await arquivo.json();
     dados.forEach(item => {
@@ -18,5 +31,3 @@ async function adicionarProdutos(){
         produtosContainer.appendChild(div);
     });
 }
-
-adicionarProdutos();

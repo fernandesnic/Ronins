@@ -31,6 +31,10 @@ body {
     margin: 0 auto;
 }
 
+main{
+    padding-top: 40px;
+}
+
 .material-symbols-outlined {
     font-size: 1.5rem;
 }
@@ -72,31 +76,10 @@ h3, h4 {
     border: solid 2px var(--border-color);
 }
 
-/* .btn.dark:hover{
-    background-color: var(--color1);
-} */
-
 .btn.dark:hover{
     background-color: var(--text-color);
     color: var(--primary-color);
 }
-
-
-/* 
-.btn-outline {
-    display: inline-block;
-    border: 2px solid var(--btn-hover-color);
-    color: var(--secondary-color);
-    padding: 8px 16px;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.btn-outline:hover {
-    background-color: var(--btn-hover-color);
-    color: var(--secondary-color);
-} */
 
 a{
     text-decoration: none;
@@ -111,8 +94,9 @@ a:hover{
 
 /* Acessibilidade */
 #acessibilidade{
+    pointer-events: none;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr 1fr;
     align-items: start;
     justify-items: start;
     position:fixed;
@@ -127,7 +111,14 @@ a:hover{
     }
 }
 
+/* Faz com que o cursor nn seja "parado" 
+pela div de acessibilidade, só seus filhos */
+#acessibilidade *{
+    pointer-events: auto;
+}
+
 #acessibilidade > span{
+ 
     font-size: 2rem;
     padding: 10px;
     background-color: var(--primary-color);
@@ -157,6 +148,7 @@ a:hover{
 
 /* Header */
 header {
+    display: flex;
   background-color: var(--primary-color);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -175,15 +167,15 @@ header {
   height: 100%;
 }
 
-.logo-absolute {
-  position: absolute;
-  top: 10px;
-  left: 20px;
+#logo {
+    display: block;
+    padding: 10px;
+    width: 100px;
+    
 }
 
-.logo-absolute img {
-  height: 80px;
-  display: block;
+#logo img{
+    height: 80px;
 }
 
 /* para a transição do header (diminuir ao rolar) */
@@ -191,18 +183,30 @@ header {
   transition: all 0.3s ease;
 }
 
+
+
 header.scrolled {
   height: 60px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-.logo-absolute img {
+#logo img {
   transition: height 0.3s ease;
 }
 
-header.scrolled .logo-absolute img {
+header.scrolled #logo img{
   height: 50px;
 }
+
+.hamburguer{
+    transition: all 0.3s ease;
+}
+
+header.scrolled .hamburguer {
+  transform: translateY(-15px);
+  
+}
+
 
 /* Menu */
 .menu ul {
@@ -235,8 +239,8 @@ header.scrolled .logo-absolute img {
   justify-content: space-between;
   width: 25px;
   height: 20px;
+  position:absolute;
   cursor: pointer;
-  position: absolute;
   right: 20px;
   top: 35px;
   z-index: 1100;
