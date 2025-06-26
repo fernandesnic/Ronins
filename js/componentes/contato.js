@@ -6,8 +6,9 @@ export default function contato(){
                 <h2>Contato</h2>
                 <div class="contact-info">
                     <h3>Fale conosco</h3>
-                    <p>Email: </p>
-                    <p>Telefone: </p>
+                    <a href="mailto:roninsquadrugby@gmail.com">Email: roninsquadrugby@gmail.com</a>
+                    <p>Telefone: (11) 92903-6219</p>
+                    <!-- Preenchido com um telefone placeholder. Trocar pelo verdadeiro assim que possível. -->
                     <div class="social-links">
                         <a href="https://www.instagram.com/roninsrugby?igsh=MW42cWxsdnA5MGY5MQ==" target="_blank">
                             <img src="assets/icons/social/Instagram_Glyph_White.png" alt="Instagram">

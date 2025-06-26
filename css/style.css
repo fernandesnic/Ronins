@@ -210,9 +210,8 @@ header {
 }
 
 .logo-absolute {
-  position: absolute;
-  top: 0.5em;
-  left: 5em;
+   margin-left: 2rem;
+   padding: 10px;
 }
 
 .logo-absolute img {
@@ -248,11 +247,11 @@ header.scrolled {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-#logo img {
+.logo-absolute img {
   transition: height 0.3s ease;
 }
 
-header.scrolled #logo img{
+header.scrolled .logo-absolute img{
   height: 50px;
 }
 
@@ -337,19 +336,19 @@ header.scrolled .hamburguer {
   transition: all 0.3s ease;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 768px) {
   
     header {
-        transition: none;
+        transition: height 0.3s ease;
     }
     
     header.scrolled {
-        height: 100px;
+        height: 60px;
     }
 
-    header.scrolled .logo-absolute img {
+    /* header.scrolled .logo-absolute img {
         height: 80px;
-    }
+    } */
   
   .hamburguer {
     display: flex;
@@ -363,7 +362,10 @@ header.scrolled .hamburguer {
     top: 100px;
     right: 0;
     width: 100%;
-    padding: 1rem 0;
+    padding: 1rem 0 2rem 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   .menu ul.active {
