@@ -12,6 +12,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Oswald:wght@500&display=swap"
         rel="stylesheet">
 
+        <!-- Ícones fontawesome -->
+    <script src="https://kit.fontawesome.com/6105ef985f.js" crossorigin="anonymous"></script>
+
     <!--Fontes costomizadas-->
     <!--Ceviche One, Bangers;-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,8 +30,10 @@
 
 <body>
     <header>
-        
-        <a href="#home" id="logo"><img src="assets/RoninsLogo/RONINS Quad Rugbyb.png" alt="Logo" /></a>
+        <div class="logo-absolute">
+            <a href="#home"><img src="assets/RoninsLogo/RONINS Quad Rugby.png" alt="Logo" title="Início"/></a>
+            <a href="#home"><img src="assets/RoninsLogo/RONINS Quad Rugbyb.png" alt="Logo" title="Início"/></a>
+        </div>
 
         <div class="hamburguer" id="hamburguer">
             <span></span>
@@ -45,6 +50,10 @@
                     <li><a href="#projetos">Projeto</a></li>
                     <li><a href="#produtos">Produtos</a></li>
                     <li><a href="#contato">Contato</a></li>
+                    <button id="theme-switch" class="btn" title="Alterar para modo claro/escuro">
+                        <span class="fa-solid fa-moon"></span>
+                        <span class="fa-solid fa-sun"></span>
+                    </button>
                 </ul>
             </nav>
         </div>
@@ -52,9 +61,9 @@
 
     <section id="acessibilidade">
         <aside id="configurações">
-            <button id="incrFont" class="btn"><strong>A+</strong></button>
-            <button id="decrFont" class="btn"><strong>A-</strong></button>
-            <button id="highContrast" class="btn">
+            <button id="incrFont" class="btn" title="Aumentar fonte"><strong>A+</strong></button>
+            <button id="decrFont" class="btn" title="Diminuir fonte"><strong>A-</strong></button>
+            <button id="highContrast" class="btn" title="Ativar modo de alto contraste">
                 <span class="material-icons-outlined" style="font-size: 1rem;">contrast</span>
             </button>
         </aside> 
@@ -70,22 +79,26 @@
             </div>
 
         </section>
+
     </main>
 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
+                    <span>
+                    <img src="assets/RoninsLogo/RONINS Quad Rugby.png" alt="Ronins Rugby">
                     <img src="assets/RoninsLogo/RONINS Quad Rugbyb.png" alt="Ronins Rugby">
+                    </span>
                     <p>RONINS QUAD RUGBY</p>
                 </div>
                 <div class="footer-links">
                     <h4>Links Rápidos</h4>
                     <ul>
                         <li><a href="#home">Início</a></li>
-                        <li><a href="#esporte">Sobre o Esporte</a></li>
-                        <li><a href="#time">Sobre o Time</a></li>
-                        <li><a href="#causa">Sobre a Causa</a></li>
+                        <li><a href="#esporte">Esporte</a></li>
+                        <li><a href="#time">Atletas</a></li>
+                        <li><a href="#causa">Nossa Causa</a></li>
                         <li><a href="#produtos">Produtos</a></li>
                         <li><a href="#contato">Contato</a></li>
                     </ul>
@@ -124,9 +137,10 @@
         new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
 
-    <!-- Link dos scripts nosso -->
+    <!-- Link dos nossos scripts -->
     <script src="js/script.js" defer></script>
     <script src="js/acessibilidade.js" defer></script>
     <script src="js/renderPage.js" type="module" defer></script>
+    <script src="js/darkmode.js" defer></script>
 </body>
 </html>

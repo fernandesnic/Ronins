@@ -3,19 +3,59 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
 }
 
+/* Importação de fontes locais */
+@font-face {
+    font-family: 'ITC Officina Serif Std Book';
+    font-style: normal;
+    font-weight: normal;
+    src: local('ITC Officina Serif Std Book'), url('../assets/fontes/itc-officina-serif-std-book-58703733c9fd5.woff') format('woff');
+    }
+
+    @font-face {
+    font-family: 'Lemon/Milk Regular';
+    font-style: normal;
+    font-weight: normal;
+    size-adjust: 85%;
+    src: local('Lemon/Milk Regular'), url('../assets/fontes/LemonMilk.woff') format('woff');
+    }
+
+/*Variáveis para cores e fontes*/
 :root{
+    /*Modo claro*/
+    --primary-color: rgb(245, 249, 240);
+    --bg-color1: rgb(230, 232, 226);
+    --bg-color2: rgb(207, 207, 200);
+    --title-color: rgb(22, 21, 22);
+    --text-color: rgb(94, 93, 93);
+    --border-color: rgb(255, 255, 255, 0);
+
+    /*Definição das fontes principais*/
+    --font-primary: 'ITC Officina Serif Std Book'; 
+    --font-title: 'Lemon/Milk Regular';
+    /* --font-primary: 'Montserrat', sans-serif;
+    --font-title: 'Trade Winds', sans-serif; */
+}
+
+/* Modo escuro */
+.dark-mode {
     --primary-color: rgb(0, 0, 0);
     --bg-color1: rgb(27, 27, 27);
     --bg-color2: rgb(19, 19, 19);
     --title-color: rgb(255, 255, 255);
     --text-color: rgb(158, 158, 158);
     --border-color: rgb(255, 255, 255, 0);
+}
 
-    --font-primary: 'Montserrat', sans-serif;
-    --font-title: 'Trade Winds', sans-serif;
+/* Modo de alto contraste */
+.high-contrast {
+    --primary-color: black;
+    --bg-color1: black;
+    --bg-color2: black;
+    --title-color: yellow;
+    --text-color: white;
+    --border-color: white;
 }
 
 body {
@@ -23,6 +63,7 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     transition: font-size 0.2s ease-out;
+    background-color: var(--primary-color);
 }
 
 .container {
@@ -39,11 +80,14 @@ main{
     font-size: 1.5rem;
 }
 
-
-
 h1, h2 {
     font-family: var(--font-title);
     font-weight: 500;
+}
+
+#jog {
+    margin-top: 1rem;
+    text-align: center;
 }
 
 h3, h4 {
@@ -54,9 +98,9 @@ h3, h4 {
 
 .btn {
     display: inline-block;
-    background-color: var(--title-color);
-    color: var(--primary-color);
-    border: solid 2px var(--title-color);
+    background-color: var(--bg-color1);
+    color: var(--text-color);
+    /* border: solid 2px var(--title-color); */
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
@@ -66,7 +110,7 @@ h3, h4 {
 }
 
 .btn:hover {
-    background-color: var(--bg-color1);
+    background-color: var(--bg-color2);
     color: var(--title-color);
 }
 
@@ -139,8 +183,6 @@ pela div de acessibilidade, só seus filhos */
     border: solid 3px var(--border-color);
 }
 
-
-
 #acessibilidade.active{
     transform: translateX(0);
     opacity: 100%;
@@ -167,15 +209,31 @@ header {
   height: 100%;
 }
 
-#logo {
-    display: block;
-    padding: 10px;
-    width: 100px;
-    
+.logo-absolute {
+  position: absolute;
+  top: 0.5em;
+  left: 5em;
 }
 
-#logo img{
-    height: 80px;
+.logo-absolute img {
+  height: 80px;
+  display: block;
+}
+
+.logo-absolute a:last-child{
+    display: none;
+    /* Oculta a logo branca do header no modo claro */
+}
+
+.dark-mode .logo-absolute a:last-child{
+    display: block;
+    /* Exibe a logo branca no modo escuro */
+}
+
+.dark-mode .logo-absolute a:first-child{
+    display: none;
+    /* Oculta a logo preta no modo escuro */
+    /* Provavelmente tem um jeito melhor de alternar imagens com JS, mas não sei como fazer isso */
 }
 
 /* para a transição do header (diminuir ao rolar) */
@@ -196,6 +254,31 @@ header.scrolled {
 
 header.scrolled #logo img{
   height: 50px;
+}
+
+/* Botão de modo escuro/modo claro */
+#theme-switch {
+    margin-top: 0.75em;
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    padding: 0;
+    border: none;
+}
+
+#theme-switch span:last-child {
+    /* Oculta o ícone de sol no tema claro */
+    display: none;
+}
+
+.dark-mode #theme-switch span:first-child {
+    /* Oculta o ícone de lua no tema escuro */
+    display: none;
+}
+
+.dark-mode #theme-switch span:last-child {
+    /* Exibe o ícone de sol no modo escuro */
+    display: block;
 }
 
 .hamburguer{
@@ -254,7 +337,20 @@ header.scrolled .hamburguer {
   transition: all 0.3s ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1500px) {
+  
+    header {
+        transition: none;
+    }
+    
+    header.scrolled {
+        height: 100px;
+    }
+
+    header.scrolled .logo-absolute img {
+        height: 80px;
+    }
+  
   .hamburguer {
     display: flex;
   }
@@ -314,9 +410,10 @@ nav ul li a:hover {
 
 /* Hero Section */
 #home {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('https://th.bing.com/th/id/OIP.Pixq9eppCBGpifpmTPXgFwAAAA?rs=1&pid=ImgDetMain');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('../assets/photos/Paulista 2025 - Erick 2.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -327,19 +424,19 @@ nav ul li a:hover {
 
 .hero-content {
     padding: 2rem;
-
 }
 
 .hero-content h2 {
     font-size: 3rem;
     margin-bottom: 20px;
     text-transform: uppercase;
-    color: var(--title-color);
+    color: white;
 }
 
 .hero-content p {
     font-size: 1.5rem;
     margin-bottom: 30px;
+    color: white;
 }
 
 /* Sections */
@@ -501,6 +598,18 @@ footer h4 {
     width:fit-content;
 }
 
+.footer-logo img:last-child {
+    display: none;
+}
+
+.dark-mode .footer-logo img:last-child{
+    display: block;
+}
+
+.dark-mode .footer-logo img:first-child{
+    display: none;
+}
+
 .footer-links ul {
     list-style: none;
 }
@@ -535,7 +644,7 @@ footer h4 {
 .copyright {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
     font-size: 0.9rem;
 }
 
