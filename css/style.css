@@ -210,8 +210,9 @@ header {
 }
 
 .logo-absolute {
-   margin-left: 2rem;
+   margin-left: 0.5em;
    padding: 10px;
+   width: 103px;
 }
 
 .logo-absolute img {
