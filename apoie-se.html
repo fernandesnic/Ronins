@@ -11,45 +11,42 @@
 </head>
 <body>
 
-    <div id="acessibilidade">
-        <span class="material-symbols-outlined" id="acessibilidade-btn">settings_accessibility</span>
-        <div id="configurações">
-            <button class="btn" id="aumentar-fonte">A+</button>
-            <button class="btn" id="diminuir-fonte">A-</button>
-            <button class="btn" id="alto-contraste">Contraste</button>
+     <header>
+        <div class="logo-absolute">
+            <a href="#home"><img src="assets/RoninsLogo/RONINS Quad Rugby.png" alt="Logo" title="Início"/></a>
+            <a href="#home"><img src="assets/RoninsLogo/RONINS Quad Rugbyb.png" alt="Logo" title="Início"/></a>
         </div>
-    </div>
-
-    <header>
+        <div class="hamburguer" id="hamburguer">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <div class="header-grid">
-            <div class="logo-absolute">
-                <a href="#"><img src="./assets/photos/logo_preta.png" alt="Logo Ronins preta"></a>
-                <a href="#"><img src="./assets/photos/logo_branca.png" alt="Logo Ronins branca"></a>
-            </div>
-            
             <nav class="menu">
                 <ul>
-                    <li><a href="index.html#home">Home</a></li>
-                    <li><a href="index.html#sobre">Sobre</a></li>
-                    <li><a href="index.html#produtos">Produtos</a></li>
-                    <li><a href="apoie-se.html">Apoie</a></li>
-                    <li><a href="index.html#contato">Contato</a></li>
-                    <li><a href="#carrinho">Carrinho (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#produtos">Produtos</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                    <button id="theme-switch" class="btn" title="Alterar para modo claro/escuro">
+                        <span class="fa-solid fa-moon"></span>
+                        <span class="fa-solid fa-sun"></span>
+                    </button>
                 </ul>
             </nav>
-
-            <button id="theme-switch" class="btn">
-                <span class="material-symbols-outlined">dark_mode</span>
-                <span class="material-symbols-outlined">light_mode</span>
-            </button>
-            
-            <div class="hamburguer" id="hamburguer">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
         </div>
     </header>
+
+    <section id="acessibilidade">
+        <aside id="configurações">
+            <button id="incrFont" class="btn" title="Aumentar fonte"><strong>A+</strong></button>
+            <button id="decrFont" class="btn" title="Diminuir fonte"><strong>A-</strong></button>
+            <button id="highContrast" class="btn" title="Ativar modo de alto contraste">
+                <span class="material-icons-outlined" style="font-size: 1rem;">contrast</span>
+            </button>
+        </aside> 
+        <span id="mainBtn" class="material-icons-outlined">accessibility_new</span>
+    </section>
 
     <main id="app">
 
@@ -134,44 +131,18 @@
 
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="./assets/photos/logo_preta.png" alt="Logo Ronins preta">
-                    <img src="./assets/photos/logo_branca.png" alt="Logo Ronins branca">
-                    <div class="footer-social">
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Navegação</h4>
-                    <ul>
-                        <li><a href="index.html#home">Home</a></li>
-                        <li><a href="index.html#sobre">Sobre</a></li>
-                        <li><a href="index.html#produtos">Produtos</a></li>
-                        <li><a href="apoie-se.html">Apoie</a></li>
-                        <li><a href="index.html#contato">Contato</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Contato</h4>
-                    <ul>
-                        <li><a href="mailto:contato@ronins.com.br">contato@ronins.com.br</a></li>
-                        <li><a href="tel:+5511999999999">+55 (11) 99999-9999</a></li>
-                        <li><p style="color: var(--text-color); padding: 5px 0;">Guarulhos, SP</p></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; 2025 Ronins Rugby. Todos os direitos reservados.
-            </div>
-        </div>
-    </footer>
-    
-    <script type="module" src="./js/script.js"></script>
-    
+
+  
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script> new window.VLibras.Widget('https://vlibras.gov.br/app'); </script>
+    <script src="js/script.js" defer></script>
+    <script src="js/acessibilidade.js" defer></script>
+    <script src="js/renderPage.js" type="module" defer></script>
+    <script src="js/darkmode.js" defer></script>
     <script src="https://kit.fontawesome.com/seu-codigo-fontawesome.js" crossorigin="anonymous"></script>
 
 </body>
