@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* Importação de fontes locais */
 @font-face {
     font-family: 'ITC Officina Serif Std Book';
