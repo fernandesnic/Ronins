@@ -1,5 +1,6 @@
 import { produtos, adicionarProdutos } from "./componentes/produtos.js";
 import { adicionarJogadores } from "./componentes/sobre.js";
+import { checkout, initCheckout } from "./componentes/checkout.js"; // ADICIONADO
 
 const main = document.querySelector("#app");
 
@@ -14,6 +15,10 @@ const router = () => {
         // Se o link for #produtos, carrega a página de produtos
         main.innerHTML = produtos();
         adicionarProdutos();
+    } else if (hash === '#checkout') {
+        // Página de checkout
+        main.innerHTML = checkout();
+        initCheckout();
     } else {
         // Para qualquer outro link (#home, #sobre, etc.), restaura o conteúdo principal
         main.innerHTML = initialMainHTML;

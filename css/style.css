@@ -1285,3 +1285,44 @@ footer h4 {
         font-size: 2.8rem;
     }
 }
+
+/* Checkout: grid e elementos */
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 20px;
+    align-items: start;
+}
+.checkout-left input[type="text"], .checkout-left input[type="email"], .checkout-left input[type="tel"], #card-number, #card-name, #card-exp, #card-cvv {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 6px;
+    background: var(--bg-color1);
+    color: var(--text-color);
+    margin: 6px 0 10px 0;
+    box-sizing: border-box;
+}
+.checkout-left label { font-weight:600; font-size:0.9rem; }
+.freight-info { font-size:0.9rem; color:var(--text-color); margin-top:6px; }
+.frete-result { margin-top:8px; color:var(--text-color); background: rgba(0,0,0,0.03); padding:8px; border-radius:6px; }
+
+.payment-methods { display:flex; gap:12px; margin:10px 0 6px 0; align-items:center; }
+.payment-box { margin-top:8px; }
+
+.checkout-right { background:var(--bg-color2); padding:12px; border-radius:8px; border:1px solid rgba(0,0,0,0.04); }
+.order-items { display:flex; flex-direction:column; gap:8px; max-height:260px; overflow:auto; padding-bottom:6px; }
+.order-item { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:6px 4px; border-bottom:1px dashed rgba(0,0,0,0.03); }
+.order-item .oi-left { max-width:70%; }
+.order-totals { margin-top:8px; display:flex; flex-direction:column; gap:6px; }
+.order-totals .row { display:flex; justify-content:space-between; align-items:center; }
+.order-totals .total { font-size:1.05rem; font-weight:800; border-top:1px solid rgba(0,0,0,0.04); padding-top:8px; }
+
+.pix-box { display:flex; gap:10px; align-items:center; margin-top:8px; }
+.pix-qr { width:90px; height:90px; background:#fff; border:1px dashed rgba(0,0,0,0.06); display:flex; align-items:center; justify-content:center; color:#999; border-radius:6px; }
+
+/* responsivo */
+@media (max-width: 900px) {
+    .checkout-grid { grid-template-columns: 1fr; }
+    .checkout-right { order: 2; margin-top:12px; }
+}
