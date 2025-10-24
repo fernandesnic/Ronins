@@ -4,60 +4,59 @@ import home from "./componentes/home.js";
 import contato from "./componentes/contato.js";
 import galeriadetrofeus from "./componentes/galeriatrofeus.js"
 const main = document.querySelector("#app");
+const landing_page = home() + sobre() + contato()
 
 // Função que decide o que mostrar
-const router = () => {
+const router = async() => {
     const hash = window.location.hash;
+    // Guarda o estado da página anterior para checar o scroll automatico
+    const previous_page = main.innerHTML
     
     switch(hash){
-        // Se o link for #home, #sobre, #contato ou qualquer outro, 
-        // ele adiciona os modulos no html e recarrega os jogadores
+        // Adiciona os módulos correspondentes a hash 
         case '#home':
         case '#sobre':
         case '#contato':
         default:
-            main.innerHTML = home();
-            main.innerHTML += sobre();
-            main.innerHTML += contato();
-            adicionarJogadores();
+            main.innerHTML = landing_page;
+            await adicionarJogadores();
             break;
-        // Se o link for #produtos, muda pra página de produtos
         case '#produtos':
             main.innerHTML = produtos();
-            adicionarProdutos();
+            await adicionarProdutos();
             break;
-        // Se o link for #galeria-de-trofeus, muda a pagina pra galeria
         case '#galeriadetrofeus':
             main.innerHTML = galeriadetrofeus();
             break;
     }
 
-    // if (hash === '#produtos') {
-    //     // Se o link for #produtos, carrega a página de produtos
-    //     main.innerHTML = produtos();
-    //     adicionarProdutos();
-    // } else {
-    //     // Para qualquer outro link (#home, #sobre, etc.), restaura o conteúdo principal
-    //     main.innerHTML = initialMainHTML;
-    //     // Recarrega os jogadores, pois o container deles foi recriado
-    //     adicionarJogadores();
-    // }
+    // Se a página anterior for diferente da atual, ele scrolla pro inicio
+    if(previous_page != main.innerHTML){
+        scroll({
+            "top": 0, 
+            "behavior": "instant"
+        });
+    }
+    
+    // Se tiver algum elemento com o id da hash, ele scrolla até ele
+    try{
+        const element = document.querySelector(hash);
+        element.scrollIntoView()
+        console.log("achei")
+    }
+    catch{
+        console.log("não achei")
+    }
+
+    
 };
 
 // Quando a página carregar pela primeira vez:
 window.addEventListener("DOMContentLoaded", () => {
     router();
-    // // 1. Salva o conteúdo principal que está no HTML
-    // initialMainHTML = main.innerHTML;
-    
-    // // 2. Carrega os dados dinâmicos da página principal (os jogadores)
-    // adicionarJogadores();
-
-    // // 3. Verifica se o usuário já chegou na página com #produtos no link
-    // if (window.location.hash === '#produtos') {
-    //     router();
-    // }
 });
 
 // Quando o link (hash) mudar, chama o router novamente
 window.addEventListener("hashchange", router);
+
+

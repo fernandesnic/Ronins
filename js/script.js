@@ -45,4 +45,3 @@ document.addEventListener('DOMContentLoaded', function() {
         yearSpan.innerHTML = `&copy; ${new Date().getFullYear()} Ronins Rugby. Todos os direitos reservados.`;
     }
 });
-
