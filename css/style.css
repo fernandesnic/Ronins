@@ -1326,3 +1326,38 @@ footer h4 {
     .checkout-grid { grid-template-columns: 1fr; }
     .checkout-right { order: 2; margin-top:12px; }
 }
+
+/* Correções específicas para posicionamento e opacidade quando o widget fica dentro da seção de produtos */
+#produtos #cart-widget.cart-widget {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    width: 260px;
+    max-width: calc(100% - 32px);
+    background: var(--bg-color1, #ffffff); /* garante fundo sólido quando variáveis não estão definidas */
+    color: var(--text-color, #111);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    opacity: 1; /* remove transparência indesejada */
+    z-index: 9999;
+}
+
+/* Fallback quando widget é anexado ao body (mantém estilo padrão) */
+#cart-widget.cart-widget {
+    position: fixed;
+    right: 16px;
+    top: 16px;
+    background: var(--bg-color1, #ffffff);
+    opacity: 1;
+    z-index: 9999;
+}
+
+/* Garante o corpo do carrinho totalmente opaco quando aberto */
+#cart-widget .cart-body {
+    background: var(--primary-color, #fff);
+    opacity: 0;
+    transition: max-height 280ms ease, padding 220ms ease, opacity 200ms ease;
+}
+#cart-widget.cart-open .cart-body {
+    opacity: 1;
+}

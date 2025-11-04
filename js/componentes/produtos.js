@@ -85,6 +85,15 @@ function setupCartWidget() {
     widget.id = 'cart-widget';
     widget.className = 'cart-widget';
     widget.style.zIndex = 9999;
+
+    // estilo inline mínimo para garantir visibilidade (evita transparência indesejada)
+    widget.style.position = 'absolute';
+    widget.style.right = '16px';
+    widget.style.top = '16px';
+    widget.style.background = 'var(--bg-color1, #ffffff)';
+    widget.style.opacity = '1';
+    widget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.22)';
+
     widget.innerHTML = `
         <div id="cart-header" class="cart-header" role="toolbar">
             <button id="cart-button" class="cart-button" aria-label="Abrir carrinho" aria-expanded="false" tabindex="0">
@@ -107,7 +116,20 @@ function setupCartWidget() {
             </div>
         </div>
     `;
-    document.body.appendChild(widget);
+
+    // Anexa o widget DENTRO da seção de produtos para não "flutuar" em outras páginas
+    const produtosSection = document.getElementById('produtos') || document.querySelector('#produtos-container');
+    if (produtosSection) {
+        // garante que o container tenha posicionamento para o absolute do widget
+        const computed = window.getComputedStyle(produtosSection);
+        if (computed.position === 'static' || !computed.position) {
+            produtosSection.style.position = 'relative';
+        }
+        produtosSection.appendChild(widget);
+    } else {
+        // fallback: anexa ao body se a seção não existir
+        document.body.appendChild(widget);
+    }
 
     // Toggle abrir/fechar via botão e tecla (permitir controle acessível)
     const btn = widget.querySelector('#cart-button');
@@ -148,11 +170,14 @@ function setupCartWidget() {
         }
     });
 
-    // Fecha ao clicar fora
+    // Fecha ao clicar fora da seção de produtos ou do widget
     document.addEventListener('click', (e) => {
         const widgetEl = document.getElementById('cart-widget');
         if (!widgetEl) return;
-        if (!widgetEl.contains(e.target)) closeCart();
+
+        // se o widget estiver dentro de produtos, considera clique fora da seção de produtos como "fora"
+        const root = produtosSection || document.body;
+        if (!root.contains(e.target)) closeCart();
     });
 
     renderCart();
