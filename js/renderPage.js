@@ -1,25 +1,37 @@
+// router.js
+
+// Importações dos módulos de conteúdo
 import { produtos, adicionarProdutos } from "./componentes/produtos.js";
-import { adicionarJogadores } from "./componentes/sobre.js";
+import { adicionarJogadores } from "./componentes/sobre.js"; 
+import { equipe } from './componentes/equipe.js'; 
+
 
 const main = document.querySelector("#app");
 
 // Guarda o HTML original da página principal para poder restaurá-lo depois
-let initialMainHTML = '';
+let initialMainHTML = ''; 
 
 // Função que decide o que mostrar
 const router = () => {
-    const hash = window.location.hash;
+ const hash = window.location.hash;
 
-    if (hash === '#produtos') {
-        // Se o link for #produtos, carrega a página de produtos
-        main.innerHTML = produtos();
-        adicionarProdutos();
+if (hash === '#produtos') {
+// Rota #PRODUTOS
+ main.innerHTML = produtos();
+ adicionarProdutos();
+ adicionarJogadores(); 
+        
+    } else if (hash === '#equipe') { 
+        // Rota #EQUIPE: Carrega o conteúdo da equipe e isola a página
+        main.innerHTML = equipe(); 
+        // É fundamental recarregar os jogadores na nova estrutura de DOM:
+        adicionarJogadores(); 
+        
     } else {
-        // Para qualquer outro link (#home, #sobre, etc.), restaura o conteúdo principal
-        main.innerHTML = initialMainHTML;
-        // Recarrega os jogadores, pois o container deles foi recriado
-        adicionarJogadores();
-    }
+ // Rota PADRÃO: Restaura o conteúdo principal (#home, #sobre, #contato)
+ main.innerHTML = initialMainHTML;
+ adicionarJogadores();
+ }
 };
 
 // Quando a página carregar pela primeira vez:
