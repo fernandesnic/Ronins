@@ -3,6 +3,8 @@ import { sobre, adicionarJogadores } from "./componentes/sobre.js";
 import home from "./componentes/home.js";
 import contato from "./componentes/contato.js";
 import galeriadetrofeus from "./componentes/galeriatrofeus.js"
+import { checkout, initCheckout } from "./componentes/checkout.js"; // ADICIONADO
+
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
 
@@ -28,6 +30,9 @@ const router = async() => {
         case '#galeriadetrofeus':
             main.innerHTML = galeriadetrofeus();
             break;
+        case '#checkout':
+            main.innerHTML = checkout();
+            initCheckout();
     }
 
     // Se a página anterior for diferente da atual, ele scrolla pro inicio
