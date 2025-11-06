@@ -15,7 +15,7 @@ export function produtos(){
 
 export async function adicionarProdutos(){
     const produtosContainer = document.querySelector("#produtos-container");
-    const arquivo = await fetch("./assets/dados/produtos.json");
+    const arquivo = await fetch("../../assets/dados/produtos.json");
     const dados = await arquivo.json();
     dados.forEach(item => {
         const div = document.createElement("div");
