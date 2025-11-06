@@ -1,0 +1,176 @@
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// --- TABELAS DE UTILIZADOR E VENDAS (Baseado em image_e9dfa7.png) ---
+
+// NOTA: Esta tabela substitui a sua tabela "Usuario".
+// O Neon Auth já trata do login (email/senha).
+// Esta tabela "Perfil" guarda os seus dados extra (nome, admin, socio).
+// O 'id' (String) deve ser o mesmo 'id' que o Neon Auth cria quando o utilizador se regista.
+model Perfil {
+  id       String    @id // Este ID vem do Neon Auth, não é auto-incrementado
+  nome     String?
+  email    String  @unique // Guardamos o email aqui por conveniência
+  is_admin Boolean @default(false)
+  is_socio Boolean @default(false)
+
+  // Relações (como no seu ERD)
+  endereco Endereco? // Relação 1-para-1
+  vendas   Venda[]   // Relação 1-para-N
+  
+  @@map("perfis")
+}
+
+model Endereco {
+  id     Int    @id @default(autoincrement())
+  cep    String
+  estado String
+  cidade String
+  bairro String
+  rua    String
+  numero String
+
+  // Relação 1-para-1 com Perfil
+  perfil_id String   @unique // @unique força a ser 1-para-1
+  perfil    Perfil @relation(fields: [perfil_id], references: [id], onDelete: Cascade)
+
+  @@map("enderecos")
+}
+
+model Produto {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  preco     Float
+  tamanho   String?
+  descricao String?
+
+  // Relação M-para-N com Venda
+  vendas ProdutoDaVenda[]
+
+  @@map("produtos")
+}
+
+model Venda {
+  id              Int      @id @default(autoincrement())
+  forma_pagamento String
+  preco_final     Float
+  foi_entregue    Boolean  @default(false)
+  criadoEm        DateTime @default(now())
+
+  // Relação 1-para-N com Perfil
+  perfil_id String
+  perfil    Perfil @relation(fields: [perfil_id], references: [id])
+
+  // Relação M-para-N com Produto
+  produtos ProdutoDaVenda[]
+
+  @@map("vendas")
+}
+
+// Esta é a tabela "pivot" (join table) para Vendas e Produtos
+model ProdutoDaVenda {
+  quantidade Int
+
+  // Chave estrangeira para Venda
+  venda_id Int
+  venda    Venda @relation(fields: [venda_id], references: [id])
+
+  // Chave estrangeira para Produto
+  produto_id Int
+  produto    Produto @relation(fields: [produto_id], references: [id])
+
+  @@id([venda_id, produto_id]) // Chave primária composta
+  @@map("produto_da_venda")
+}
+
+
+// --- TABELAS DA EQUIPA E JOGOS (Baseado em image_e9dfad.png) ---
+
+model Jogador {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  numero_camisa Int?
+  classificacao String? // Ex: "2.5"
+  nacionalidade String?
+  idade         Int?
+  foto          String?
+  on_team       Boolean  @default(true)
+
+  // Relações (como no seu ERD)
+  premiacoes  Premiacao[]
+  campeonatos ElencoDoCampeonato[]
+
+  @@map("jogadores")
+}
+
+model Staff {
+  id      Int      @id @default(autoincrement())
+  nome    String
+  funcao  String
+  foto    String?
+  on_team Boolean  @default(true)
+
+  // Relação (como no seu ERD)
+  campeonatos ElencoDoCampeonato[]
+
+  @@map("staff")
+}
+
+model Premiacao {
+  id        Int    @id @default(autoincrement())
+  descricao String
+  ano       Int
+
+  // Relação 1-para-N com Jogador
+  jogador_id Int
+  jogador    Jogador @relation(fields: [jogador_id], references: [id])
+
+  @@map("premiacoes")
+}
+
+model CampeonatoGanho {
+  id    Int    @id @default(autoincrement())
+  nome  String
+  ano   Int
+
+  // Relação (como no seu ERD)
+  elenco ElencoDoCampeonato[]
+
+  @@map("campeonatos_ganhos")
+}
+
+// Tabela "pivot" (join table) para Campeonato, Jogador e Staff
+model ElencoDoCampeonato {
+  id Int @id @default(autoincrement()) // É mais simples ter um ID próprio
+
+  // Chave estrangeira para Campeonato
+  campeonato_id Int
+  campeonato    CampeonatoGanho @relation(fields: [campeonato_id], references: [id])
+
+  // Chave estrangeira para Jogador (opcional, ? , pode ser um staff)
+  jogador_id Int?
+  jogador    Jogador? @relation(fields: [jogador_id], references: [id])
+
+  // Chave estrangeira para Staff (opcional, ? , pode ser um staff)
+  staff_id Int?
+  staff    Staff? @relation(fields: [staff_id], references: [id])
+
+  @@map("elenco_do_campeonato")
+}
+
+model Jogo {
+  id              Int      @id @default(autoincrement())
+  data            DateTime // O seu ERD diz "data", DateTime é mais útil
+  time_adversario String
+  local           String
+  campeonato      String? // O nome do campeonato (não é uma FK no seu ERD)
+
+  @@map("jogos")
+}
