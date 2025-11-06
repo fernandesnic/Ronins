@@ -26,19 +26,8 @@ export function sobre(){
                     </div>
                 </div>
             </div>
-            <div id="time" class="section dark-bg">
-                <div class="container">
-                    <h2>Nossa História</h2>
-                    <p>Primeiro time de Rugby em Cadeira de Rodas da cidade de São Paulo, o Ronins Quad Rugby foi fundado em
-                        2017 por um grupo de atletas liderado pelo atual presidente Lucas Junqueira, e pelo vice-presidente
-                        Denis Cairiac...</p>
-
-                    <h3>Nossos Jogadores</h3>
-                    <div id="player-container" class="cards-container">
-                    </div>
-                </div>
-            </div>
-            <div id="causa" class="section">
+            
+            <div id="causa" class="dark-bg section">
                 <div class="container">
                     <h2>Nossa Causa</h2>
                     <div class="cause-content">
@@ -61,23 +50,4 @@ export function sobre(){
         </section>
     `
     return content
-}
-
-export async function adicionarJogadores(){
-    const playerContainer = document.querySelector("#player-container");
-    const arquivo = await fetch("./assets/dados/jogadores.json");
-    const dados = await arquivo.json();
-    dados.forEach(item => {
-        const div = document.createElement("div");
-        div.classList.add("card", "player");
-        div.innerHTML = `
-            <img src="${item.imagem}" alt="${item.nome}">
-            <div class="card-content">
-                <h4>${item.nome}</h4>
-                <p>${item.funcao}</p>
-                <p>${item.descricao}</p>
-            </div>
-        `
-        playerContainer.appendChild(div);
-    });
 }
