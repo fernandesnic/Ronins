@@ -212,13 +212,15 @@
         width: 100%;
         /* Adiciona um padding maior para centralizar o form */
         padding: 3rem 10%;
+        justify-content: start;
     }
 }
 
-@media screen and (max-width: 1064px) {
+@media screen and (max-width: 800px) {
     /* Em telas pequenas, o form já é 100% */
     .form {
         padding: 2rem 5%; /* Diminui o padding */
+        
     }
 
     .input-group {
