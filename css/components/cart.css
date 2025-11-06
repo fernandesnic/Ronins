@@ -1,0 +1,247 @@
+#cart-widget {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    max-width: calc(100% - 40px);
+    z-index: 9999;
+    
+    background-color: var(--cart-bg);
+    color: var(--cart-text-primary);
+    font-family: var(--cart-font);
+    
+    border-radius: 12px;
+    border: 1px solid var(--cart-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+
+#cart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 12px 16px;
+    cursor: pointer; 
+    border-bottom: 1px solid var(--cart-border);
+}
+
+#cart-button {
+    position: relative; 
+    background-color: var(--cart-bg-light);
+    color: var(--cart-text-primary);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#cart-button:hover {
+    background-color: var(--cart-bg-hover);
+}
+
+#cart-button svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+}
+
+#cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    
+    background-color: var(--cart-accent);
+    color: white;
+    
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px; 
+    text-align: center;
+    
+    border: 2px solid var(--cart-bg); 
+    
+}
+
+#cart-toggle {
+    font-size: 20px;
+    color: var(--cart-text-secondary);
+    user-select: none; 
+    padding: 0 8px;
+}
+
+#cart-body {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 16px; 
+    overflow: hidden;
+    
+    transition: max-height 0.3s ease-out, 
+                opacity 0.2s ease-out, 
+                padding 0.3s ease-out;
+}
+
+#cart-widget.cart-open #cart-body {
+    max-height: 500px; 
+    opacity: 75;
+    padding: 16px; 
+}
+
+
+#cart-count {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--cart-text-secondary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--cart-border);
+}
+
+
+#cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px; 
+    overflow-y: auto;
+    padding-right: 8px; 
+    margin-right: -8px; 
+}
+
+.cart-empty {
+    text-align: center;
+    color: var(--cart-text-secondary);
+    padding: 24px 0;
+    font-style: italic;
+    font-size: 15px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    background-color: var(--cart-bg-light);
+    border-radius: 8px;
+}
+
+.cart-item-info {
+    flex: 1; 
+    min-width: 0; 
+}
+
+.cart-item-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--cart-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.cart-item-meta {
+    font-size: 13px;
+    color: var(--cart-text-secondary);
+}
+
+
+.cart-body .btn {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cart-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--cart-border);
+}
+
+#cart-clear.btn.dark {
+    background-color: var(--cart-accent);
+    color: white;
+}
+
+#cart-clear.btn.dark:hover {
+    background-color: #c03030; 
+}
+
+.cart-remove.btn {
+    background-color: var(--cart-bg-hover);
+    color: var(--cart-text-primary);
+}
+
+.cart-remove.btn:hover {
+    background-color: var(--cart-accent);
+    color: white;
+}
+
+#cart-items::-webkit-scrollbar {
+    width: 6px;
+}
+#cart-items::-webkit-scrollbar-track {
+    background: transparent;
+}
+#cart-items::-webkit-scrollbar-thumb {
+    background-color: var(--cart-bg-hover);
+    border-radius: 20px;
+}
+#cart-items {
+    scrollbar-width: thin;
+    scrollbar-color: var(--cart-bg-hover) transparent;
+}
+
+/* Correções de posicionamento do widget */
+#produtos #cart-widget.cart-widget {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    width: 260px;
+    max-width: calc(100% - 32px);
+    background: var(--bg-color1, #ffffff); /* garante fundo sólido quando variáveis não estão definidas */
+    color: var(--text-color, #111);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    opacity: 1; /* remove transparência indesejada */
+    z-index: 9999;
+}
+
+/* Fallback quando widget é anexado ao body (mantém estilo padrão) */
+#cart-widget.cart-widget {
+    position: fixed;
+    right: 16px;
+    top: 16px;
+    background: var(--bg-color1, #ffffff);
+    opacity: 1;
+    z-index: 9999;
+}
+
+/* Garante o corpo do carrinho totalmente opaco quando aberto */
+#cart-widget .cart-body {
+    background: var(--primary-color, #fff);
+    opacity: 0;
+    transition: max-height 280ms ease, padding 220ms ease, opacity 200ms ease;
+}
+#cart-widget.cart-open .cart-body {
+    opacity: 1;
+}

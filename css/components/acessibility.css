@@ -1,0 +1,62 @@
+/* Acessibilidade */
+#acessibilidade {
+    pointer-events: none;
+    display: grid;
+
+    grid-template-columns: 1fr auto; 
+    align-items: start;
+    justify-items: start;
+    position: fixed;
+    top: 25vh;
+    left: 0;
+    z-index: 1000;
+    transition: 0.3s ease-out;
+    transform: translateX(-100%); 
+    
+}
+
+
+#acessibilidade > #configurações {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 15px;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-radius: 0 5px 5px 0;
+    border: solid 3px var(--border-color);
+    border-left: none; 
+}
+
+#acessibilidade > #mainBtn {
+    font-size: 2rem;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: var(--title-color);
+    border-radius: 0 5px 5px 0;
+    border: solid 3px var(--border-color);
+    border-left: none; /* Sem borda na parte colada no menu */
+    cursor: pointer;
+    min-height: 0;
+    position: relative;
+    left: 100%;
+    
+    /* Transição de opacidade no hover (Sintaxe CSS correta) */
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+/* Efeito de hover (Sintaxe CSS correta) */
+#acessibilidade:hover > #mainBtn,
+#acessibilidade.active > #mainBtn {
+    opacity: 1;
+}
+
+
+#acessibilidade.active {
+    transform: translateX(0); /* Tra_Z o menu de volta para a tela */
+}
+
+/* Permite cliques apenas nos filhos do widget */
+#acessibilidade * {
+    pointer-events: auto;
+}

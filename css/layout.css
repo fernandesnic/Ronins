@@ -1,0 +1,241 @@
+/* Header */
+header {
+    display: flex;
+    background-color: var(--primary-color);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    height: 100px;
+    font-family: var(--font-title);
+    transition: all 0.3s ease;
+}
+
+header.scrolled {
+    height: 60px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.header-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.logo-absolute {
+    margin-left: 0.5em;
+    padding: 10px;
+    width: 103px;
+}
+
+.logo-absolute img {
+    height: 80px;
+    display: block;
+    transition: height 0.3s ease;
+}
+
+header.scrolled .logo-absolute img{
+    height: 50px;
+}
+
+.logo-absolute a:last-child{
+    display: none;
+    /* Oculta a logo branca do header no modo claro */
+}
+
+.dark-mode .logo-absolute a:last-child{
+    display: block;
+    /* Exibe a logo branca no modo escuro */
+}
+
+.dark-mode .logo-absolute a:first-child{
+    display: none;
+    /* Oculta a logo preta no modo escuro */
+    /* Provavelmente tem um jeito melhor de alternar imagens com JS, mas não sei como fazer isso */
+}
+
+/* Botão de modo escuro/modo claro */
+#theme-switch {
+    margin-top: 0.75em;
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    padding: 0;
+    border: none;
+}
+
+#theme-switch span:last-child {
+    /* Oculta o ícone de sol no tema claro */
+    display: none;
+}
+
+.dark-mode #theme-switch span:first-child {
+    /* Oculta o ícone de lua no tema escuro */
+    display: none;
+}
+
+.dark-mode #theme-switch span:last-child {
+    /* Exibe o ícone de sol no modo escuro */
+    display: block;
+}
+
+/* Menu */
+.menu ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li a {
+    color: var(--title-color);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+    display: inline-block;
+    padding: 10px;
+}
+
+.menu ul li a:hover {
+    color: var(--text-color);
+}
+
+/* Menu Hamburguer */
+.hamburguer{
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+    position:absolute;
+    cursor: pointer;
+    right: 20px;
+    top: 35px;
+    z-index: 1100;
+    transition: all 0.3s ease;
+}
+
+header.scrolled .hamburguer {
+    transform: translateY(-15px);
+}
+
+.hamburguer span {
+    display: block;
+    height: 3px;
+    background: var(--title-color);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Estilo do nav para ocupar as 6 colunas seguintes */
+nav {
+    grid-column: span 6;
+}
+
+nav ul {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 blocos iguais */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: var(--title-color);
+    font-weight: 600;
+    font-size: 1.8rem !important;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: var(--text-color);
+}
+
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    padding: 50px 0 20px;
+}
+
+footer h4 {
+    margin-bottom: 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-logo img {
+    height: 150px;
+    width:fit-content;
+}
+
+.footer-logo img:last-child {
+    display: none;
+}
+
+.dark-mode .footer-logo img:last-child{
+    display: block;
+}
+
+.dark-mode .footer-logo img:first-child{
+    display: none;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links ul li a {
+    color: var(--title-color);
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.footer-links ul li a:hover {
+    color: var(--text-color);
+}
+
+/*Ícones Instagram e Facebook*/
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.footer-social {
+    font-size: 24px;
+    display: flex;
+    gap: 20px;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}

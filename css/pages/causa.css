@@ -1,0 +1,36 @@
+/* --- Seção Causa --- */
+
+.cause-content {
+    max-width: 750px; 
+    margin: 0 auto;   
+    text-align: center;
+}
+
+
+#causa p {
+    margin-bottom: 25px; 
+}
+
+
+#causa ul {
+    list-style: none; 
+    padding: 0;
+    margin: 0 auto 40px auto; 
+    display: inline-block; 
+    text-align: left; 
+}
+
+#causa li {
+    position: relative;
+    padding-left: 30px; 
+    margin-bottom: 10px; 
+    font-size: 1.1rem;
+}
+
+#causa li::before {
+    content: '✔'; 
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--title-color); 
+}

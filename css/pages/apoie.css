@@ -1,0 +1,209 @@
+/* =============================================
+    ESTILIZAÇÃO PÁGINA "APOIE-SE" 
+    ============================================= */
+
+/* Container das 2 colunas */
+.apoie-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: stretch;
+}
+
+/* Card de Opção (base para Sócio e PIX) */
+.apoie-option-card {
+    border: 2px solid transparent; 
+    border-radius: 16px; 
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.apoie-option-card:hover {
+    transform: scale(1.03) translateY(-5px); 
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.apoie-option-card h3 {
+    font-family: var(--font-title);
+    font-size: 2.2rem; 
+    color: var(--title-color); /* Mantém a cor do tema */
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Estilo do preço */
+.apoie-option-card .price {
+    font-size: 3.5rem; 
+    font-weight: 700; 
+    font-family: var(--font-title); 
+    color: var(--title-color); /* Mantém a cor do tema */
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.apoie-option-card .price .per-month {
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: var(--text-color); /* Mantém a cor do tema */
+    margin-left: 5px;
+    font-family: var(--font-primary); 
+}
+
+/* Descrição curta */
+.apoie-option-card > p {
+    text-align: center;
+    color: var(--text-color); 
+    font-size: 1rem;
+    min-height: 40px; 
+    margin-bottom: 30px;
+    flex-grow: 1; 
+}
+
+/* --- Card 1: Sócio Ronin (Fundo mais claro do tema) --- */
+.apoie-container .apoie-option-card:nth-child(1) {
+    background-color: var(--bg-color1); /* Fundo mais claro */
+    border-color: var(--border-color); /* Borda do tema */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra para o card mais claro */
+}
+
+/* Lista de benefícios */
+.benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+
+.benefits-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    font-size: 1.05rem;
+}
+
+.benefits-list li::before {
+    content: '✔';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--title-color); /* Checkmark com a cor principal do tema */
+    font-weight: bold;
+}
+
+/* Botão Sócio */
+.apoie-option-card:nth-child(1) .btn.dark {
+    background-color: var(--title-color); /* Botão com cor de título */
+    color: var(--primary-color); /* Texto com cor de fundo principal (preto/branco) */
+    border: none;
+    font-family: var(--font-title);
+    font-size: 1.2rem;
+    padding: 15px;
+}
+.apoie-option-card:nth-child(1) .btn.dark:hover {
+    background-color: var(--title-color);
+    color: var(--primary-color);
+    filter: brightness(1.2);
+}
+
+
+/* --- Card 2: Doação PIX (Fundo mais escuro do tema) --- */
+.apoie-container .apoie-option-card:nth-child(2) {
+    background-color: var(--bg-color2); /* Fundo mais escuro */
+    border-color: var(--border-color); /* Borda do tema */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra mais intensa para o card mais escuro */
+}
+/* No modo de alto contraste, a primary-color é preta. */
+.dark-mode .apoie-container .apoie-option-card:nth-child(2) {
+    background-color: var(--primary-color); /* No dark-mode, use o fundo mais escuro ainda (preto) */
+}
+
+/* Detalhes do PIX */
+.pix-details {
+    text-align: center;
+    background-color: var(--bg-color1); /* Fundo do PIX mais claro para contraste interno */
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+/* No dark-mode, o fundo interno do PIX deve ser var(--bg-color2) */
+.dark-mode .apoie-option-card:nth-child(2) .pix-details {
+    background-color: var(--bg-color2); 
+}
+
+
+.pix-details img {
+    max-width: 200px;
+    height: 200px;
+    background: white; /* QR Code sempre branco */
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0 auto 20px auto;
+}
+
+.pix-details h4 {
+    margin-bottom: 5px;
+    color: var(--title-color); /* Mantém a cor do tema */
+}
+
+.pix-details .pix-key {
+    color: var(--text-color); /* Mantém a cor do tema */
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+}
+
+/* Botão Copiar PIX */
+.apoie-option-card:nth-child(2) .btn {
+    background-color: var(--title-color); /* Botão com cor de título */
+    color: var(--primary-color); /* Texto com cor de fundo principal */
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    padding: 12px;
+}
+.apoie-option-card:nth-child(2) .btn:hover {
+    background-color: var(--title-color);
+    color: var(--primary-color);
+    filter: brightness(1.2);
+}
+.pix-details .btn .material-symbols-outlined {
+    font-size: 1.2rem;
+}
+
+
+/* --- Mural de Sócios --- */
+.socios-wall {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px 30px;
+    background-color: var(--bg-color1);
+    border: 2px solid var(--border-color);
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.socio-nome {
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.socio-nome.destaque {
+    color: var(--title-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--title-color); /* Destaque com a cor do tema */
+    padding-bottom: 2px;
+}
