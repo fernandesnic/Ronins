@@ -1,0 +1,237 @@
+/*
+ * ESTILOS PARA A PÁGINA DE CADASTRO
+ * Este arquivo usa as variáveis globais de 'theme.css'
+ * VERSÃO 4: Layout de TELA INTEIRA (fixed)
+ */
+
+.cadastro-container {
+    /* --- MUDANÇA PRINCIPAL --- */
+    /* Faz o container ocupar a tela inteira, cobrindo o header/footer */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000; /* Garante que ele fique por cima do header (que é z-index: 1000) */
+
+    /* Reseta estilos anteriores */
+    margin: 0;
+    border-radius: 0;
+    max-width: none; /* Remove a largura máxima */
+
+    /* Estilos originais */
+    display: flex;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .212);
+    overflow: hidden; /* Garante que nada saia da tela */
+}
+
+.form-image {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color2); /* Cor de fundo da área da imagem */
+    padding: 1rem;
+}
+
+.form-image img {
+    width: 100%;
+    max-width: 40rem;
+}
+
+.form {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-color1); /* Fundo do formulário */
+    padding: 3rem;
+    overflow-y: auto; /* Adiciona scroll se o form for maior que a tela */
+}
+
+.form-header {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-header h1 {
+    color: var(--title-color);
+    font-family: var(--font-title);
+    position: relative;
+}
+
+.login-button {
+    display: flex;
+    align-items: center;
+}
+
+.login-button button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.login-button button:hover {
+    background-color: transparent;
+}
+
+.login-button button a {
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--title-color);
+}
+
+.form-header h1::after {
+    content: '';
+    display: block;
+    width: 5rem;
+    height: 0.3rem;
+    background-color: var(--text-color);
+    margin-top: 5px;
+    border-radius: 10px;
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1rem 0;
+    width: 100%;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.1rem;
+    width: calc(50% - 10px); /* Duas colunas de inputs */
+}
+
+.input-box input {
+    margin: 0.6rem 0;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #0000001c;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+.input-box input:hover {
+    background-color: var(--bg-color2);
+}
+
+.input-box input:focus-visible {
+    outline: 1px solid var(--title-color);
+}
+
+.input-box label,
+.gender-title h6 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.input-box input::placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.gender-inputs {
+    width: 100%;
+}
+
+.gender-title {
+    width: 100%;
+}
+
+.gender-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.62rem;
+    padding: 0 0.5rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.gender-input {
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    margin-top: 0.5rem;
+}
+
+.gender-input input {
+    margin-right: 0.35rem;
+    font-weight: 600;
+}
+
+.continue-button {
+    width: 100%;
+}
+
+.continue-button button {
+    width: 100%;
+    margin-top: 2.5rem;
+    border: none;
+    background-color: var(--bg-color2);
+    padding: 0.62rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.continue-button button a {
+    text-decoration: none;
+    font-size: 0.93rem;
+    font-weight: 500;
+    color: var(--title-color);
+    transition: color 0.3s;
+}
+
+.continue-button button:hover {
+    background-color: var(--title-color);
+}
+
+.continue-button button:hover a {
+    color: var(--primary-color);
+}
+
+
+/* --- Media Queries --- */
+
+@media screen and (max-width: 1330px) {
+    /* Esconde a imagem e faz o form ocupar 100% da tela */
+    .form-image {
+        display: none;
+    }
+
+    .form {
+        width: 100%;
+        /* Adiciona um padding maior para centralizar o form */
+        padding: 3rem 10%;
+    }
+}
+
+@media screen and (max-width: 1064px) {
+    /* Em telas pequenas, o form já é 100% */
+    .form {
+        padding: 2rem 5%; /* Diminui o padding */
+    }
+
+    .input-group {
+        max-height: none; /* Remove a altura máxima no mobile */
+        overflow-y: visible;
+        padding-right: 0;
+    }
+
+    .input-box {
+        width: 100%; /* Inputs ocupam 100% no mobile */
+    }
+
+    .gender-group {
+        flex-direction: column;
+    }
+}

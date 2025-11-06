@@ -17,6 +17,11 @@
 @import url('pages/apoie.css');
 @import url('pages/contact.css');
 @import url('pages/checkout.css');
+@import url('pages/cadastro.css');
+@import url('pages/login.css');
+@import url('pages/calendario.css');
+@import url('pages/ todosjogos.css');
+
 
 /* (Responsividade - DEVE VIR POR ÚLTIMO) */
 @import url('responsive.css');

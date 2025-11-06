@@ -1,0 +1,132 @@
+/*
+ * ESTILOS PARA A PÁGINA CALENDÁRIO
+ * Este arquivo usa as variáveis globais de 'theme.css'
+ */
+
+.calendario-page {
+    width: 100%;
+    max-width: 900px;
+    margin: 50px auto 60px;
+    margin-top: 200px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.calendario-page h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--title-color);
+}
+
+.calendario-page h2 {
+    font-size: 16px;
+    color: var(--text-color);
+    font-weight: normal;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+}
+
+/* ======================== GRADE DE JOGOS ======================== */
+.jogos-container {
+    display: grid;
+    /* Cria 2 colunas em desktop, 1 em mobile */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.jogo {
+    background-color: var(--bg-color1); /* Fundo do card */
+    color: var(--text-color);
+    display: flex;
+    width: 100%; /* Ocupa 100% da coluna do grid */
+    min-height: 110px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0 auto;
+    transition: transform 0.2s, box-shadow 0.3s;
+    border: 3px solid var(--border-color);
+}
+
+.jogo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.jogo .data {
+    background-color: var(--bg-color2); /* Cor de data */
+    color: var(--title-color);
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    flex-shrink: 0; /* Impede que a data encolha */
+}
+
+.jogo .data .dia {
+    font-size: 28px;
+    line-height: 25px;
+    font-family: var(--font-title);
+}
+
+.jogo .data .mes {
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.jogo .info {
+    flex: 1;
+    background-color: var(--bg-color1);
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    text-align: left;
+}
+
+.jogo .info h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: var(--title-color);
+    /* Garante que o texto não empurre a hora */
+    padding-right: 50px; 
+}
+
+.jogo .info .hora {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    font-weight: normal;
+    color: var(--text-color);
+    font-family: var(--font-title);
+}
+
+.jogo .info .local {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    color: var(--text-color);
+    margin-top: 10px;
+}
+
+.jogo .local .material-symbols-outlined {
+    font-size: 16px; /* Tamanho do ícone */
+    color: var(--title-color);
+}
+
+/* ======================== BOTÃO ======================== */
+/* O botão .btn já está estilizado globalmente no style.css */
+/* Apenas centralizamos ele aqui */
+.calendario-page .btn {
+    display: inline-block; /* Garante que margin auto funcione */
+    margin: 0 auto;
+}

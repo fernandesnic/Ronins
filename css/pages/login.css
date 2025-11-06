@@ -1,0 +1,218 @@
+/*
+ * ESTILOS PARA A PÁGINA DE LOGIN
+ */
+
+.login-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+    display: flex;
+    font-family: var(--font-primary);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .212);
+    overflow: hidden;
+}
+
+.login-container .form {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-color1);
+    padding: 3rem;
+    overflow-y: auto;
+}
+
+.login-container .form-image {
+    width: 50%;
+    overflow: hidden;
+    background-color: var(--bg-color2); 
+    background-image: url('../../assets/photos/Wheelchair Quad Rugby.png');
+    background-size: cover;
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+
+
+
+/* --- Estilos Internos do Formulário --- */
+
+.login-container form {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container .form-header {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.login-container .form-header h1 {
+    font-size: 30px;
+    text-align: center;
+    font-family: var(--font-title);
+    color: var(--title-color);
+    position: relative;
+}
+
+.login-container .form-header h1::after {
+    content: '';
+    display: block;
+    width: 5rem;
+    height: 0.3rem;
+    background-color: var(--text-color);
+    margin-top: 5px;
+    border-radius: 10px;
+}
+
+
+.login-container .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.login-container .input-box {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.login-container .input-box label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.6rem;
+}
+
+.login-container .input-box input {
+    width: 100%;
+    height: 50px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #0000001c;
+    outline: none;
+    font-size: 15px;
+    color: var(--text-color);
+    padding: 0.8rem 1.2rem;
+    padding-right: 45px;
+}
+
+.login-container .input-box input:hover {
+    background-color: var(--bg-color2);
+}
+
+.login-container .input-box input:focus-visible {
+    outline: 1px solid var(--title-color);
+}
+
+.login-container .input-box input::placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.login-container .input-box i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(20%);
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+.login-container .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    color: var(--text-color);
+    width: 100%;
+}
+
+.login-container .remember-forgot label input {
+    accent-color: var(--title-color);
+    margin-right: 5px;
+}
+
+.login-container .remember-forgot a {
+    text-decoration: none;
+    color: var(--title-color);
+    font-weight: bold;
+}
+
+.login-container .remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.login-container .continue-button {
+    width: 100%;
+}
+
+.login-container .login {
+    width: 100%;
+    height: 50px;
+    background-color: var(--bg-color2);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--title-color);
+    font-weight: 600;
+    margin-top: 2.5rem;
+    font-family: var(--font-primary);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login-container .login:hover {
+    background-color: var(--title-color);
+    color: var(--primary-color);
+}
+
+.login-container .register-link {
+    font-size: 15px;
+    text-align: center;
+    margin: 20px 0 15px;
+    color: var(--text-color);
+}
+
+.login-container .register-link a {
+    text-decoration: none;
+    color: var(--title-color);
+    font-weight: 500;
+}
+
+.login-container .register-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* --- Media Queries --- */
+
+@media screen and (max-width: 1330px) {
+    .login-container .form-image {
+        display: none;
+    }
+
+    .login-container .form {
+        width: 100%;
+        padding: 3rem 10%;
+    }
+}
+
+@media screen and (max-width: 1064px) {
+    .login-container .form {
+        padding: 2rem 5%;
+    }
+}

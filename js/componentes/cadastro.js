@@ -1,6 +1,6 @@
 export function cadastro(){
     return `
-    <div class="container">
+    <div class="cadastro-container"> <!-- ATUALIZADO: A classe agora é "cadastro-container" -->
         <div class="form-image">
             <img src="assets/img/undraw_windows_kqsk.svg">
         </div>
