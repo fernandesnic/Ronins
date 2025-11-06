@@ -1,4 +1,4 @@
-export default function home(){
+export function home(){
     const content = `
         <section id="home">
             <div class="hero-content">

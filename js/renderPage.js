@@ -1,15 +1,16 @@
 // router.js
 
 // Importações dos módulos de conteúdo
-import { produtos, adicionarProdutos } from "./componentes/produtos.js";
+import { produtos, adicionarProdutos } from './componentes/produtos.js';
 import { equipe, adicionarJogadores, adicionarStaff } from './componentes/equipe.js'; 
 import { sobre } from './componentes/sobre.js'
-import home from "./componentes/home.js";
-import contato from "./componentes/contato.js";
-import galeriadetrofeus from "./componentes/galeriatrofeus.js"
-import { checkout, initCheckout } from "./componentes/checkout.js"; // ADICIONADO
-import { apoiase } from "./componentes/apoiase.js"
+import { home } from "./componentes/home.js";
+import { contato } from "./componentes/contato.js";
+import { galeriatrofeus } from './componentes/galeriatrofeus.js'
+import { checkout, initCheckout } from './componentes/checkout.js'; // ADICIONADO
+import { apoiase } from './componentes/apoiase.js'
 import { login } from './componentes/login.js'
+import { cadastro } from './componentes/cadastro.js'
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
 
@@ -41,8 +42,8 @@ const router = async() => {
                 main.innerHTML = produtos();
                 await adicionarProdutos();
                 break;
-            case '#galeriadetrofeus':
-                main.innerHTML = galeriadetrofeus();
+            case '#galeriatrofeus':
+                main.innerHTML = galeriatrofeus();
                 break;
             case '#checkout':
                 main.innerHTML = checkout();
@@ -58,6 +59,9 @@ const router = async() => {
                 break;
             case '#login':
                 main.innerHTML = login();
+                break;
+            case '#cadastro':
+                main.innerHTML = cadastro();
                 break;
 
         }

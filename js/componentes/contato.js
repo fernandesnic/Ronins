@@ -1,4 +1,4 @@
-export default function contato(){
+export function contato(){
     const content = `
         <section id="contato" class="section">
             <div class="container">

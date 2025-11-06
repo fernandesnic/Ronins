@@ -1,4 +1,4 @@
-export default function galeriatrofeus(){
+export function galeriatrofeus(){
     const content = `
         <section class="section">
             <h1>Galeria de troféus</h1>
