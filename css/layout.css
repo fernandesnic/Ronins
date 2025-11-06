@@ -29,6 +29,7 @@ header.scrolled {
     margin-left: 0.5em;
     padding: 10px;
     width: 103px;
+    z-index: 1000;
 }
 
 .logo-absolute img {
@@ -56,6 +57,18 @@ header.scrolled .logo-absolute img{
     /* Oculta a logo preta no modo escuro */
     /* Provavelmente tem um jeito melhor de alternar imagens com JS, mas não sei como fazer isso */
 }
+
+.high-contrast .logo-absolute a:last-child{
+    display: block;
+    /* Exibe a logo branca no modo escuro */
+}
+
+.high-contrast .logo-absolute a:first-child{
+    display: none;
+    /* Oculta a logo preta no modo escuro */
+    /* Provavelmente tem um jeito melhor de alternar imagens com JS, mas não sei como fazer isso */
+}
+
 
 /* Botão de modo escuro/modo claro */
 #theme-switch {

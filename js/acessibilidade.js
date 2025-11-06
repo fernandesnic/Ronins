@@ -31,18 +31,8 @@ incrFont.addEventListener("click", () => {
 
 //Codigo de alto contraste
 const highContrast = document.getElementById('highContrast'); //Botão de alto contraste
-let highContrastOn = false;
 
 highContrast.addEventListener("click", () => {
-    if (highContrastOn == false) {
-        highContrastOn = true;
-        body.classList.toggle('high-contrast')
-        console.log("Alto contraste ativado"); 
-    } else {
-        highContrastOn = false;
-        body.classList.toggle('high-contrast')
-        console.log("De volta às cores padrão");
-        
-        }
-    }
-)
+    const logo = document.querySelector(".logo-absolute")
+    body.classList.toggle('high-contrast')
+})

@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Menu hamburguer funcional
     const hamburguer = document.getElementById('hamburguer');
     const menu = document.querySelector('.menu ul');
-
     if (hamburguer && menu) {
         hamburguer.addEventListener('click', () => {
             menu.classList.toggle('active');
@@ -25,6 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }else if(window.scrollY > 50){
                 header.classList.add('scrolled');
             }
+        });
+        menu.querySelectorAll('li').forEach(element => {
+            element.addEventListener('click', () => {
+                menu.classList.toggle('active')
+            });
         });
     }
 
