@@ -9,7 +9,7 @@ import contato from "./componentes/contato.js";
 import galeriadetrofeus from "./componentes/galeriatrofeus.js"
 import { checkout, initCheckout } from "./componentes/checkout.js"; // ADICIONADO
 import { apoiase } from "./componentes/apoiase.js"
-
+import { login } from './componentes/login.js'
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
 
@@ -55,6 +55,9 @@ const router = async() => {
                 main.innerHTML = equipe();
                 await adicionarJogadores();
                 await adicionarStaff();
+                break;
+            case '#login':
+                main.innerHTML = login();
                 break;
 
         }
