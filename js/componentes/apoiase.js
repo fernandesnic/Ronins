@@ -1,56 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apoie o Time | Ronins Rugby</title>
-    
-    <link rel="stylesheet" href="./css/style.css">
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-</head>
-<body>
-
-     <header>
-        <div class="logo-absolute">
-            <a href="#home"><img src="assets/RoninsLogo/RONINS Quad Rugby.png" alt="Logo" title="Início"/></a>
-            <a href="#home"><img src="assets/RoninsLogo/RONINS Quad Rugbyb.png" alt="Logo" title="Início"/></a>
-        </div>
-        <div class="hamburguer" id="hamburguer">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="header-grid">
-            <nav class="menu">
-                <ul>
-                    <li><a href="#home">Início</a></li>
-                    <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#produtos">Produtos</a></li>
-                    <li><a href="#contato">Contato</a></li>
-                    <button id="theme-switch" class="btn" title="Alterar para modo claro/escuro">
-                        <span class="fa-solid fa-moon"></span>
-                        <span class="fa-solid fa-sun"></span>
-                    </button>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <section id="acessibilidade">
-        <aside id="configurações">
-            <button id="incrFont" class="btn" title="Aumentar fonte"><strong>A+</strong></button>
-            <button id="decrFont" class="btn" title="Diminuir fonte"><strong>A-</strong></button>
-            <button id="highContrast" class="btn" title="Ativar modo de alto contraste">
-                <span class="material-icons-outlined" style="font-size: 1rem;">contrast</span>
-            </button>
-        </aside> 
-        <span id="mainBtn" class="material-icons-outlined">accessibility_new</span>
-    </section>
-
-    <main id="app">
-
-        <section class="section dark-bg" id="apoie-intro">
+export function apoiase(){
+    return `
+    <section class="section dark-bg" id="apoie-intro">
             <div class="container">
                 <h2>Jogue Conosco!</h2>
                 <div class="cause-content">
@@ -128,22 +78,5 @@
                 </div>
             </div>
         </section>
-
-    </main>
-
-
-  
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
-    </div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script> new window.VLibras.Widget('https://vlibras.gov.br/app'); </script>
-    <script src="js/script.js" defer></script>
-    <script src="js/acessibilidade.js" defer></script>
-    <script src="js/renderPage.js" type="module" defer></script>
-    <script src="js/darkmode.js" defer></script>
-    <script src="https://kit.fontawesome.com/seu-codigo-fontawesome.js" crossorigin="anonymous"></script>
-
-</body>
-</html>
+    `
+}

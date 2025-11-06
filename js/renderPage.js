@@ -4,6 +4,7 @@ import home from "./componentes/home.js";
 import contato from "./componentes/contato.js";
 import galeriadetrofeus from "./componentes/galeriatrofeus.js"
 import { checkout, initCheckout } from "./componentes/checkout.js"; // ADICIONADO
+import { apoiase } from "./componentes/apoiase.js"
 
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
@@ -33,6 +34,11 @@ const router = async() => {
         case '#checkout':
             main.innerHTML = checkout();
             initCheckout();
+            break;
+        case '#apoiase':
+            main.innerHTML = apoiase();
+            break;
+
     }
 
     // Se a página anterior for diferente da atual, ele scrolla pro inicio
