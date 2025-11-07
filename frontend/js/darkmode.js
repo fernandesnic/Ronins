@@ -3,7 +3,11 @@ const botaoTema = document.getElementById("theme-switch")
 
 function trocaTema(){ //assim como diz o nome, essa é a função que vai trocar o tema
     var element = document.body; //aqui a gente identifica o corpo da pag
+    if(element.classList.contains("high-contrast")){
+        return
+    }
     element.classList.toggle("dark-mode") //e aqui a gente liga/desliga a classe do modo escuro no corpo da pagina
+    
 }
 
 botaoTema.addEventListener("click", () => { 

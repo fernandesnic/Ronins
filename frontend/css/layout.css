@@ -20,15 +20,17 @@ header.scrolled {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 
 .logo-absolute {
     margin-left: 0.5em;
     padding: 10px;
     width: 103px;
+    z-index: 1000;
 }
 
 .logo-absolute img {
@@ -40,6 +42,46 @@ header.scrolled {
 header.scrolled .logo-absolute img{
     height: 50px;
 }
+
+/* Estilos para os botões de ação no cabeçalho */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espaçamento entre os botões */
+}
+
+.header-actions .btn {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.header-actions .btn-login {
+    background-color: transparent;
+    border: 2px solid var(--title-color);
+    color: var(--title-color);
+}
+
+.header-actions .btn-login:hover {
+    background-color: var(--title-color);
+    color: var(--bg-color1);
+}
+
+.header-actions .btn-register {
+    background-color: var(--title-color);
+    border: 2px solid var(--title-color);
+    color: var(--bg-color1);
+}
+
+.header-actions .btn-register:hover {
+    background-color: transparent;
+    color: var(--title-color);
+}
+
 
 .logo-absolute a:last-child{
     display: none;
@@ -56,6 +98,18 @@ header.scrolled .logo-absolute img{
     /* Oculta a logo preta no modo escuro */
     /* Provavelmente tem um jeito melhor de alternar imagens com JS, mas não sei como fazer isso */
 }
+
+.high-contrast .logo-absolute a:last-child{
+    display: block;
+    /* Exibe a logo branca no modo escuro */
+}
+
+.high-contrast .logo-absolute a:first-child{
+    display: none;
+    /* Oculta a logo preta no modo escuro */
+    /* Provavelmente tem um jeito melhor de alternar imagens com JS, mas não sei como fazer isso */
+}
+
 
 /* Botão de modo escuro/modo claro */
 #theme-switch {
@@ -132,18 +186,21 @@ header.scrolled .hamburguer {
     transition: all 0.3s ease;
 }
 
-/* Estilo do nav para ocupar as 6 colunas seguintes */
 nav {
     grid-column: span 6;
+    flex-grow: 1; 
+    grid-column: span 6; 
+    flex-grow: 1; 
 }
 
 nav ul {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr); /* 6 blocos iguais */
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: center; /* Altera para 'center' para agrupar os itens */
     list-style: none;
     margin: 0;
     padding: 0;
-    text-align: center;
 }
 
 nav ul li a {
@@ -154,6 +211,14 @@ nav ul li a {
     font-weight: 600;
     font-size: 1.8rem !important;
     transition: color 0.3s;
+}
+
+.btn-login {
+    position: absolute; /* Remove o botão do fluxo do menu */
+    right: 2rem; /* Posiciona no canto direito */
+    top: 50%; /* Centraliza verticalmente */
+    transform: translateY(-50%); /* Ajuste fino para centralização vertical perfeita */
+    margin-left: auto; /* MÁGICA: Empurra este item específico para o extremo direito */
 }
 
 nav ul li a:hover {
@@ -238,4 +303,4 @@ footer h4 {
     padding-top: 20px;
     border-top: 1px solid var(--border-color);
     font-size: 0.9rem;
-}
+} 

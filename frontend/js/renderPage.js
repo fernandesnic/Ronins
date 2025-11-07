@@ -12,6 +12,7 @@ import { apoiase } from './componentes/apoiase.js'
 import { login } from './componentes/login.js'
 import { cadastro } from './componentes/cadastro.js'
 import { calendario } from './componentes/calendario.js'
+import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
 
@@ -60,9 +61,11 @@ const router = async() => {
                 break;
             case '#login':
                 main.innerHTML = login();
+                setupLoginForm(); // Adiciona os listeners para o formulário de login
                 break;
             case '#cadastro':
                 main.innerHTML = cadastro();
+                setupCadastroForm(); // Adiciona os listeners para o formulário de cadastro
                 break;
             case '#calendario':
                 main.innerHTML = calendario();
@@ -80,6 +83,38 @@ const router = async() => {
     }
 };
 
+// --- Funções para Configurar Formulários ---
+
+function setupLoginForm() {
+    const loginForm = main.querySelector('.login-container form');
+    const registerLink = main.querySelector('.register-link a');
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLoginSubmit);
+    }
+    if (registerLink) {
+        registerLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.hash = '#cadastro'; // Navega para a página de cadastro
+        });
+    }
+}
+
+function setupCadastroForm() {
+    const cadastroForm = main.querySelector('.cadastro-container form');
+    const loginLink = main.querySelector('#link-to-login');
+
+    if (cadastroForm) {
+        cadastroForm.addEventListener('submit', handleCadastroSubmit);
+    }
+    if (loginLink) {
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.hash = '#login'; // Navega para a página de login
+        });
+    }
+}
+
 // Quando a página carregar pela primeira vez:
 window.addEventListener("DOMContentLoaded", () => {
     router();
@@ -87,5 +122,3 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // Quando o link (hash) mudar, chama o router novamente
 window.addEventListener("hashchange", router);
-
-
