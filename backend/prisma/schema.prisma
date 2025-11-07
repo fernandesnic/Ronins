@@ -14,18 +14,20 @@ generator client {
 // O Neon Auth já trata do login (email/senha).
 // Esta tabela "Perfil" guarda os seus dados extra (nome, admin, socio).
 // O 'id' (String) deve ser o mesmo 'id' que o Neon Auth cria quando o utilizador se regista.
-model Perfil {
-  id       String    @id // Este ID vem do Neon Auth, não é auto-incrementado
-  nome     String?
+model User {
+  id       String    @id @default(cuid()) // Agora o ID será gerado automaticamente
+  nome     String
   email    String  @unique // Guardamos o email aqui por conveniência
+  password String
+
   is_admin Boolean @default(false)
   is_socio Boolean @default(false)
 
   // Relações (como no seu ERD)
-  endereco Endereco? // Relação 1-para-1
+  enderecos Endereco[] // Relação 1-para-N
   vendas   Venda[]   // Relação 1-para-N
   
-  @@map("perfis")
+  @@map("users")
 }
 
 model Endereco {
@@ -37,9 +39,9 @@ model Endereco {
   rua    String
   numero String
 
-  // Relação 1-para-1 com Perfil
-  perfil_id String   @unique // @unique força a ser 1-para-1
-  perfil    Perfil @relation(fields: [perfil_id], references: [id], onDelete: Cascade)
+  // Relação 1-para-N com User (um usuário pode ter vários endereços)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("enderecos")
 }
@@ -65,8 +67,8 @@ model Venda {
   criadoEm        DateTime @default(now())
 
   // Relação 1-para-N com Perfil
-  perfil_id String
-  perfil    Perfil @relation(fields: [perfil_id], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
   // Relação M-para-N com Produto
   produtos ProdutoDaVenda[]
