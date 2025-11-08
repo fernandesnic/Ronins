@@ -2,7 +2,12 @@
     margin-top: 40px;
     border: var(--primary-color) solid 5px;
     border-radius: 10px;
+    margin: 0 auto;
+
 }
+
+
+
 
 #users-grid > div{
     align-items: center;
@@ -10,6 +15,10 @@
     grid-template-columns: 1fr 1fr 0.2fr 0.2fr 0.2fr 0.2fr;
     padding: 10px;
     gap: 20px;
+}
+
+#users-grid > div{
+    border: solid var(--border-color) 3px;
 }
 
 #users-grid > div:first-child{
