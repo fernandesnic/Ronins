@@ -4,7 +4,7 @@
  */
 export function equipe() {
     return `
-        <section id="equipe-page" class="section dark-bg">
+        <section id="equipe-page" class="section">
             <div id="time" class="section-content"> 
                 <div class="container">
                     <h2>Nossa História</h2>
@@ -33,7 +33,7 @@ Essa dedicação incansável culminou em um ano histórico: o Ronins Quad Rugby 
 
 export async function adicionarJogadores(){
     const playerContainer = document.querySelector("#player-container");
-    const arquivo = await fetch("../../assets/dados/jogadores.json");
+    const arquivo = await fetch("assets/dados/jogadores.json");
     const dados = await arquivo.json();
     dados.forEach(item => {
         const div = document.createElement("div");
@@ -52,7 +52,7 @@ export async function adicionarJogadores(){
 
 export async function adicionarStaff(){
     const comissaoContainer = document.querySelector("#comissao-container");
-    const arquivo = await fetch("../../assets/dados/staff.json");
+    const arquivo = await fetch("assets/dados/staff.json");
     const dados = await arquivo.json();
     dados.forEach(item => {
         const div = document.createElement("div");
