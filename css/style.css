@@ -20,6 +20,7 @@
 @import url('pages/cadastro.css');
 @import url('pages/login.css');
 @import url('pages/calendario.css');
+@import url('pages/ADMIN/users.css');
 
 
 /* (Responsividade - DEVE VIR POR ÚLTIMO) */
@@ -81,7 +82,7 @@ h3, h4 {
     display: inline-block;
     background-color: var(--bg-color1);
     color: var(--text-color);
-    /* border: solid 2px var(--title-color); */
+    border: solid 2px var(--border-color);
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
