@@ -75,7 +75,15 @@ router.post("/login", async (req, res) => {
     // Gerar o token JWT
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "7d" });
 
-    res.status(200).json({ token });
+    // Remove a senha do objeto do usuário antes de enviá-lo
+    const { password, ...userWithoutPassword } = user;
+
+    // Retorna o token E os dados do usuário (incluindo is_admin)
+    res.status(200).json({
+      token,
+      user: userWithoutPassword,
+    });
+
   } catch (error) {
     console.error("Erro na rota /login:", error);
     res.status(500).json({ error: "Não foi possível processar o login." });

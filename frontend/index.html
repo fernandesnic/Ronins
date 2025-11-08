@@ -34,11 +34,13 @@
                     <li><a href="#produtos">Produtos</a></li>
                     <li><a href="#galeriatrofeus">Trofeus</a></li>
                     <li><a href="#contato">Contato</a></li>
-                    <button id="theme-switch" class="btn" title="Alterar para modo claro/escuro">
-                        <span class="fa-solid fa-moon"></span>
-                        <span class="fa-solid fa-sun"></span>
-                    </button>
-                    <a href="#login" class="btn btn-login">Login</a>
+                    <li>
+                        <button id="theme-switch" class="btn" title="Alterar para modo claro/escuro">
+                            <span class="fa-solid fa-moon"></span>
+                            <span class="fa-solid fa-sun"></span>
+                        </button>
+                    </li>
+                    <li><a href="#login" class="btn btn-login">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -73,6 +75,14 @@
     <script src="js/renderPage.js" type="module" defer></script>
     <script src="js/darkmode.js" defer></script>
     <script src="js/auth.js" type="module" defer></script>
+    <!-- main.js removido -->
+
+    <!-- chama updateHeaderActions após carregar e quando o hash muda -->
+    <script type="module">
+      import { updateHeaderActions } from './js/auth.js';
+      window.addEventListener('DOMContentLoaded', updateHeaderActions);
+      window.addEventListener('hashchange', updateHeaderActions);
+    </script>
 </body>
 
 </html>

@@ -13,7 +13,7 @@ import { login } from './componentes/login.js'
 import { cadastro } from './componentes/cadastro.js'
 import { calendario } from './componentes/calendario.js'
 import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
-import { users, adicionarUsuarios } from './componentes/ADMIN/users.js'
+import { users, adicionarUsuarios, setupModalListeners } from './componentes/ADMIN/users.js'
 
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
@@ -128,3 +128,33 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // Quando o link (hash) mudar, chama o router novamente
 window.addEventListener("hashchange", router);
+
+function renderUsersRoute() {
+    const app = document.getElementById('app');
+    if (!app) return console.error('#app não encontrado no DOM');
+
+    try {
+        // 1) Insere markup
+        app.innerHTML = users();
+
+        // 2) registra listeners (idempotente)
+        setupModalListeners();
+
+        // 3) popula lista
+        adicionarUsuarios().catch(err => {
+            console.error('adicionarUsuarios erro:', err);
+            // mostra mensagem amigável
+            const msg = `<div style="padding:20px;color:red;">Erro ao carregar usuários. Veja console (F12).</div>`;
+            app.insertAdjacentHTML('afterbegin', msg);
+        });
+
+    } catch (err) {
+        console.error('Erro ao renderizar rota users:', err);
+        app.innerHTML = `<div style="padding:20px;color:red;">Ocorreu um erro ao renderizar a página de users. Verifique o console (F12).</div>`;
+    }
+}
+
+// exemplo de uso (adapte conforme seu roteador)
+if (location.hash === '#users') {
+    renderUsersRoute();
+}
