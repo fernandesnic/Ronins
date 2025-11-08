@@ -20,8 +20,8 @@ export function apoiase(){
                 <div class="apoie-container">
 
                     <div class="apoie-option-card">
-                        <h3>Seja um Sócio Ronin</h3>
-                        <div class="price">R$ 20<span class="per-month">/mês</span></div>
+                        <h3>Seja um Apoiador Ronin</h3>
+                        <div class="price"><span class="per-month">A partir de</span> R$ 15<span class="per-month">/mês</span></div>
                         <p>Nosso plano único de sócio-torcedor. Ajude de forma recorrente e ganhe benefícios!</p>
                         
                         <ul class="benefits-list">

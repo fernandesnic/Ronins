@@ -42,7 +42,7 @@ export function sobre(){
                         <div class="cta">
                             <h3>Junte-se a nós!</h3>
                             <p>Seja um apoiador, patrocinador ou voluntário.</p>
-                            <a href="#contato" class="btn dark">Quero ajudar</a>
+                            <a href="#apoiase" class="btn dark">Quero ajudar</a>
                         </div>
                     </div>
                 </div>
