@@ -16,22 +16,6 @@ export function users(){
                         <p>SOCIO</p>
                         <p>ADMIN</p>
                     </div>
-                    <div class="user">
-                        <p>PEDRO FAVELA</p>
-                        <p>PEDRO@FODASE.COM</p>
-                        <p>FALSE</p>
-                        <p>TRUE</p>
-                        <button class="btn">E</button>
-                        <button class="btn">X</button>
-                    </div>
-                    <div class="user">
-                        <p>PEDRO FAVELA</p>
-                        <p>PEDRO@FODASE.COM</p>
-                        <p>FALSE</p>
-                        <p>TRUE</p>
-                        <button class="btn">E</button>
-                        <button class="btn">X</button>
-                    </div>
                 </section>
             </div>
             
