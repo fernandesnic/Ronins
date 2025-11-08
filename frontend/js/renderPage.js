@@ -13,6 +13,8 @@ import { login } from './componentes/login.js'
 import { cadastro } from './componentes/cadastro.js'
 import { calendario } from './componentes/calendario.js'
 import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
+import { users, adicionarUsuarios } from './componentes/ADMIN/users.js'
+
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
 
@@ -69,6 +71,10 @@ const router = async() => {
                 break;
             case '#calendario':
                 main.innerHTML = calendario();
+                break;
+            case '#users':
+                main.innerHTML = users();
+                await adicionarUsuarios();
                 break;
         }
 
