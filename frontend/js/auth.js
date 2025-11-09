@@ -94,21 +94,28 @@ export function updateHeaderActions() {
     const menuList = loginLI ? loginLI.parentElement : null;
     if (!menuList) return;
 
-    // Remove botão admin antigo se existir
-    const oldAdmin = menuList.querySelector('.admin-button-li');
-    if (oldAdmin) oldAdmin.remove();
+    // Remove botões admin antigos se existirem
+    const oldAdminButtons = menuList.querySelectorAll('.admin-button-li');
+    oldAdminButtons.forEach(btn => btn.remove());
 
     // Limpa listeners antigos
     loginButton.onclick = null;
     loginButton.removeEventListener && loginButton.removeEventListener('click', logout);
 
     if (isUserLoggedIn()) {
-        // Se for admin, insere botão Users antes do li do login
+        // Se for admin, insere botões antes do li do login
         if (isUserAdmin()) {
-            const adminLI = document.createElement('li');
-            adminLI.className = 'admin-button-li';
-            adminLI.innerHTML = '<a href="#users" class="btn">Users</a>';
-            menuList.insertBefore(adminLI, loginLI);
+            // Botão Users
+            const usersLI = document.createElement('li');
+            usersLI.className = 'admin-button-li';
+            usersLI.innerHTML = '<a href="#users" class="btn">Users</a>';
+            menuList.insertBefore(usersLI, loginLI);
+
+            // Botão Vendas
+            const vendasLI = document.createElement('li');
+            vendasLI.className = 'admin-button-li';
+            vendasLI.innerHTML = '<a href="#vendas" class="btn">Vendas</a>';
+            menuList.insertBefore(vendasLI, loginLI);
         }
 
         loginButton.textContent = 'Sair';
