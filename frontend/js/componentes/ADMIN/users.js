@@ -43,7 +43,7 @@ export function users(){
 export async function adicionarUsuarios(){
     const usersContainer = document.querySelector("#users-grid");
     if (!usersContainer) {
-        console.error('Container #users-grid não encontrado. Certifique-se que users() foi inserido no DOM antes de chamar adicionarUsuarios().');
+        console.error('Container #users-grid não encontrado.');
         return;
     }
 
@@ -70,7 +70,7 @@ export async function adicionarUsuarios(){
             throw new Error(msg);
         }
 
-        const usersList = data.users || data; // aceita formatos variados
+        const usersList = data.users || data;
 
         if (!usersList || usersList.length === 0) {
             usersContainer.innerHTML += "<p>Nenhum usuário encontrado.</p>";
@@ -99,10 +99,8 @@ export async function adicionarUsuarios(){
             usersContainer.appendChild(div);
         });
 
-        setupClickListeners(usersContainer);
-
     } catch (error) {
-        console.error("Erro ao buscar e adicionar usuários:", error);
+        console.error("Erro ao buscar usuários:", error);
         usersContainer.innerHTML += `<p style="color: red;">Falha ao carregar usuários. (${error.message})</p>`;
     }
 }
@@ -114,64 +112,128 @@ function escapeHtml(str) {
 // ----------------------------------------------------
 // Helpers
 // ----------------------------------------------------
-function setupClickListeners(container) {
-    if (!container) return;
-    if (container.dataset.listenerAttached === 'true') return;
-    container.dataset.listenerAttached = 'true';
-
-    container.addEventListener('click', (event) => {
-        const target = event.target;
-        if (!target) return;
-
-        if (target.classList.contains('btn-delete')) {
-            const id = target.dataset.id || target.closest('.user')?.id?.replace(/^user-row-/, '');
-            const token = localStorage.getItem('authToken');
-            if (!token) return alert('Usuário não autenticado.');
-            if (!id) return console.error('ID ausente no botão de delete.');
-            if (!confirm('Confirma exclusão do usuário?')) return;
-            handleDelete(id, token);
-            return;
-        }
-
-        if (target.classList.contains('btn-edit')) {
-            // tenta obter id por vários caminhos
-            const idFromData = target.dataset.id;
-            const idFromRow = target.closest('.user')?.id?.replace(/^user-row-/, '');
-            const fallbackId = idFromData || idFromRow || '';
-            if (!fallbackId) {
-                console.error('ID ausente no botão de edit. Element:', target);
-                return;
-            }
-            const user = {
-                id: String(fallbackId),
-                nome: unescapeHtml(target.dataset.nome || target.getAttribute('data-nome') || ''),
-                is_socio: (target.dataset.is_socio === 'true'),
-                is_admin: (target.dataset.is_admin === 'true')
-            };
-            openEditModal(user);
-        }
-    });
-}
-
 function unescapeHtml(str) {
     return String(str).replace(/&lt;|&gt;|&amp;|&quot;|&#39;/g, (m) => ({'&lt;':'<','&gt;':'>','&amp;':'&','&quot;':'"','&#39;':"'" }[m]));
 }
 
+export function setupModalListeners() {
+    // Remove the guard clause to ensure listeners are always attached
+    // if (window.__users_listeners_attached) return;
+    // window.__users_listeners_attached = true;
+
+    // Click handler for edit and delete buttons
+    document.body.addEventListener('click', async (e) => {
+        const target = e.target;
+        if (!target) return;
+
+        // Edit button handler
+        if (target.classList.contains('btn-edit')) {
+            e.preventDefault();
+            console.log('Edit button clicked:', target.dataset); // Debug log
+
+            const user = {
+                id: target.dataset.id,
+                nome: unescapeHtml(target.dataset.nome || ''),
+                is_socio: target.dataset.is_socio === 'true',
+                is_admin: target.dataset.is_admin === 'true'
+            };
+
+            if (!user.id) {
+                console.error('ID ausente no botão de edit:', target);
+                return;
+            }
+
+            openEditModal(user);
+            return;
+        }
+
+        // Delete button handler
+        if (target.classList.contains('btn-delete')) {
+            e.preventDefault();
+            const id = target.dataset.id;
+            const token = localStorage.getItem('authToken');
+            if (!token) return alert('Usuário não autenticado.');
+            if (!id) return console.error('ID ausente no botão de delete.');
+            if (!confirm('Confirma exclusão do usuário?')) return;
+            await handleDelete(id, token);
+            return;
+        }
+
+        // Modal close handlers
+        if (target.id === 'btn-cancel-edit' || 
+            (target.id === 'edit-modal-overlay' && target === e.currentTarget)) {
+            e.preventDefault();
+            closeEditModal();
+        }
+    });
+
+    // Form submit handler
+    document.body.addEventListener('submit', async (e) => {
+        const form = e.target;
+        if (!form || form.id !== 'edit-user-form') return;
+        e.preventDefault();
+
+        try {
+            const token = localStorage.getItem('authToken');
+            if (!token) throw new Error('Usuário não autenticado');
+
+            const idEl = document.getElementById('edit-user-id');
+            const idRaw = idEl?.value?.trim();
+
+            if (!idRaw) throw new Error('ID do usuário inválido');
+
+            const nome = document.getElementById('edit-nome')?.value?.trim();
+            if (!nome) throw new Error('Nome é obrigatório');
+
+            const data = {
+                nome,
+                is_socio: document.getElementById('edit-is_socio')?.checked || false,
+                is_admin: document.getElementById('edit-is_admin')?.checked || false
+            };
+
+            console.log('Submitting update:', { id: idRaw, data }); // Debug log
+
+            const ok = await handleUpdate(idRaw, data, token);
+            if (ok) {
+                closeEditModal();
+                await adicionarUsuarios(); // Recarrega a lista
+            }
+        } catch (err) {
+            console.error('Erro no submit do formulário:', err);
+            alert(err.message || 'Erro ao atualizar usuário');
+        }
+    });
+}
+
 function openEditModal(user) {
+    console.log('Opening modal for user:', user); // Debug log
+
     const overlay = document.getElementById('edit-modal-overlay');
     const idEl = document.getElementById('edit-user-id');
-    if (!overlay || !idEl) {
-        console.error('Modal não encontrado no DOM.');
+    const nomeEl = document.getElementById('edit-nome');
+    const socioEl = document.getElementById('edit-is_socio');
+    const adminEl = document.getElementById('edit-is_admin');
+
+    if (!overlay || !idEl || !nomeEl || !socioEl || !adminEl) {
+        console.error('Elementos do modal não encontrados:', {
+            overlay: !!overlay,
+            idEl: !!idEl,
+            nomeEl: !!nomeEl,
+            socioEl: !!socioEl,
+            adminEl: !!adminEl
+        });
         return;
     }
 
-    // garante que o id esteja presente e salvo no hidden
+    // Preenche os campos
     idEl.value = String(user.id || '');
-    document.getElementById('edit-nome').value = user.nome || '';
-    document.getElementById('edit-is_socio').checked = !!user.is_socio;
-    document.getElementById('edit-is_admin').checked = !!user.is_admin;
+    nomeEl.value = user.nome || '';
+    socioEl.checked = !!user.is_socio;
+    adminEl.checked = !!user.is_admin;
 
+    // Exibe o modal
     overlay.style.display = 'flex';
+    // Força reflow
     void overlay.offsetWidth;
     overlay.classList.add('show');
 }
@@ -179,79 +241,17 @@ function openEditModal(user) {
 function closeEditModal() {
     const overlay = document.getElementById('edit-modal-overlay');
     const form = document.getElementById('edit-user-form');
+    
     if (overlay) {
         overlay.classList.remove('show');
-        setTimeout(() => {
-            overlay.style.display = 'none';
-        }, 200);
+        overlay.style.display = 'none';
     }
+    
     if (form) {
         form.reset();
         const idEl = document.getElementById('edit-user-id');
         if (idEl) idEl.value = '';
     }
-}
-
-export function setupModalListeners() {
-    if (window.__users_modal_listeners_attached) return;
-    window.__users_modal_listeners_attached = true;
-
-    // fechar por cancelar / click no overlay
-    document.addEventListener('click', (e) => {
-        const target = e.target;
-        if (!target) return;
-        if (target.id === 'btn-cancel-edit') {
-            e.preventDefault();
-            closeEditModal();
-            return;
-        }
-        if (target.id === 'edit-modal-overlay') {
-            closeEditModal();
-            return;
-        }
-    });
-
-    // submit do form: aceita ID como string (UUID ou numérico)
-    document.addEventListener('submit', async (e) => {
-        const form = e.target;
-        if (!form || form.id !== 'edit-user-form') return;
-        e.preventDefault();
-
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-            alert('Usuário não autenticado.');
-            return;
-        }
-
-        // pega ID preferencialmente do hidden, se estiver vazio tenta buscar no DOM (último edit-open)
-        let idRaw = String(document.getElementById('edit-user-id')?.value || '').trim();
-        if (!idRaw) {
-            // tenta encontrar o user-row com foco/selecionado
-            const possible = document.querySelector('.user[id^="user-row-"]');
-            idRaw = possible ? possible.id.replace(/^user-row-/, '') : '';
-        }
-
-        if (!idRaw) {
-            console.error('ID do usuário inválido no submit do modal.');
-            alert('ID do usuário inválido.');
-            return;
-        }
-
-        const data = {
-            nome: document.getElementById('edit-nome').value,
-            is_socio: document.getElementById('edit-is_socio').checked,
-            is_admin: document.getElementById('edit-is_admin').checked
-        };
-
-        try {
-            const ok = await handleUpdate(idRaw, data, token);
-            if (ok) closeEditModal();
-            else alert('Falha ao atualizar usuário.');
-        } catch (err) {
-            console.error('Erro no submit do modal:', err);
-            alert('Erro ao atualizar usuário.');
-        }
-    });
 }
 
 async function handleDelete(id, token) {
@@ -275,14 +275,26 @@ async function handleDelete(id, token) {
 }
 
 async function handleUpdate(id, data, token) {
+    console.log('Attempting to update user:', { id, data }); // Debug log
+
     try {
         const response = await fetch(`http://localhost:3000/api/private/update/${id}`, {
             method: 'PUT',
-            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(data)
         });
 
-        const body = await response.json().catch(() => ({}));
+        console.log('Update response status:', response.status); // Debug log
+
+        const body = await response.json().catch(err => {
+            console.error('Error parsing response:', err);
+            return {};
+        });
+
+        console.log('Update response body:', body); // Debug log
 
         if (!response.ok) {
             const msg = body?.error || `Erro na atualização: ${response.status}`;
@@ -294,9 +306,13 @@ async function handleUpdate(id, data, token) {
 
         alert(body?.message || 'Usuário atualizado com sucesso!');
         return true;
+
     } catch (error) {
-        console.error('Erro ao atualizar:', error);
-        alert('Erro ao atualizar usuário: ' + error.message);
+        console.error('Erro detalhado ao atualizar:', {
+            message: error.message,
+            error: error
+        });
+        alert(`Erro ao atualizar usuário: ${error.message}`);
         return false;
     }
 }
