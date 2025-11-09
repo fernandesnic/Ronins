@@ -2,7 +2,11 @@ export function users(){
     return `
     <section class="section">
         <h1>Usuários</h1>
-        <div id="users-grid" class="users-grid"></div>
+        <div id="users-grid" class="table-grid">
+            <div class="header">
+                <p>NOME</p><p>EMAIL</p><p>SOCIO</p><p>ADMIN</p>
+            </div>
+        </div>
     </section>
 
     <div id="edit-modal-overlay" class="modal-overlay">
@@ -46,11 +50,6 @@ export async function adicionarUsuarios(){
         console.error('Container #users-grid não encontrado. Certifique-se que users() foi inserido no DOM antes de chamar adicionarUsuarios().');
         return;
     }
-
-    usersContainer.innerHTML = `
-        <div class="header">
-            <p>NOME</p><p>EMAIL</p><p>SOCIO</p><p>ADMIN</p>
-        </div>`;
 
     try {
         const token = localStorage.getItem('authToken');
