@@ -7,7 +7,7 @@ import { sobre } from './componentes/sobre.js'
 import { home } from "./componentes/home.js";
 import { contato } from "./componentes/contato.js";
 import { galeriatrofeus } from './componentes/galeriatrofeus.js'
-import { checkout, initCheckout } from './componentes/checkout.js'; // ADICIONADO
+import { checkout, initCheckout } from './componentes/checkout.js';
 import { apoiase } from './componentes/apoiase.js'
 import { login } from './componentes/login.js'
 import { cadastro } from './componentes/cadastro.js'
@@ -15,6 +15,8 @@ import { calendario } from './componentes/calendario.js'
 import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
 import { users, adicionarUsuarios, setupModalListeners } from './componentes/ADMIN/users.js'
 import { ADMINequipe, ADMINadicionarJogador, setupModalListenersEquipe } from './componentes/ADMIN/equipe.js'
+// Pede o export com o NOME "BACKEND_URL"
+import { BACKEND_URL } from './url.js'; // <-- A CHAVE SÃO AS CHAVES {}
 
 import { vendas, initVendasPage } from './componentes/ADMIN/vendas.js'
 
@@ -75,14 +77,19 @@ const router = async() => {
             case '#calendario':
                 main.innerHTML = calendario();
                 break;
+            
+            // --- CORREÇÃO APLICADA AQUI ---
             case '#users':
-                main.innerHTML = users();
-                await adicionarUsuarios();
+                main.innerHTML = users();      // 1. Cria o HTML (incluindo o modal)
+                setupModalListeners();   // 2. Ativa os listeners (agora vai funcionar sempre)
+                await adicionarUsuarios(); // 3. Preenche a lista com os usuários
                 break;
+            // ---------------------------------
+
             case '#ADMINequipe':
                 main.innerHTML = ADMINequipe();
                 await ADMINadicionarJogador();
-                setupModalListenersEquipe();
+                setupModalListenersEquipe(); // (O seu código aqui já estava correto)
                 break;
             case "#vendas":
                 main.innerHTML = vendas();
@@ -141,32 +148,8 @@ window.addEventListener("DOMContentLoaded", () => {
 // Quando o link (hash) mudar, chama o router novamente
 window.addEventListener("hashchange", router);
 
-function renderUsersRoute() {
-    const app = document.getElementById('app');
-    if (!app) return console.error('#app não encontrado no DOM');
 
-    try {
-        // 1) Insere markup
-        app.innerHTML = users();
-
-        // 2) registra listeners (idempotente)
-        setupModalListeners();
-
-        // 3) popula lista
-        adicionarUsuarios().catch(err => {
-            console.error('adicionarUsuarios erro:', err);
-            // mostra mensagem amigável
-            const msg = `<div style="padding:20px;color:red;">Erro ao carregar usuários. Veja console (F12).</div>`;
-            app.insertAdjacentHTML('afterbegin', msg);
-        });
-
-    } catch (err) {
-        console.error('Erro ao renderizar rota users:', err);
-        app.innerHTML = `<div style="padding:20px;color:red;">Ocorreu um erro ao renderizar a página de users. Verifique o console (F12).</div>`;
-    }
-}
-
-// exemplo de uso (adapte conforme seu roteador)
-if (location.hash === '#users') {
-    renderUsersRoute();
-}
+// --- BLOCO PROBLEMÁTICO REMOVIDO ---
+// A função 'renderUsersRoute()' e o 'if (location.hash === '#users')'
+// foram deletados daqui. A lógica agora está
+// corretamente centralizada no 'switch' acima.

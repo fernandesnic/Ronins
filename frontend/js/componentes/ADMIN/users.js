@@ -1,5 +1,5 @@
-import BACKEND_URL from "../../url.js";
-
+// Pede o export com o NOME "BACKEND_URL"
+import { BACKEND_URL } from '../../url.js'; // <-- A CHAVE SÃO AS CHAVES {}
 export function users(){
     return `
     <section class="section">

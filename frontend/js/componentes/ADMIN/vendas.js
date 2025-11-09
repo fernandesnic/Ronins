@@ -1,5 +1,5 @@
-import BACKEND_URL from "../../url.js";
 
+import { BACKEND_URL } from '../../url.js'; 
 export function vendas(){
     return `
     <div class="vendas-container">

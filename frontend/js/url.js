@@ -1,1 +1,1 @@
-const BACKEND_URL = "https://ronins.onrender.com/"
+export const BACKEND_URL = "https://ronins.onrender.com/"

@@ -1,6 +1,6 @@
 // --- Configuração ---
-import BACKEND_URL from "../../url.js";
-
+// Pede o export com o NOME "BACKEND_URL"
+import { BACKEND_URL } from './url.js'; // <-- A CHAVE SÃO AS CHAVES {}
 // --- Funções de Feedback ---
 function showMessage(message, isError = false) {
     alert(message);

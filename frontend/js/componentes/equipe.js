@@ -1,5 +1,5 @@
-import BACKEND_URL from "../url.js";
-
+// Pede o export com o NOME "BACKEND_URL"
+import { BACKEND_URL } from '../url.js'; // <-- A CHAVE SÃO AS CHAVES {}
 /**
  * Função que retorna a string HTML da seção de Equipe.
  * @returns {string} O HTML completo da página de Equipe.

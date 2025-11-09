@@ -76,10 +76,7 @@
     <script src="js/renderPage.js" type="module" defer></script>
     <script src="js/darkmode.js" defer></script>
     <script src="js/auth.js" type="module" defer></script>
-    <!-- main.js removido -->
-
-    <!-- chama updateHeaderActions após carregar e quando o hash muda -->
-    <script type="module">
+    <script typeal="module">
       import { updateHeaderActions } from './js/auth.js';
       window.addEventListener('DOMContentLoaded', updateHeaderActions);
       window.addEventListener('hashchange', updateHeaderActions);
