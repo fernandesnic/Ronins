@@ -1,3 +1,5 @@
+import BACKEND_URL from "./url.js";
+
 export function ADMINequipe(){
     return `
         <section class="section">
@@ -74,7 +76,7 @@ export async function ADMINadicionarJogador(){
             return;
         }
     
-        const response = await fetch("http://localhost:3000/api/public/equipe");
+        const response = await fetch(`${BACKEND_URL}api/public/equipe`);
 
         const data = await response.json().catch(() => ({}));
     
@@ -289,7 +291,7 @@ export function setupModalListenersEquipe() {
 
 async function handleDelete(id, token) {
     try {
-        const response = await fetch(`http://localhost:3000/api/private/equipe/delete/jogador/${id}`, {
+        const response = await fetch(`${BACKEND_URL}api/private/equipe/delete/jogador/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -309,7 +311,7 @@ async function handleDelete(id, token) {
 
 async function handleUpdate(id, data, token) {
     try {
-        const response = await fetch(`http://localhost:3000/api/private/equipe/update/jogador/${id}`, {
+        const response = await fetch(`${BACKEND_URL}api/private/equipe/update/jogador/${id}`, {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
             body: JSON.stringify(data)

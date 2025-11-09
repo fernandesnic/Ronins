@@ -1,5 +1,5 @@
 // --- Configuração ---
-const API_URL = 'http://localhost:3000/api';
+import BACKEND_URL from "../../url.js";
 
 // --- Funções de Feedback ---
 function showMessage(message, isError = false) {
@@ -15,7 +15,7 @@ export async function handleLoginSubmit(event) {
     if (!email || !password) return showMessage('Por favor, preencha e-mail e senha.', true);
 
     try {
-        const response = await fetch(`${API_URL}/public/login`, {
+        const response = await fetch(`${BACKEND_URL}api/public/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
@@ -43,7 +43,7 @@ export async function handleCadastroSubmit(event) {
     const nome = `${firstName} ${lastName}`.trim();
 
     try {
-        const response = await fetch(`${API_URL}/public/cadastro`, {
+        const response = await fetch(`${BACKEND_URL}api/public/cadastro`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome, email, password }),

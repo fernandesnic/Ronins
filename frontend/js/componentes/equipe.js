@@ -1,3 +1,5 @@
+import BACKEND_URL from "../url.js";
+
 /**
  * Função que retorna a string HTML da seção de Equipe.
  * @returns {string} O HTML completo da página de Equipe.
@@ -33,7 +35,7 @@ Essa dedicação incansável culminou em um ano histórico: o Ronins Quad Rugby 
 
 export async function adicionarEquipe() {
     try{
-        const response = await fetch("http://localhost:3000/api/public/equipe");
+        const response = await fetch(`${BACKEND_URL}api/public/equipe`);
 
         const data = await response.json().catch(() => ({}));
         console.log(data)

@@ -1,3 +1,5 @@
+import BACKEND_URL from "../../url.js";
+
 export function vendas(){
     return `
     <div class="vendas-container">
@@ -80,7 +82,6 @@ function formatarData(dataISO) {
 
 // Guarda a lista completa de vendas
 let todasAsVendas = [];
-const BACKEND_URL = 'http://localhost:3000'; // URL do backend
 
 // --- Funções de Renderização ---
 
@@ -99,7 +100,7 @@ async function carregarKpis() {
       throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch(`${BACKEND_URL}/api/vendas/kpis`, {
+    const response = await fetch(`${BACKEND_URL}api/vendas/kpis`, {
       headers: { 'Authorization': `Bearer ${token}` } // 2. Enviar o token
     }); 
 
@@ -234,7 +235,7 @@ async function buscarTodasVendas() {
        throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch(`${BACKEND_URL}/api/vendas/list`, {
+    const response = await fetch(`${BACKEND_URL}api/vendas/list`, {
       headers: { 'Authorization': `Bearer ${token}` } // 2. Enviar o token
     }); 
 
