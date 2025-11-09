@@ -1,0 +1,189 @@
+/* ================================================= */
+/* 1. SEU CSS ORIGINAL (TEMA E LAYOUT)               */
+/* ================================================= */
+
+.vendas-container {
+    padding: 120px 20px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Título mais destacado */
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--title-color);
+    font-size: 2.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Cards KPI mais espaçados e destacados */
+.kpi-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.kpi-card {
+    background: var(--bg-color1);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.kpi-card h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.4em;
+    color: var(--title-color);
+    font-weight: bold;
+}
+
+.kpi-card p {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+    color: #27ae60;
+}
+
+/* Ajuste específico para o valor monetário */
+.kpi-card p.valor-monetario {
+    color: #2ecc71;
+}
+
+/* Melhoria na tabela */
+.tabela-container {
+    background: var(--bg-color1);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+#tabela-vendas {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--bg-color1);
+}
+
+#tabela-vendas th {
+    background-color: var(--primary-color);
+    color: var(--title-color);
+    padding: 15px;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid var(--border-color);
+    font-size: 1.1em;
+}
+
+#tabela-vendas td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-size: 1em;
+}
+
+/* Status badges mais modernos */
+.status-badge {
+    padding: 8px 16px;
+    border-radius: 25px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9em;
+    display: inline-block;
+    text-align: center;
+    min-width: 120px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-entregue {
+    background-color: #27ae60;
+    box-shadow: 0 2px 4px rgba(39, 174, 96, 0.2);
+}
+
+.status-pendente {
+    background-color: #e67e22;
+    box-shadow: 0 2px 4px rgba(230, 126, 34, 0.2);
+}
+
+/* Endereço com tooltip melhorado */
+#tabela-vendas td[data-col="endereco"] {
+    position: relative;
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#tabela-vendas td[data-col="endereco"]:hover {
+    white-space: normal;
+    overflow: visible;
+    position: absolute;
+    background-color: var(--bg-color1);
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 15px;
+    margin: -15px;
+    cursor: help;
+}
+
+/* Melhoria no select de filtro */
+.filtros select {
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    background-color: var(--bg-color1);
+    color: var(--text-color);
+    font-size: 1em;
+    cursor: pointer;
+    min-width: 200px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M8 12L2 6h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 1200px) {
+    .kpi-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .vendas-container {
+        padding-top: 100px;
+    }
+
+    .kpi-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .filtros {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .filtros select {
+        width: 100%;
+    }
+    
+    #tabela-vendas {
+        font-size: 0.9em;
+    }
+
+    .status-badge {
+        min-width: 100px;
+        padding: 6px 12px;
+    }
+}

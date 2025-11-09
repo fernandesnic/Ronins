@@ -16,6 +16,8 @@ import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
 import { users, adicionarUsuarios, setupModalListeners } from './componentes/ADMIN/users.js'
 import { ADMINequipe, ADMINadicionarJogador, setupModalListenersEquipe } from './componentes/ADMIN/equipe.js'
 
+import { vendas, initVendasPage } from './componentes/ADMIN/vendas.js'
+
 
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
@@ -81,6 +83,10 @@ const router = async() => {
                 main.innerHTML = ADMINequipe();
                 await ADMINadicionarJogador();
                 setupModalListenersEquipe();
+                break;
+            case "#vendas":
+                main.innerHTML = vendas();
+                await initVendasPage();
                 break;
         }
 

@@ -74,6 +74,15 @@ model Venda {
   // Relação M-para-N com Produto
   produtos ProdutoDaVenda[]
 
+  
+  endereco_rua    String?
+  endereco_numero String?
+  endereco_bairro String?
+  endereco_cidade String?
+  endereco_estado String?
+  endereco_cep    String?
+  
+
   @@map("vendas")
 }
 
