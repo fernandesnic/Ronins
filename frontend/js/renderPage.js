@@ -14,6 +14,8 @@ import { cadastro } from './componentes/cadastro.js'
 import { calendario } from './componentes/calendario.js'
 import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
 import { users, adicionarUsuarios, setupModalListeners } from './componentes/ADMIN/users.js'
+import { vendas, initVendasPage } from './componentes/ADMIN/vendas.js'
+
 
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
@@ -75,6 +77,10 @@ const router = async() => {
             case '#users':
                 main.innerHTML = users();
                 await adicionarUsuarios();
+                break;
+            case "#vendas":
+                main.innerHTML = vendas();
+                await initVendasPage();
                 break;
         }
 
