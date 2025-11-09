@@ -31,40 +31,92 @@ Essa dedicação incansável culminou em um ano histórico: o Ronins Quad Rugby 
 
 }
 
-export async function adicionarJogadores(){
-    const playerContainer = document.querySelector("#player-container");
-    const arquivo = await fetch("assets/dados/jogadores.json");
-    const dados = await arquivo.json();
-    dados.forEach(item => {
-        const div = document.createElement("div");
-        div.classList.add("card", "player");
-        div.innerHTML = `
-            <img src="${item.imagem}" alt="${item.nome}">
-            <div class="card-content">
-                <h4>${item.nome}</h4>
-                <p>${item.funcao}</p>
-                <p>${item.descricao}</p>
-            </div>
-        `
-        playerContainer.appendChild(div);
-    });
+export async function adicionarEquipe() {
+    try{
+        const response = await fetch("http://localhost:3000/api/public/equipe");
+
+        const data = await response.json().catch(() => ({}));
+        console.log(data)
+        if (!response.ok) {
+            const msg = data?.error || `Erro na API: ${response.status}`;
+            throw new Error(msg);
+        }
+
+        const jogadores = data.jogadores
+        const staff = data.staff
+        adicionarJogadores(jogadores)
+        adicionarStaff(staff)
+    }catch{
+        console.log("bunda")
+    }
+    
 }
 
-export async function adicionarStaff(){
+
+export async function adicionarJogadores(jogadores){
+    const playerContainer = document.querySelector("#player-container");
+    if(!playerContainer){
+        console.error('Container #player-container não encontrado. Certifique-se que equipe() foi inserido no DOM antes de chamar adicionarEquipe().');
+        return;
+    }
+    try{
+        if (!jogadores || jogadores.length === 0) {
+            playerContainer.innerHTML += "<p>Nenhum jogador encontrado.</p>";
+            return;
+        }
+        jogadores.forEach(item => {
+            if(!item.on_team){
+                return
+            }
+            const div = document.createElement("div");
+            div.classList.add("card", "player");
+            div.innerHTML = `
+                <img src="assets/photos/jogadores/${item.foto}" alt="Jogador: ${item.nome}">
+                <div class="card-content">
+                    <h4>${item.nome}</h4>
+                    <p>Número da camisa: ${item.numero_camisa}</p>
+                    <p>Classificação: ${item.classificacao}</p>
+                    <p>Nacionalidade: ${item.nacionalidade}</p>
+                </div>
+            `
+            playerContainer.appendChild(div);
+        });
+    }catch(error){
+        console.error("Erro ao buscar e adicionar jogadores:", error);
+        playerContainer.innerHTML += `<p style="color: red;">Falha ao carregar jogadores. (${error.message})</p>`;
+    }
+    
+}
+
+export async function adicionarStaff(staff){
     const comissaoContainer = document.querySelector("#comissao-container");
-    const arquivo = await fetch("assets/dados/staff.json");
-    const dados = await arquivo.json();
-    dados.forEach(item => {
-        const div = document.createElement("div");
-        div.classList.add("card", "staff");
-        div.innerHTML = `
-            <img src="${item.imagem}" alt="${item.nome}">
-            <div class="card-content">
-                <h4>${item.nome}</h4>
-                <p>${item.funcao}</p>
-                <p>${item.descricao}</p>
-            </div>
-        `
-        comissaoContainer.appendChild(div);
-    });
+    if(!comissaoContainer){
+        console.error('Container #comissao-container não encontrado. Certifique-se que equipe() foi inserido no DOM antes de chamar adicionarEquipe()')
+        return;
+    }
+    try{
+
+        if (!staff || staff.length === 0) {
+            comissaoContainer.innerHTML += "<p>Nenhum membro da comissao encontrado.</p>";
+            return;
+        }
+
+        staff.forEach(item => {
+            const div = document.createElement("div");
+            div.classList.add("card", "staff");
+            div.innerHTML = `
+                <img src="assets/photos/staff/${item.foto}" alt="${item.nome}">
+                <div class="card-content">
+                    <h4>${item.nome}</h4>
+                    <p>${item.funcao}</p>
+                    <p>${item.descricao}</p>
+                </div>
+            `
+            comissaoContainer.appendChild(div);
+        });
+    }catch(error){
+        console.error("Erro ao buscar e adicionar staff:", error);
+        playerContainer.innerHTML += `<p style="color: red;">Falha ao carregar staff. (${error.message})</p>`;
+    }
+    
 }

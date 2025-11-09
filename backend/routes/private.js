@@ -66,3 +66,53 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 export default router;
+
+router.put("/equipe/update/jogador/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedJogador = await prisma.jogador.update({
+      where: { id: parseInt(id) },
+      data: req.body,
+    });
+    res.status(200).json({
+      message: "Player updated successfully",
+      user: updatedJogador,
+    });
+  } catch (error) {
+    console.error("Error in /update route:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.delete("equipe/delete/jogador/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await prisma.jogador.delete({
+      where: { id },
+    });
+    res.status(200).json({
+      message: "Jogador deleted successfully",
+      user: removePassword(deletedUser),
+    });
+  } catch (error) {
+    console.error("Error in /delete route:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.put("/equipe/update/staff/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedStaff = await prisma.staff.update({
+      where: { id: id },
+      data: req.body,
+    });
+    res.status(200).json({
+      message: "Staff updated successfully",
+      user: updatedStaff,
+    });
+  } catch (error) {
+    console.error("Error in /update route:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});

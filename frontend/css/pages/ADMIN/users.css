@@ -1,4 +1,4 @@
-#users-grid{
+.table-grid{
     margin-top: 40px;
     border: var(--primary-color) solid 5px;
     border-radius: 10px;
@@ -6,61 +6,65 @@
 
 }
 
-
-
-
-#users-grid > div{
+.table-grid > div{
     align-items: center;
     display: grid;
-    grid-template-columns: 1fr 1fr 0.2fr 0.2fr 0.2fr 0.2fr;
+    text-wrap: unset;
     padding: 10px;
     gap: 20px;
 }
 
 #users-grid > div{
+    grid-template-columns: 1fr 1fr 0.2fr 0.2fr 0.2fr 0.2fr;
+}
+
+#players-grid > div{
+    grid-template-columns: 1fr 0.2fr 0.2fr 1fr 0.2fr 1fr 0.2fr 0.2fr 0.2fr;
+}
+
+.table-grid > div{
     border: solid var(--border-color) 3px;
 }
 
-#users-grid > div:first-child{
+.table-grid > div:first-child{
     background-color: var(--primary-color);
     color: var(--title-color);
 
 }
 
-#users-grid > div{
+.table-grid > div{
     background-color: var(--bg-color2);
 }
 
-#users-grid > div > .btn:first-of-type{
+.table-grid > div > .btn:first-of-type{
     background-color: var(--bg-color1);
 }
 
-#users-grid > div > .btn:first-of-type:hover{
+.table-grid > div > .btn:first-of-type:hover{
     background-color: var(--bg-color2);
 }
 
 /* Cor secundária */
-
-#users-grid > div:nth-child(2n){
+.table-grid > div:nth-child(2n){
     background-color: var(--bg-color1);
 }
 
-#users-grid > div:nth-child(2n) > .btn:first-of-type{
+.table-grid > div:nth-child(2n) > .btn:first-of-type{
     background-color: var(--bg-color2);
 }
 
-#users-grid > div:nth-child(2n) > .btn:first-of-type:hover{
+.table-grid > div:nth-child(2n) > .btn:first-of-type:hover{
     background-color: var(--bg-color1);
 }
 
 /* Botão de excluir */
 
-#users-grid > div > .btn:last-of-type{
+.table-grid > div > .btn:last-of-type{
     background-color: red;
     color: var(--primary-color);
 }
 
-#users-grid > div > .btn:last-of-type:hover{
+.table-grid > div > .btn:last-of-type:hover{
     background-color: rgb(160, 0, 0);
     color: var(--primary-color);
 }

@@ -90,4 +90,21 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/equipe", async (req, res) => {
+  try {
+    const jogadores = await prisma.jogador.findMany();
+    const staff = await prisma.staff.findMany();
+    res.status(200).json({
+      message: "Team retrieved successfully",
+      jogadores,
+      staff
+    });
+
+  } catch (error) {
+    console.error("Error in /equipe route:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 export default router;

@@ -2,7 +2,7 @@
 
 // Importações dos módulos de conteúdo
 import { produtos, adicionarProdutos } from './componentes/produtos.js';
-import { equipe, adicionarJogadores, adicionarStaff } from './componentes/equipe.js'; 
+import { equipe, adicionarEquipe } from './componentes/equipe.js'; 
 import { sobre } from './componentes/sobre.js'
 import { home } from "./componentes/home.js";
 import { contato } from "./componentes/contato.js";
@@ -14,6 +14,8 @@ import { cadastro } from './componentes/cadastro.js'
 import { calendario } from './componentes/calendario.js'
 import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
 import { users, adicionarUsuarios, setupModalListeners } from './componentes/ADMIN/users.js'
+import { ADMINequipe, ADMINadicionarJogador, setupModalListenersEquipe } from './componentes/ADMIN/equipe.js'
+
 
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
@@ -58,8 +60,7 @@ const router = async() => {
                 break;
             case '#equipe':
                 main.innerHTML = equipe();
-                await adicionarJogadores();
-                await adicionarStaff();
+                await adicionarEquipe();
                 break;
             case '#login':
                 main.innerHTML = login();
@@ -75,6 +76,11 @@ const router = async() => {
             case '#users':
                 main.innerHTML = users();
                 await adicionarUsuarios();
+                break;
+            case '#ADMINequipe':
+                main.innerHTML = ADMINequipe();
+                await ADMINadicionarJogador();
+                setupModalListenersEquipe();
                 break;
         }
 
