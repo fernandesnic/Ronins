@@ -1,3 +1,5 @@
+import { BACKEND_URL } from '../url.js'; // <-- A CHAVE SÃO AS CHAVES {}
+
 export function produtos(){
     const content = `
         <section id="produtos" class="section">
@@ -15,9 +17,10 @@ export function produtos(){
 
 export async function adicionarProdutos(){
     const produtosContainer = document.querySelector("#produtos-container");
-    const arquivo = await fetch("assets/dados/produtos.json");
-    const dados = await arquivo.json();
-    dados.forEach(item => {
+    const response = await fetch(`${BACKEND_URL}/api/public/produto/`);
+    const arquivo = await response.json();
+    const produtos = arquivo.produtos
+    produtos.forEach(item => {
         const div = document.createElement("div");
         div.classList.add("card", "product");
         const pid = item.id ?? item.nome;
