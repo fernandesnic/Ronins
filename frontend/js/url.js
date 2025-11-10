@@ -3,7 +3,7 @@ const isLocal = window.location.hostname === 'localhost' || window.location.host
 
 // Define as duas URLs
 const LOCAL_BACKEND = 'http://localhost:3000';
-const PRODUCTION_BACKEND = 'https://ronins-omega.onrender.com';
+const PRODUCTION_BACKEND = 'https://ronins.onrender.com';
 
 // Exporta a URL correta baseada no ambiente
 export const BACKEND_URL = isLocal ? LOCAL_BACKEND : PRODUCTION_BACKEND;

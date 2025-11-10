@@ -24,10 +24,8 @@ import { vendas, initVendasPage } from './componentes/ADMIN/vendas.js'
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
 
-// Função que decide o que mostrar
 const router = async() => {
     const hash = window.location.hash;
-    // Guarda o estado da página anterior para checar o scroll automatico
     try{
         const element = document.querySelector(hash);
         element.scrollIntoView()
@@ -41,7 +39,6 @@ const router = async() => {
         
         console.log("não achei")
         switch(hash){
-            // Adiciona os módulos correspondentes a hash 
             case '#home':
             case '#sobre':
             case '#contato':
@@ -68,28 +65,26 @@ const router = async() => {
                 break;
             case '#login':
                 main.innerHTML = login();
-                setupLoginForm(); // Adiciona os listeners para o formulário de login
+                setupLoginForm(); 
                 break;
             case '#cadastro':
                 main.innerHTML = cadastro();
-                setupCadastroForm(); // Adiciona os listeners para o formulário de cadastro
+                setupCadastroForm(); 
                 break;
             case '#calendario':
                 main.innerHTML = calendario();
                 break;
             
-            // --- CORREÇÃO APLICADA AQUI ---
             case '#users':
-                main.innerHTML = users();      // 1. Cria o HTML (incluindo o modal)
-                setupModalListeners();   // 2. Ativa os listeners (agora vai funcionar sempre)
-                await adicionarUsuarios(); // 3. Preenche a lista com os usuários
+                main.innerHTML = users();      
+                setupModalListeners();   
+                await adicionarUsuarios(); 
                 break;
-            // ---------------------------------
 
             case '#ADMINequipe':
                 main.innerHTML = ADMINequipe();
                 await ADMINadicionarJogador();
-                setupModalListenersEquipe(); // (O seu código aqui já estava correto)
+                setupModalListenersEquipe(); 
                 break;
             case "#vendas":
                 main.innerHTML = vendas();
@@ -149,7 +144,3 @@ window.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("hashchange", router);
 
 
-// --- BLOCO PROBLEMÁTICO REMOVIDO ---
-// A função 'renderUsersRoute()' e o 'if (location.hash === '#users')'
-// foram deletados daqui. A lógica agora está
-// corretamente centralizada no 'switch' acima.
