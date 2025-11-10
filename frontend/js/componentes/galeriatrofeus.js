@@ -1,73 +1,80 @@
-export function galeriatrofeus(){
-    const content = `
-        <section class="section">
-            <h1>Galeria de troféus</h1>
-        </section>
-        <section class="section dark-bg">
-            <div class="container">
-                <h2>Austrália - 2025</h2>
-                <div class="content-grid">
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
+import { BACKEND_URL } from '../url.js'; 
+
+// 1. A função "casca"
+export function galeriatrofeus() {
+    return `
+    <section class="section">
+        <h1>Galeria de troféus</h1>
+    </section>
+    
+    <div id="galeria-container" class="galeria-container">
+        <p class="loading-trofeus">Carregando troféus...</p>
+    </div>
+    `;
+}
+
+export async function adicionarTrofeus() {
+    const container = document.getElementById("galeria-container");
+    if (!container) return;
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/public/trofeus`);
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.error);
+
+        const { trofeus } = data;
+
+        if (!trofeus || trofeus.length === 0) {
+            container.innerHTML = "<p>Nenhum troféu encontrado.</p>";
+            return;
+        }
+
+        container.innerHTML = ""; 
+
+        trofeus.forEach((campeonato, index) => {
+            const section = document.createElement("section");
+            section.className = "section trophy-section";
+            if (index % 2 === 0) section.classList.add("dark-bg");
+            
+            const fotosArray = campeonato.foto || []; 
+            const fotosHTML = fotosArray.map(url => `
+                <div class="image-content">
+                    <img src="${url}" alt="Foto do troféu ${campeonato.nome}">
+                </div>
+            `).join('');
+
+            const elencoArray = campeonato.elenco || [];
+            const elencoHTML = elencoArray.map(item => {
+                if (item.jogador) {
+                    return `<li>${item.jogador.nome} (Jogador)</li>`;
+                }
+                if (item.staff) {
+                    return `<li>${item.staff.nome} (${item.staff.funcao || 'Staff'})</li>`;
+                }
+                return ''; 
+            }).join('');
+
+            section.innerHTML = `
+                <div class="container">
+                    <h2>${campeonato.nome} - ${campeonato.ano}</h2>
+                    
+                    <h3>Fotos</h3>
+                    <div class="content-grid">
+                        ${fotosArray.length > 0 ? fotosHTML : '<p>Sem fotos para este campeonato.</p>'}
                     </div>
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
+
+                    <h3 class="elenco-title">Elenco</h3>
+                    <div class="elenco-grid">
+                        ${elencoArray.length > 0 ? `<ul>${elencoHTML}</ul>` : '<p>Elenco não cadastrado.</p>'}
                     </div>
                 </div>
-            </div>
-        </section>
-        <section class="section">
-            <div class="container">
-                <h2>Capão redondo - 2024</h2>
-                <div class="content-grid">
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
-                    </div>
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section dark-bg">
-            <div class="container">
-                <h2>Guarulhos - 2020</h2>
-                <div class="content-grid">
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
-                    </div>
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section">
-           <div class="container">
-                <h2>ESTRAGOS UNIDOS - 2020</h2>
-                <div class="content-grid">
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
-                    </div>
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section dark-bg">
-            <div class="container">
-                <h2>BRASÍLIA - 2019</h2>
-                <div class="content-grid">
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
-                    </div>
-                    <div class="image-content">
-                        <img src="https://anholeto.com.br/wp-content/uploads/2024/02/2296-pedido-7379.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-    `
-    return content
+            `;
+            container.appendChild(section);
+        });
+
+    } catch (error) {
+        console.error("Erro ao carregar troféus:", error);
+        container.innerHTML = "<p style='color: red;'>Falha ao carregar troféus.</p>";
+    }
 }

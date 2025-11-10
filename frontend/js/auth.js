@@ -17,7 +17,7 @@ export async function handleLoginSubmit(event) {
     if (!email || !password) return showMessage('Por favor, preencha e-mail e senha.', true);
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/public/login`, {
+        const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
@@ -51,7 +51,7 @@ export async function handleCadastroSubmit(event) {
     }
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/public/cadastro`, {
+        const response = await fetch(`${BACKEND_URL}/api/auth/cadastro`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome, email, password }),
