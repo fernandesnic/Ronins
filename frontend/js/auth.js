@@ -17,7 +17,6 @@ export async function handleLoginSubmit(event) {
     if (!email || !password) return showMessage('Por favor, preencha e-mail e senha.', true);
 
     try {
-        // O 'url.js' vai garantir que esta é a URL correta (local ou produção)
         const response = await fetch(`${BACKEND_URL}/api/public/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -32,9 +31,8 @@ export async function handleLoginSubmit(event) {
         localStorage.setItem('userData', JSON.stringify(data.user));
         showMessage('Login realizado com sucesso!');
         window.location.hash = '#home';
-        window.location.reload(); // Força a atualização do header
+        window.location.reload(); 
     } catch (error) {
-        // Se o login falhar (senha errada, etc.), vai cair aqui
         showMessage(error.message, true);
     }
 }

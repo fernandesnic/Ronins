@@ -100,7 +100,7 @@ async function carregarKpis() {
       throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch(`${BACKEND_URL}api/vendas/kpis`, {
+    const response = await fetch(`${BACKEND_URL}/api/vendas/kpis`, {
       headers: { 'Authorization': `Bearer ${token}` } // 2. Enviar o token
     }); 
 
@@ -235,7 +235,7 @@ async function buscarTodasVendas() {
        throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch(`${BACKEND_URL}api/vendas/list`, {
+    const response = await fetch(`${BACKEND_URL}/api/vendas/list`, {
       headers: { 'Authorization': `Bearer ${token}` } // 2. Enviar o token
     }); 
 

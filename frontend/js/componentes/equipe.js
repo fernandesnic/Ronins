@@ -35,7 +35,7 @@ Essa dedicação incansável culminou em um ano histórico: o Ronins Quad Rugby 
 
 export async function adicionarEquipe() {
     try{
-        const response = await fetch(`${BACKEND_URL}api/public/equipe`);
+        const response = await fetch(`${BACKEND_URL}/api/public/equipe`);
 
         const data = await response.json().catch(() => ({}));
         console.log(data)

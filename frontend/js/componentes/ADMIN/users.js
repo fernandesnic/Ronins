@@ -60,7 +60,7 @@ export async function adicionarUsuarios(){
             return;
         }
 
-        const response = await fetch(`${BACKEND_URL}api/private/list`, {
+        const response = await fetch(`${BACKEND_URL}/api/private/list`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -257,7 +257,7 @@ function closeEditModal() {
 
 async function handleDelete(id, token) {
     try {
-        const response = await fetch(`${BACKEND_URL}api/private/delete/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/private/delete/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -279,7 +279,7 @@ async function handleUpdate(id, data, token) {
     console.log('Attempting to update user:', { id, data }); // Debug log
 
     try {
-        const response = await fetch(`${BACKEND_URL}api/private/update/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/private/update/${id}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
