@@ -6,7 +6,7 @@ import { equipe, adicionarEquipe } from './componentes/equipe.js';
 import { sobre } from './componentes/sobre.js'
 import { home } from "./componentes/home.js";
 import { contato } from "./componentes/contato.js";
-import { galeriatrofeus } from './componentes/galeriatrofeus.js'
+import { galeriatrofeus, adicionarTrofeus } from './componentes/galeriatrofeus.js'
 import { checkout, initCheckout } from './componentes/checkout.js';
 import { apoiase } from './componentes/apoiase.js'
 import { login } from './componentes/login.js'
@@ -50,6 +50,10 @@ const router = async() => {
                 await adicionarProdutos();
                 break;
             case '#galeriatrofeus':
+                app.innerHTML = galeriatrofeus();
+                await adicionarTrofeus();
+                break;
+            case '#trofeus':
                 main.innerHTML = galeriatrofeus();
                 break;
             case '#checkout':

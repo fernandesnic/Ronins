@@ -2,6 +2,7 @@ import express from "express";
 import publicRoutes from "./routes/public/public.js";
 import privateRoutes from "./routes/private/private.js"
 import vendasRoutes from "./routes/private/vendas.js";
+import authRoutes from "./routes/auth.js"
 import auth from "./middlewares/auth.js";
 import cors from "cors";
 
@@ -30,8 +31,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.use("/api/auth", authRoutes);
 app.use("/api/public", publicRoutes);
-app.use("/api/vendas", auth, vendasRoutes)
+app.use("/api/vendas", auth, vendasRoutes) 
 app.use("/api/private", auth, privateRoutes)
 
 app.listen(PORT, () => console.log("Server is running on port", PORT));
