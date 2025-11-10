@@ -16,7 +16,7 @@ import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
 import { users, adicionarUsuarios, setupModalListeners } from './componentes/ADMIN/users.js'
 import { ADMINequipe, ADMINadicionarJogador, setupModalListenersEquipe } from './componentes/ADMIN/equipe.js'
 // Pede o export com o NOME "BACKEND_URL"
-import { BACKEND_URL } from './url.js'; // <-- A CHAVE SÃO AS CHAVES {}
+import { BACKEND_URL } from './url.js'; 
 
 import { vendas, initVendasPage } from './componentes/ADMIN/vendas.js'
 
