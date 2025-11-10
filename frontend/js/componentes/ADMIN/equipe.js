@@ -1,10 +1,12 @@
-// Pede o export com o NOME "BACKEND_URL"
-import { BACKEND_URL } from '../../url.js'; // <-- A CHAVE SÃO AS CHAVES {}
+import { BACKEND_URL } from '../../url.js'; 
+
 export function ADMINequipe(){
     return `
         <section class="section">
             <h1>Jogadores</h1>
-            <div id="players-grid" class="table-grid">
+            <button id="btn-open-create-modal" class="btn btn-primary" style="margin-bottom: 1rem;">Criar Novo Jogador</button>
+            
+            <div id="players-grid" class="table-grid"> 
                 <div class="header">
                     <p>NOME</p><p>NUMERO CAMISA</p><p>CLASSIFICAÇÃO</p><p>NACIONALIDADE</p><p>IDADE</p><p>FOTO</p><p>TA NO TIME</p>
                 </div>
@@ -13,7 +15,7 @@ export function ADMINequipe(){
 
         <div id="edit-modal-overlay" class="modal-overlay">
             <div class="modal-content">
-                <h2>Editar Usuário</h2>
+                <h2 id="edit-modal-title">Editar Jogador</h2> 
                 <form id="edit-player-form">
                     <input type="hidden" id="edit-player-id">
                     <div>
@@ -26,8 +28,7 @@ export function ADMINequipe(){
                     </div>
                     <div>
                         <label for="edit-classificacao">Classificação:</label>
-                        <input type="number" id="edit-classificacao" required>
-                    </div>
+                        <input type="text" id="edit-classificacao" required> </div>
                     <div>
                         <label for="edit-nacionalidade">Nacionaliade:</label>
                         <input type="text" id="edit-nacionalidade" required>
@@ -58,18 +59,16 @@ export function ADMINequipe(){
 }
 
 export async function ADMINadicionarJogador(){
-    const jogadoresContainer = document.querySelector("#players-grid");
+    const jogadoresContainer = document.querySelector("#players-grid"); 
     if (!jogadoresContainer) {
-        console.error('Container #jogadores-grid não encontrado. Certifique-se que equipe() foi inserido no DOM antes de chamar ADMINadicionarEquipe().');
+        console.error('Container #players-grid não encontrado.');
         return;
     }
     try {
 
-        jogadoresContainer.innerHTML = `
-        <div class="header">
-            <p>NOME</p><p>NUMERO CAMISA</p><p>CLASSIFICAÇÃO</p><p>NACIONALIDADE</p><p>IDADE</p><p>FOTO</p><p>TA NO TIME</p>
-        </div>
-        `
+        const headerHTML = jogadoresContainer.querySelector(".header").outerHTML;
+        jogadoresContainer.innerHTML = headerHTML;
+
         const token = localStorage.getItem('authToken');
         if (!token) {
             jogadoresContainer.innerHTML += "<p>Usuário não autenticado.</p>";
@@ -77,7 +76,6 @@ export async function ADMINadicionarJogador(){
         }
     
         const response = await fetch(`${BACKEND_URL}/api/public/equipe`);
-
         const data = await response.json().catch(() => ({}));
     
         if (!response.ok) {
@@ -133,9 +131,6 @@ function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
-// ----------------------------------------------------
-// Helpers
-// ----------------------------------------------------
 function setupClickListeners(container) {
     if (!container) return;
     if (container.dataset.listenerAttached === 'true') return;
@@ -156,7 +151,6 @@ function setupClickListeners(container) {
         }
 
         if (target.classList.contains('btn-edit')) {
-            // tenta obter id por vários caminhos
             const idFromData = target.dataset.id;
             const idFromRow = target.closest('.player')?.id?.replace(/^player-row-/, '');
             const fallbackId = idFromData || idFromRow || '';
@@ -184,29 +178,35 @@ function unescapeHtml(str) {
     return String(str).replace(/&lt;|&gt;|&amp;|&quot;|&#39;/g, (m) => ({'&lt;':'<','&gt;':'>','&amp;':'&','&quot;':'"','&#39;':"'" }[m]));
 }
 
-function openEditModal(user) {
+function openEditModal(jogador = {}) { 
     const overlay = document.getElementById('edit-modal-overlay');
     const idEl = document.getElementById('edit-player-id');
-    if (!overlay || !idEl) {
-        console.error('Modal não encontrado no DOM.');
+    const modalTitle = document.getElementById('edit-modal-title'); 
+
+    if (!overlay || !idEl || !modalTitle) {
+        console.error('Modal ou seus componentes não encontrados no DOM.');
         return;
     }
 
-    // garante que o id esteja presente e salvo no hidden
-    idEl.value = String(user.id || '');
-    document.getElementById('edit-nome').value = user.nome || '';
-    document.getElementById('edit-camisa').value = user.camisa || '';
-    document.getElementById('edit-classificacao').value = user.classificacao || '';
-    document.getElementById('edit-nacionalidade').value = user.nacionalidade || '';
-    document.getElementById('edit-idade').value = user.idade || '';
-    document.getElementById('edit-foto').value = user.foto || '';
-    document.getElementById('edit-on_team').checked = !!user.on_team;
+    if (jogador && jogador.id) {
+        modalTitle.textContent = 'Editar Jogador';
+    } else {
+        modalTitle.textContent = 'Criar Novo Jogador';
+    }
+
+    idEl.value = String(jogador.id || '');
+    document.getElementById('edit-nome').value = jogador.nome || '';
+    document.getElementById('edit-camisa').value = jogador.camisa || '';
+    document.getElementById('edit-classificacao').value = jogador.classificacao || '';
+    document.getElementById('edit-nacionalidade').value = jogador.nacionalidade || '';
+    document.getElementById('edit-idade').value = jogador.idade || '';
+    document.getElementById('edit-foto').value = jogador.foto || '';
+    document.getElementById('edit-on_team').checked = !!jogador.on_team;
 
     overlay.style.display = 'flex';
     void overlay.offsetWidth;
     overlay.classList.add('show');
 }
-
 
 function closeEditModal() {
     const overlay = document.getElementById('edit-modal-overlay');
@@ -215,38 +215,45 @@ function closeEditModal() {
         overlay.classList.remove('show');
         setTimeout(() => {
             overlay.style.display = 'none';
-        }, 200);
+        }, 200); 
     }
     if (form) {
-        form.reset();
+        form.reset(); 
         const idEl = document.getElementById('edit-player-id');
         if (idEl) idEl.value = '';
     }
 }
 
 export function setupModalListenersEquipe() {
-    if (window.__users_modal_listeners_attached) return;
-    window.__users_modal_listeners_attached = true;
+    if (window.__equipe_modal_listeners_attached) return;
+    window.__equipe_modal_listeners_attached = true;
 
-    // fechar por cancelar / click no overlay
     document.addEventListener('click', (e) => {
         const target = e.target;
         if (!target) return;
+
+        if (target.id === 'btn-open-create-modal') {
+            e.preventDefault();
+            openEditModal({}); 
+            return;
+        }
+
         if (target.id === 'btn-cancel-edit') {
             e.preventDefault();
             closeEditModal();
             return;
         }
+        
         if (target.id === 'edit-modal-overlay') {
             closeEditModal();
             return;
         }
     });
 
-    // submit do form: aceita ID como string (UUID ou numérico)
     document.addEventListener('submit', async (e) => {
         const form = e.target;
         if (!form || form.id !== 'edit-player-form') return;
+        
         e.preventDefault();
 
         const token = localStorage.getItem('authToken');
@@ -255,39 +262,44 @@ export function setupModalListenersEquipe() {
             return;
         }
 
-        // pega ID preferencialmente do hidden, se estiver vazio tenta buscar no DOM (último edit-open)
         let idRaw = String(document.getElementById('edit-player-id')?.value || '').trim();
-        if (!idRaw) {
-            // tenta encontrar o user-row com foco/selecionado
-            const possible = document.querySelector('.player[id^="player-row-"]');
-            idRaw = possible ? possible.id.replace(/^player-row-/, '') : '';
-        }
-        if (!idRaw) {
-            console.error('ID do usuário inválido no submit do modal.');
-            alert('ID do usuário inválido.');
-            return;
-        }
 
         const data = {
             nome: document.getElementById('edit-nome').value,
-            numero_camisa: parseInt(document.getElementById('edit-camisa').value),
+            numero_camisa: parseInt(document.getElementById('edit-camisa').value, 10),
             classificacao: document.getElementById('edit-classificacao').value,
             nacionalidade: document.getElementById('edit-nacionalidade').value,
-            idade: parseInt(document.getElementById('edit-idade').value),
+            idade: parseInt(document.getElementById('edit-idade').value, 10),
             foto: document.getElementById('edit-foto').value,
             on_team: document.getElementById('edit-on_team').checked,
         };
 
+        if (isNaN(data.numero_camisa)) data.numero_camisa = 0; 
+        if (isNaN(data.idade)) data.idade = 0;
+
         try {
-            const ok = await handleUpdate(idRaw, data, token);
-            if (ok) closeEditModal();
-            else alert('Falha ao atualizar jogador.');
+            let ok = false;
+            
+            if (idRaw) {
+                ok = await handleUpdate(idRaw, data, token);
+            } else {
+                ok = await handleCreate(data, token);
+            }
+            
+            if (ok) {
+                 closeEditModal();
+            } else {
+                 alert('Falha ao salvar jogador.');
+            }
+
         } catch (err) {
             console.error('Erro no submit do modal:', err);
-            alert('Erro ao atualizar jogador.');
+            alert('Erro ao salvar jogador.');
         }
     });
 }
+
+
 
 async function handleDelete(id, token) {
     try {
@@ -324,14 +336,39 @@ async function handleUpdate(id, data, token) {
             throw new Error(msg);
         }
 
-        // atualiza a lista no frontend
-        await ADMINadicionarJogador();
+        await ADMINadicionarJogador(); // Recarrega a lista
 
         alert(body?.message || 'Jogador atualizado com sucesso!');
         return true;
     } catch (error) {
         console.error('Erro ao atualizar:', error);
         alert('Erro ao atualizar jogador: ' + error.message);
+        return false;
+    }
+}
+
+async function handleCreate(data, token) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/private/equipe/create/jogador`, { 
+            method: 'POST', 
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify(data) 
+        });
+
+        const body = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            const msg = body?.error || `Erro na criação: ${response.status}`;
+            throw new Error(msg);
+        }
+
+        await ADMINadicionarJogador(); // Recarrega a lista
+
+        alert(body?.message || 'Jogador criado com sucesso!');
+        return true;
+    } catch (error) {
+        console.error('Erro ao criar:', error);
+        alert('Erro ao criar jogador: ' + error.message);
         return false;
     }
 }

@@ -53,10 +53,18 @@ export async function adicionarUsuarios(){
         return;
     }
 
+    const header = usersContainer.querySelector(".header");
+    const headerHTML = header ? header.outerHTML : '';
+
+    
+    usersContainer.innerHTML = headerHTML;
+
     try {
         const token = localStorage.getItem('authToken');
         if (!token) {
-            usersContainer.innerHTML += "<p>Usuário não autenticado.</p>";
+            const p = document.createElement('p');
+            p.textContent = "Usuário não autenticado.";
+            usersContainer.appendChild(p);
             return;
         }
 
@@ -74,7 +82,9 @@ export async function adicionarUsuarios(){
         const usersList = data.users || data;
 
         if (!usersList || usersList.length === 0) {
-            usersContainer.innerHTML += "<p>Nenhum usuário encontrado.</p>";
+            const p = document.createElement('p');
+            p.textContent = "Nenhum usuário encontrado.";
+            usersContainer.appendChild(p);
             return;
         }
 
@@ -102,27 +112,24 @@ export async function adicionarUsuarios(){
 
     } catch (error) {
         console.error("Erro ao buscar usuários:", error);
-        usersContainer.innerHTML += `<p style="color: red;">Falha ao carregar usuários. (${error.message})</p>`;
+        const p = document.createElement('p');
+        p.style.color = "red";
+        p.textContent = `Falha ao carregar usuários. (${error.message})`;
+        usersContainer.appendChild(p);
     }
 }
+
 
 function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
-// ----------------------------------------------------
-// Helpers
-// ----------------------------------------------------
 function unescapeHtml(str) {
     return String(str).replace(/&lt;|&gt;|&amp;|&quot;|&#39;/g, (m) => ({'&lt;':'<','&gt;':'>','&amp;':'&','&quot;':'"','&#39;':"'" }[m]));
 }
 
 export function setupModalListeners() {
-    // Remove the guard clause to ensure listeners are always attached
-    // if (window.__users_listeners_attached) return;
-    // window.__users_listeners_attached = true;
-
-    // Click handler for edit and delete buttons
+    
     document.body.addEventListener('click', async (e) => {
         const target = e.target;
         if (!target) return;
@@ -302,8 +309,7 @@ async function handleUpdate(id, data, token) {
             throw new Error(msg);
         }
 
-        // atualiza a lista no frontend
-        await adicionarUsuarios();
+     
 
         alert(body?.message || 'Usuário atualizado com sucesso!');
         return true;

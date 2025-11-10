@@ -1,25 +1,25 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 
+
+import {
+  createOne,
+  updateOne,
+  deleteOne,
+  removePassword, 
+} from "../../controllers/handleFactory.js";
+
 const router = express.Router();
-const prisma = new PrismaClient();
-
-const removePassword = (user) => {
-  if (!user) return null;
-  const { password, ...userWithoutPassword } = user;
-  return userWithoutPassword;
-};
-
+const prisma = new PrismaClient(); 
 
 router.get("/kpis", async (req, res) => {
   try {
-    
-    const agregacao = await prisma.Venda.aggregate({
+    const agregacao = await prisma.Venda.aggregate({ 
       _sum: {
-        preco_final: true, 
+        preco_final: true,
       },
       _count: {
-        id: true, 
+        id: true,
       },
     });
 
@@ -44,9 +44,9 @@ router.get("/kpis", async (req, res) => {
 
 router.get("/list", async (req, res) => {
   try {
-    const vendas = await prisma.Venda.findMany({
+    const vendas = await prisma.Venda.findMany({ 
       include: {
-        user: true, 
+        user: true,
       },
       orderBy: {
         criadoEm: "desc",
@@ -70,51 +70,11 @@ router.get("/list", async (req, res) => {
   }
 });
 
-
-router.put("/update/:id", async (req, res) => {
-  try {
-    const vendaId = parseInt(req.params.id, 10);
-
-    if (isNaN(vendaId)) {
-      return res.status(400).json({ error: "Invalid ID format." });
-    }
-    
-    const updatedVenda = await prisma.Venda.update({
-      where: { id: vendaId },
-      data: req.body,
-    });
-
-    res.status(200).json({
-      message: "Venda updated successfully",
-      venda: updatedVenda,
-    });
-  } catch (error) {
-    console.error("Error in /update route:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+const vendaOptions = { idType: 'int' };
 
 
-router.delete("/delete/:id", async (req, res) => {
-  try {
-    const vendaId = parseInt(req.params.id, 10);
-
-    if (isNaN(vendaId)) {
-      return res.status(400).json({ error: "Invalid ID format." });
-    }
-
-    const deletedVenda = await prisma.Venda.delete({
-      where: { id: vendaId },
-    });
-
-    res.status(200).json({
-      message: "Venda deleted successfully",
-      user: deletedVenda,
-    });
-  } catch (error) {
-    console.error("Error in /delete route:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+router.post("/create", createOne('Venda', vendaOptions));
+router.put("/update/:id", updateOne('Venda', vendaOptions));
+router.delete("/delete/:id", deleteOne('Venda', vendaOptions));
 
 export default router;
