@@ -95,7 +95,8 @@ export function logout(event) {
  * Atualiza o botão de login/sair e adiciona o botão Users se for admin.
  */
 export function updateHeaderActions() {
-    const loginButton = document.querySelector('.btn-login');
+    const 
+loginButton = document.querySelector('.btn-login');
     if (!loginButton) return;
 
     const loginLI = loginButton.closest('li');
@@ -106,12 +107,8 @@ export function updateHeaderActions() {
     const oldAdminButtons = menuList.querySelectorAll('.admin-button-li');
     oldAdminButtons.forEach(btn => btn.remove());
 
-    // *** CORREÇÃO APLICADA AQUI ***
-    // A melhor forma de limpar listeners antigos é clonando o botão
-    // e substituindo o antigo.
     const newLoginButton = loginButton.cloneNode(true);
     loginLI.replaceChild(newLoginButton, loginButton);
-    // ******************************
 
     if (isUserLoggedIn()) {
         // Se for admin, insere botões antes do li do login
@@ -128,7 +125,7 @@ export function updateHeaderActions() {
             vendasLI.innerHTML = '<a href="#vendas" class="btn">Vendas</a>';
             menuList.insertBefore(vendasLI, loginLI);
             
-            // Botão Admin Equipe (Faltando)
+            // Botão Admin Equipe 
             const equipeLI = document.createElement('li');
             equipeLI.className = 'admin-button-li';
             equipeLI.innerHTML = '<a href="#ADMINequipe" class="btn">Equipe</a>';

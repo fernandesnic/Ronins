@@ -29,15 +29,12 @@ const router = async() => {
     try{
         const element = document.querySelector(hash);
         element.scrollIntoView()
-        console.log("achei")
     }
     catch{
         scroll({
             "top": 0, 
             "behavior": "instant"
         });
-        
-        console.log("não achei")
         switch(hash){
             case '#home':
             case '#sobre':
@@ -99,10 +96,9 @@ const router = async() => {
         try{
             const element = document.querySelector(hash);
             element.scrollIntoView()
-            console.log("achei")
         }
         catch{
-            console.log("não achei")
+            return null
         }
     }
 };

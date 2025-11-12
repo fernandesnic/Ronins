@@ -113,7 +113,7 @@ header.scrolled .logo-absolute img{
 
 /* Botão de modo escuro/modo claro */
 #theme-switch {
-    margin-top: 0.75em;
+    margin-top: auto;
     height: 45px;
     width: 45px;
     border-radius: 50%;
@@ -211,6 +211,17 @@ nav ul li a {
     font-weight: 600;
     font-size: 1.8rem !important;
     transition: color 0.3s;
+}
+
+header.scrolled .admin-btn-li a{
+    height: 0.5rem;
+}
+
+#header-btns{
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    right: 20px;
 }
 
 .btn-login {

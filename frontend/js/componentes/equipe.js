@@ -21,7 +21,7 @@ Essa dedicação incansável culminou em um ano histórico: o Ronins Quad Rugby 
                     <h3>Nossos Jogadores</h3>
                     <div id="player-container" class="cards-container">
                         </div>
-                    <h5>Comissão Técnica</h5>
+                    <h3>Comissão Técnica</h3>
                     <div id="comissao-container" class="cards-container">
                         </div>
                 </div>
@@ -48,9 +48,7 @@ export async function adicionarEquipe() {
         const staff = data.staff
         adicionarJogadores(jogadores)
         adicionarStaff(staff)
-    }catch{
-        console.log("bunda")
-    }
+    }catch{}
     
 }
 
