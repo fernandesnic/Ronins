@@ -1,102 +1,163 @@
-/* --- Contact --- */
+/* ====== CONTATO - NOVO DESIGN ====== */
+
+#contato {
+    padding: 80px 0;
+}
+
+#contato h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 2.3rem;
+    color: var(--title-color);
+}
+
+#contato p {
+    color: var(--text-color);
+}
+
+/* ===== GRID ===== */
+
 .contact-grid {
+    margin-top: 60px;
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
+    grid-template-columns: 0.8fr 1.2fr;
     gap: 50px;
-    align-items: start;
+}
+
+/* ===== CARTÃO DE INFORMAÇÕES ===== */
+
+.contact-details {
+    background: var(--dark-bg);
+    padding: 35px;
+    border-radius: 16px;
+    border-left: 4px solid var(--title-color);
+    color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 
 .contact-details h3 {
-    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: var(--title-color);
+    margin-bottom: 18px;
 }
 
 .contact-item {
+    margin-bottom: 18px;
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;
 }
 
 .contact-item i {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: var(--title-color);
-    width: 25px;
-    text-align: center;
 }
 
-.contact-item p,
-.contact-item a {
-    margin: 0;
+.contact-item a,
+.contact-item p {
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+/* ===== SOCIAL ===== */
+
+.social-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
 }
 
 .social-links a i {
     font-size: 2rem;
     color: var(--title-color);
-    transition: color 0.3s, transform 0.3s;
+    transition: 0.3s;
 }
 
 .social-links a i:hover {
-    color: var(--text-color);
-    transform: scale(1.1);
+    transform: scale(1.12);
 }
 
+/* ===== FORM ===== */
+
 .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    background: var(--bg-color2);
+    padding: 40px;
+    border-radius: 16px;
+    border: 2px solid var(--bg-color3);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
+    gap: 8px;
 }
 
 .form-group label {
-    margin-bottom: 8px;
     font-weight: bold;
+    font-size: 1rem;
     color: var(--title-color);
 }
 
 .contact-form input,
 .contact-form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid var(--bg-color2);
-    border-radius: 5px;
-    background-color: var(--bg-color2);
+    padding: 14px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background: var(--bg-color1);
     color: var(--text-color);
-    font-family: var(--font-primary);
+    transition: 0.3s;
     font-size: 1rem;
-    transition: border-color 0.3s;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
+    border-color: var(--title-color);
     outline: none;
+}
+
+/* Botão */
+.contact-form button.btn {
+    margin-top: 10px;
+    padding: 16px;
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+/* ===== ALTO CONTRASTE ===== */
+
+.high-contrast .contact-form {
+    background: var(--bg-color1);
     border-color: var(--title-color);
 }
 
-.contact-form button.btn {
-    width: 100%;
-    padding: 15px;
-    font-family: var(--font-title);
-    font-size: 1.1rem;
-}
-
-/* --- Correção para o Formulário em Alto Contraste --- */
 .high-contrast .contact-form input,
 .high-contrast .contact-form textarea {
-    background-color: var(--bg-color1);   
-    border: 2px solid var(--title-color); 
-    color: var(--text-color);          
-}   
+    background: var(--bg-color1);
+    border-color: var(--title-color);
+    color: var(--text-color);
+}
 
 .high-contrast .contact-form button.btn {
-    background-color: transparent; 
-    border: 2px solid var(--title-color); 
+    background: transparent;
+    border: 2px solid var(--title-color);
 }
 
 .high-contrast .contact-form button.btn:hover {
-    background-color: var(--title-color); 
-    color: var(--bg-color1); 
+    background: var(--title-color);
+    color: var(--bg-color1);
+}
+
+/* ===== RESPONSIVO ===== */
+
+@media (max-width: 900px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    .contact-details {
+        order: 1;
+    }
+    .contact-form {
+        order: 2;
+    }
 }

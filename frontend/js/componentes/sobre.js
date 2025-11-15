@@ -27,27 +27,36 @@ export function sobre(){
                 </div>
             </div>
             
-            <div id="causa" class="dark-bg section">
-                <div class="container">
-                    <h2>Nossa Causa</h2>
-                    <div class="cause-content">
-                        <p>Acreditamos no poder transformador do esporte para pessoas com deficiência. Através do rugby,
-                            promovemos:</p>
-                        <ul>
-                            <li>Inclusão social</li>
-                            <li>Autoestima e superação</li>
-                            <li>Saúde física e mental</li>
-                            <li>Visibilidade para a causa da pessoa com deficiência</li>
-                        </ul>
-                        <div class="cta">
-                            <h3>Junte-se a nós!</h3>
-                            <p>Seja um apoiador, patrocinador ou voluntário.</p>
-                            <a href="#apoiase" class="btn dark">Quero ajudar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+           <div id="causa" class="section causa-wrapper">
+    <div class="container causa-grid">
+
+        <div class="causa-text">
+            <h2>Nossa Causa</h2>
+            <p>Acreditamos no poder transformador do esporte para pessoas com deficiência. Através do rugby,
+                promovemos:</p>
+
+            <ul class="cause-list">
+                <li>Inclusão social</li>
+                <li>Autoestima e superação</li>
+                <li>Saúde física e mental</li>
+                <li>Visibilidade para a causa da pessoa com deficiência</li>
+            </ul>
+
+            <a href="#apoiase" class="btn dark causa-btn">Quero ajudar</a>
+        </div>
+
+        <div class="causa-side-card">
+            <h3>Impacto Real</h3>
+            <p>O rugby em cadeira de rodas vai muito além da quadra — ele constrói autonomia, fortalece vínculos e
+                abre portas para novas oportunidades.</p>
+            <p>Com o apoio de pessoas como você, ampliamos treinos, promovemos viagens, fornecemos estrutura e
+                garantimos que atletas tenham acesso a um esporte que transforma vidas.</p>
+            <p>Cada contribuição é um passo a mais para inclusão, dignidade e evolução contínua.</p>
+        </div>
+
+    </div>
+</div>
+
     `
     return content
 }
