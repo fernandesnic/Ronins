@@ -1,0 +1,40 @@
+/* --- Estilização da Seção de Premiações --- */
+
+.premiacao-title {
+    margin-top: 16px; 
+    padding-top: 12px;
+    border-top: 1px solid #e0e0e0; 
+
+    font-size: 0.9em;       
+    font-weight: 600;     
+    color: #444;           
+    margin-bottom: 8px;   
+}
+
+.premiacao-list {
+    list-style-type: none; 
+    padding-left: 0;       
+    margin: 0;            
+}
+
+
+.premiacao-list li {
+    font-size: 0.85em;     
+    color: #666;           
+    margin-bottom: 6px;   
+    
+    
+    display: flex;
+    align-items: center; 
+}
+
+.premiacao-list li::before {
+    content: '🏆';           
+    margin-right: 8px;  
+    font-size: 0.9em;       
+    opacity: 0.8;        
+}
+
+.premiacao-list li:last-child {
+    margin-bottom: 0;
+}

@@ -45,14 +45,32 @@ model Endereco {
 model Produto {
   id        Int      @id @default(autoincrement())
   nome      String
-  preco     Float
-  tamanho   String?
   descricao String?
+  // Adicione um campo para a imagem principal
+  foto_principal String? 
 
-  // Relação M-para-N com Venda
-  vendas ProdutoDaVenda[]
+  // RELAÇÃO: Um produto tem MUITAS variantes
+  variacoes ProdutoVariacao[]
 
   @@map("produtos")
+}
+
+model ProdutoVariacao {
+  id        Int     @id @default(autoincrement())
+  tamanho   String? // "M", "G", "Unico"
+  cor       String? // "Preto", "Branco"
+  preco     Float   // O preço pode variar (ex: XXG é mais caro)
+  estoque   Int     @default(0) // ESSENCIAL: Gerenciamento de estoque
+  foto      String? // Foto específica da variante (ex: a camisa branca)
+  
+  // Relação de volta ao Pai
+  produtoId Int
+  produto   Produto @relation(fields: [produtoId], references: [id])
+
+  // RelaÇÃO: Uma variante pode estar em muitos carrinhos
+  vendas    ProdutoDaVenda[]
+
+  @@map("produto_variacoes")
 }
 
 model Venda {
@@ -86,11 +104,10 @@ model ProdutoDaVenda {
 
   venda_id Int
   venda    Venda @relation(fields: [venda_id], references: [id])
+  produto_variacao_id Int
+  variacao            ProdutoVariacao @relation(fields: [produto_variacao_id], references: [id])
 
-  produto_id Int
-  produto    Produto @relation(fields: [produto_id], references: [id])
-
-  @@id([venda_id, produto_id]) 
+  @@id([venda_id, produto_variacao_id]) // O ID composto agora usa a variacao_id
   @@map("produto_da_venda")
 }
 
