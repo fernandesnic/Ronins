@@ -11,10 +11,6 @@ generator client {
 
 // --- TABELAS DE UTILIZADOR E VENDAS (Baseado em image_e9dfa7.png) ---
 
-// NOTA: Esta tabela substitui a sua tabela "Usuario".
-// O Neon Auth já trata do login (email/senha).
-// Esta tabela "Perfil" guarda os seus dados extra (nome, admin, socio).
-// O 'id' (String) deve ser o mesmo 'id' que o Neon Auth cria quando o utilizador se regista.
 model User {
   id       String    @id @default(cuid()) // Agora o ID será gerado automaticamente
   nome     String
@@ -24,7 +20,6 @@ model User {
   is_admin Boolean @default(false)
   is_socio Boolean @default(false)
 
-  // Relações (como no seu ERD)
   enderecos Endereco[] // Relação 1-para-N
   vendas   Venda[]   // Relação 1-para-N
   
@@ -86,24 +81,20 @@ model Venda {
   @@map("vendas")
 }
 
-// Esta é a tabela "pivot" (join table) para Vendas e Produtos
 model ProdutoDaVenda {
   quantidade Int
 
-  // Chave estrangeira para Venda
   venda_id Int
   venda    Venda @relation(fields: [venda_id], references: [id])
 
-  // Chave estrangeira para Produto
   produto_id Int
   produto    Produto @relation(fields: [produto_id], references: [id])
 
-  @@id([venda_id, produto_id]) // Chave primária composta
+  @@id([venda_id, produto_id]) 
   @@map("produto_da_venda")
 }
 
 
-// --- TABELAS DA EQUIPA E JOGOS (Baseado em image_e9dfad.png) ---
 
 model Jogador {
   id            Int      @id @default(autoincrement())
@@ -179,10 +170,20 @@ model ElencoDoCampeonato {
 
 model Jogo {
   id              Int      @id @default(autoincrement())
-  data            DateTime // O seu ERD diz "data", DateTime é mais útil
+  data            DateTime 
   time_adversario String
   local           String
-  campeonato      String? // O nome do campeonato (não é uma FK no seu ERD)
+  campeonato      String?
 
   @@map("jogos")
 }
+
+model Apoiadores {
+  id Int @id @default(autoincrement())
+  apoiador String
+  meses Int
+  isActive Boolean @default(true)
+
+  @@map("apoiadores")
+}
+

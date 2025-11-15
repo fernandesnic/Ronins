@@ -7,21 +7,15 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const jogadores = await prisma.jogador.findMany({
-      include: {
-        premiacoes: true
-      }
-    });
-    const staff = await prisma.staff.findMany();
+    const apoiadores = await prisma.apoiadores.findMany();
     
     res.status(200).json({
-      message: "Team retrieved successfully",
-      jogadores,
-      staff
+      message: "Supporters retrieved successfully",
+      apoiadores
     });
 
   } catch (error) {
-    console.error("Error in /equipe route:", error);
+    console.error("Error in /apoiadores route:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
