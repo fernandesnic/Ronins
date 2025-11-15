@@ -19,6 +19,7 @@ import { ADMINequipe, ADMINadicionarJogador, setupModalListenersEquipe } from '.
 import { BACKEND_URL } from './url.js'; 
 
 import { vendas, initVendasPage } from './componentes/ADMIN/vendas.js'
+import { adicionarBotoes, ADMINtableManager } from './componentes/ADMIN/tableManager.js';
 
 
 const main = document.querySelector("#app");
@@ -91,6 +92,9 @@ const router = async() => {
                 main.innerHTML = vendas();
                 await initVendasPage();
                 break;
+            case "#ADMINtableManager":
+                main.innerHTML = await ADMINtableManager();
+                await adicionarBotoes();
         }
 
         try{
