@@ -73,7 +73,7 @@ router.get("/list/:tableName", async (req, res) => {
 })
 
 router.delete("/delete/:tableName/:id", async (req, res) => {
-    const {tableName, id} = req.params
+    let {tableName, id} = req.params
     try {
         const tableNameSql = Prisma.raw(tableName); 
 
@@ -152,6 +152,7 @@ router.put("/update/:tableName/:id", async (req, res) => {
         // Itera sobre os dados do corpo da requisição (req.body)
         for (const [columnName, value] of Object.entries(updates)) {
             // Usa Prisma.raw() para o nome da coluna (Identificador)
+            if(columnName === "id") continue
             const columnSql = Prisma.raw(columnName); 
             
             // Usa Prisma.sql para criar a atribuição segura: "coluna" = valor
@@ -182,6 +183,75 @@ router.put("/update/:tableName/:id", async (req, res) => {
         console.error("Erro ao executar UPDATE:", error);
         // Retorna 500 para qualquer outro erro (DB, sintaxe SQL, etc.)
         return res.status(500).json({ error: "Erro interno do servidor ao tentar atualizar o registro." });
+    }
+});
+
+router.post("/create/:tableName", async (req, res) => {
+    // 1. Obter o nome da tabela e os dados a serem inseridos
+    const { tableName } = req.params;
+    const data = req.body; 
+
+    // 2. Validação básica: verificar se há dados para inserir
+    if (Object.keys(data).length === 0) {
+        return res.status(400).json({ error: "Nenhum dado fornecido para criação do registro." });
+    }
+
+    try {
+        // Usa Prisma.raw() para o nome da tabela (Identificador SQL)
+        const tableNameSql = Prisma.raw(tableName);
+        
+        const columnNames = [];
+        const columnValues = [];
+
+        // 3. Itera sobre os dados do corpo da requisição (req.body) para construir as listas
+        for (const [columnName, value] of Object.entries(data)) {
+            // Usa Prisma.raw() para o nome da coluna (Identificador SQL)
+            if (columnName === "id") continue;
+            const columnSql = Prisma.raw(columnName); 
+            columnNames.push(columnSql);
+            
+            // O valor é adicionado à lista para ser parametrizado de forma segura no INSERT
+            columnValues.push(value);
+        }
+        
+        // 4. Combina os nomes das colunas e os valores
+        
+        // Constrói a lista de colunas no formato: "coluna1", "coluna2", ...
+        // Usa Prisma.join para combinar os nomes das colunas (que já são Prisma.raw)
+        const columnsClauseSql = Prisma.join(columnNames); 
+
+        // Constrói a lista de placeholders de valores no formato: $1, $2, ...
+        // Usa Prisma.sql para forçar a parametrização segura dos valores
+        // O array de valores (columnValues) será passado como o segundo argumento de Prisma.sql
+        // O primeiro argumento de Prisma.sql é a string do template (VALUES (...)), e os placeholders
+        // ($1, $2, etc.) serão gerados automaticamente pelo Prisma.join
+        const valuesClauseSql = Prisma.join(columnValues);
+
+        // --- 5. Execução Segura do INSERT ---
+        // A sintaxe final é: INSERT INTO "tabela" ("coluna1", "coluna2") VALUES ($1, $2)
+        const result = await prisma.$executeRaw(Prisma.sql`
+            INSERT INTO ${tableNameSql} (${columnsClauseSql})
+            VALUES (${valuesClauseSql})
+        `);
+
+        // --- 6. Resposta ---
+        if (result === 1) { // Um INSERT bem-sucedido deve retornar 1
+            // NOTA: Em um CREATE/POST real, você geralmente buscaria o ID do novo registro
+            // (por exemplo, usando `RETURNING id` em PostgreSQL).
+            // Com `$executeRaw`, o `result` é apenas o número de linhas afetadas.
+            return res.status(201).json({ 
+                message: `Novo registro criado com sucesso na tabela ${tableName}.`, 
+                count: result 
+            });
+        } else {
+            // Caso $executeRaw retorne 0 (o que é improvável para um INSERT bem-sucedido)
+            return res.status(500).json({ message: `A criação do registro falhou na tabela ${tableName}. Linhas afetadas: ${result}.` });
+        }
+
+    } catch (error) {
+        console.error("Erro ao executar INSERT:", error);
+        // Retorna 500 para qualquer outro erro (DB, sintaxe SQL, violação de restrição, etc.)
+        return res.status(500).json({ error: "Erro interno do servidor ao tentar criar o registro." });
     }
 });
 
