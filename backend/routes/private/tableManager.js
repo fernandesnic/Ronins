@@ -5,14 +5,22 @@ const prisma = new PrismaClient();
 
 const router = express.Router();
 
-
 router.get("/list", async (req, res) =>{
     try{
         const tableResult = await prisma.$queryRaw`
             SELECT table_name
             FROM information_schema.tables
             WHERE table_schema = 'public' 
-            AND table_type = 'BASE TABLE';
+            AND table_type = 'BASE TABLE'
+            AND table_name in (
+                'users', 
+                'produtos',
+                'apoiadores',
+                'campeonatos_ganhos',
+                'jogadores',
+                'staff',
+                'jogos',
+                '');
         `;
         
         const tableNames = tableResult.map(row => row.table_name);
@@ -119,7 +127,7 @@ router.delete("/delete/:tableName/:id", async (req, res) => {
 });
 
 router.put("/update/:tableName/:id", async (req, res) => {
-    const { tableName, id } = req.params;
+    let { tableName, id } = req.params;
     const updates = req.body; 
 
     if (Object.keys(updates).length === 0) {

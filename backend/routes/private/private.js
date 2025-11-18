@@ -7,6 +7,7 @@ import trofeuRoutes from "./trofeus.js";
 import apoiadoresRoutes from "./apoaidores.js"
 import jogosRoutes from "./calendario.js"       
 import vendasRoutes from "./vendas.js";
+import mensagemRoutes from "./mensagem.js"
 
 import tableManagerRoutes from "./tableManager.js"    
 
@@ -21,5 +22,6 @@ router.use("/apoiadores", apoiadoresRoutes);
 router.use("/jogos", jogosRoutes);  
 router.use("/vendas", vendasRoutes);
 router.use("/tablemanager", tableManagerRoutes)
+router.use("/mensagem", mensagemRoutes)
 
 export default router;

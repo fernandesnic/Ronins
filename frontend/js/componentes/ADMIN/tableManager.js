@@ -100,11 +100,13 @@ export async function renderizarTabela(tableName){
         // ------------------------ ADICIONA O HEADER TABELA -------------------------------
 
         // cria o header da tabela
+
+
         const tableHeader = document.createElement("div")
         tableHeader.classList.add("table-line","header")
         tableHeader.style.setProperty("--num-columns", Object.keys(tableFields).length)
         const addButton = document.createElement("button")
-        addButton.classList.add("btn")
+        addButton.classList.add("btn", "add")
         addButton.innerHTML = "Adicionar"
         addButton.addEventListener("click", ()=>{
             handleCreate()
@@ -138,50 +140,7 @@ export async function renderizarTabela(tableName){
         
         // pra cada linha adiciona os valores
         data.data.forEach( line => {
-            // cria o tableLineContainer
-            const tableLineContainer = document.createElement("div")
-            tableLineContainer.classList.add("table-line")
-            tableLineContainer.lineToEdit = line.id
-
-            // cria o buttonsContainer
-            const buttonsContainer = document.createElement("div")
-            buttonsContainer.classList.add("btnsContainer")
-            
-            // cria deleteButton
-            const deleteButton = document.createElement("button")
-            deleteButton.classList.add("btn", "delete")
-            deleteButton.innerHTML = "X" // TODO: colocar um icone talvez
-            deleteButton.addEventListener("click", () => {
-                handleDelete(tableLineContainer)
-            }) // no clique ele passa o editType e a linha a ser editada
-            buttonsContainer.append(deleteButton)
-
-            // cria editButton
-            const editButton = document.createElement("button")
-            editButton.classList.add("btn", "edit")
-            editButton.innerHTML = "E" // TODDO: colocar um icone talvez
-            editButton.addEventListener("click", ()=>{
-                handleEdit(tableLineContainer)
-            }) // no clique ele passa o editType e a linha a ser editada
-            buttonsContainer.append(editButton)
-
-
-            // adiciona o buttonsContainer no tableLineContainer
-            tableLineContainer.append(buttonsContainer)
-
-            // pra cada coluna, adiciona o valor correspondente
-            for(let key in line){
-                const p = document.createElement("p")
-                p.innerHTML = `${line[key]}`
-                const index = tablesInfo.tables[tableName].findIndex(obj => obj.name === key)
-                p.dataset.dataType = tablesInfo.tables[tableName][index].type // adiciona o tipo
-                p.dataset.fieldName = tablesInfo.tables[tableName][index].name // e o nome do campo
-                tableLineContainer.append(p) // adiciona no tableLineContainer
-            }
-
-            // add the tableLineContainer to the tableContainer e ajusta a quantiadde de colunas no css
-            tableLineContainer.style.setProperty("--num-columns", (Object.keys(line).length))
-            tableContainer.append(tableLineContainer)
+            tableContainer.append(createLine(line))
         });
     }catch(error){
         console.error(`Erro em renderizarTabela(${tableName})`, error)
@@ -190,61 +149,15 @@ export async function renderizarTabela(tableName){
 
 
 async function handleEdit(tableLineContainer){
-    // aciona o modal overlay
-    const modalOverlay = document.querySelector("#modal-overlay")
-    modalOverlay.classList.toggle("show")
-    
-    const modalTitle = document.querySelector("#modal-content > h2")
-    modalTitle.innerHTML = "Editar"
-    // limpa e adiciona os campos pra editar no form
+    showModal("Editar", tableLineContainer.children)
     const modalForm = document.querySelector("#modal-content > form")
-    modalForm.innerHTML = ""
-    for(const field of tableLineContainer.children){
-        // se nn for um p ou for um id/senha, continua
-        if(field.tagName !== "P") continue
-        if(field.dataset.fieldName === "id" || field.dataset.fieldName === "password") continue
-        const fieldLabel = document.createElement("label") // cria um label com o dataset do valor
-        fieldLabel.innerHTML = field.dataset.fieldName
-        const inputField = document.createElement("input") 
-        inputField.name = field.dataset.fieldName
-        switch(field.dataset.dataType){
-            case 'boolean':
-                inputField.type = "checkbox"
-                inputField.checked = field.innerHTML === 'true'
-                break;
-            default:
-                inputField.value = field.innerHTML
-                break;
-        }
-        
-        modalForm.append(fieldLabel)
-        modalForm.append(inputField)
-    }
-
-    // cria e adiciona o botão de cancelar
-    const buttonsContainer = document.createElement("div")
-    buttonsContainer.classList.add("buttonsContainer")
-    const cancelButton = document.createElement("button")
-    cancelButton.classList.add("btn", "cancel")
-    cancelButton.innerHTML = "Cancelar"
-    cancelButton.addEventListener("click", (e)=>{
-        e.preventDefault()
-        modalOverlay.classList.remove("show")
-    })
-    buttonsContainer.append(cancelButton)
-    
-    const submitButton = document.createElement("button")
-    submitButton.classList.add("btn")
-    submitButton.innerHTML = "Confirmar"
-
-
-
-    buttonsContainer.append(submitButton)
-    modalForm.append(buttonsContainer)
-    
+    const modalOverlay = document.querySelector("#modal-overlay")
+    const submitButton = document.querySelector("#modal-content > form > div > .btn.submit")
     submitButton.addEventListener("click", async (e) => {
         e.preventDefault();
+        const modalOverlay = document.querySelector("#modal-overlay")
         modalOverlay.classList.remove("show")
+        const modalForm = document.querySelector("#modal-content > form")
         let dataToStore = {}
         for(const input of modalForm.children){
             if(input.tagName !== "INPUT") continue
@@ -252,12 +165,14 @@ async function handleEdit(tableLineContainer){
                 case "checkbox":
                     dataToStore[input.name] = input.checked 
                     break;
+                case "number":
+                    dataToStore[input.name] = parseInt(input.value)
+                    break;
                 default:
                     dataToStore[input.name] = input.value
                     break;
             }
         }
-        
         // pede confirmação
         if (!confirm('Confirma atualização dos dados?')) return;
 
@@ -295,6 +210,22 @@ async function handleEdit(tableLineContainer){
     
 
     })
+
+    for(const inputField of modalForm.children){
+        if(inputField.tagName !== "INPUT") continue
+        const array = [...tableLineContainer.children]
+        const inputValue = array.find((element) => element.dataset.fieldName == inputField.name)
+        tablesInfo.tables[currentTable]
+        switch(inputField.type){
+            case "checkbox":
+                inputField.checked = inputValue.innerHTML == "true"
+                break;
+            default:
+                inputField.value = inputValue.innerHTML
+                break;
+        }
+        
+    }
 }
 
 async function handleDelete(tableLineContainer){
@@ -319,57 +250,13 @@ async function handleDelete(tableLineContainer){
 }
 
 async function handleCreate(){
-    // aciona o modal overlay
-    const modalOverlay = document.querySelector("#modal-overlay")
-    modalOverlay.classList.toggle("show")
-    
-    const modalTitle = document.querySelector("#modal-content > h2")
-    modalTitle.innerHTML = "Adicionar"
-
-    // limpa e adiciona os campos pra editar no form
-    const modalForm = document.querySelector("#modal-content > form")
-    modalForm.innerHTML = ""
-    const tableFields = tablesInfo.tables[currentTable]
-    console.log(tableFields)
-    for(const field of tableFields){
-        console.log(field)
-        if(field.name === "id" || field.name === "password") continue
-        const fieldLabel = document.createElement("label") // cria um label com o dataset do valor
-        fieldLabel.innerHTML = field.name
-        const inputField = document.createElement("input") 
-        inputField.name = field.name
-        switch(field.type){
-            case 'boolean':
-                inputField.type = "checkbox"
-                break;
-        }
-        
-        modalForm.append(fieldLabel)
-        modalForm.append(inputField)
-    }
-
-    // cria e adiciona o botão de cancelar
-    const buttonsContainer = document.createElement("div")
-    buttonsContainer.classList.add("buttonsContainer")
-    const cancelButton = document.createElement("button")
-    cancelButton.classList.add("btn", "cancel")
-    cancelButton.innerHTML = "Cancelar"
-    cancelButton.addEventListener("click", (e)=>{
-        e.preventDefault()
-        modalOverlay.classList.remove("show")
-    })
-    buttonsContainer.append(cancelButton)
-    
-    const submitButton = document.createElement("button")
-    submitButton.classList.add("btn")
-    submitButton.innerHTML = "Confirmar"
-    buttonsContainer.append(submitButton)
-    
-    modalForm.append(buttonsContainer)
-    
+    showModal("Criar")
+    const submitButton = document.querySelector("#modal-content > form > div > .btn.submit")
     submitButton.addEventListener("click", async (e)=>{
         e.preventDefault()
+        const modalOverlay = document.querySelector("#modal-overlay")
         modalOverlay.classList.remove("show")
+        const modalForm = document.querySelector("#modal-content > form")
         let dataToStore = {}
         for(const input of modalForm.children){
             if(input.tagName !== "INPUT") continue
@@ -408,64 +295,111 @@ async function handleCreate(){
 
 
         if(response.ok){
-
-            // cria o tableLineContainer
-            const tableLineContainer = document.createElement("div")
-            tableLineContainer.classList.add("table-line")
-            tableLineContainer.lineToEdit = dataToStore.id
-
-            // cria o buttonsContainer
-            const buttonsContainer = document.createElement("div")
-            buttonsContainer.classList.add("btnsContainer")
-            
-            // cria deleteButton
-            const deleteButton = document.createElement("button")
-            deleteButton.classList.add("btn", "delete")
-            deleteButton.innerHTML = "X" // TODO: colocar um icone talvez
-            deleteButton.addEventListener("click", () => {
-                handleDelete(tableLineContainer)
-            }) // no clique ele passa o editType e a linha a ser editada
-            buttonsContainer.append(deleteButton)
-
-            // cria editButton
-            const editButton = document.createElement("button")
-            editButton.classList.add("btn", "edit")
-            editButton.innerHTML = "E" // TODDO: colocar um icone talvez
-            editButton.addEventListener("click", ()=>{
-                handleEdit(tableLineContainer)
-            }) // no clique ele passa o editType e a linha a ser editada
-            buttonsContainer.append(editButton)
-
-
-            // adiciona o buttonsContainer no tableLineContainer
-            tableLineContainer.append(buttonsContainer)
-
-            // pra cada coluna, adiciona o valor correspondente
-            for(let key in dataToStore){
-                const p = document.createElement("p")
-                p.innerHTML = `${dataToStore[key]}`
-                const index = tablesInfo.tables[currentTable].findIndex(obj => obj.name === key)
-                p.dataset.dataType = tablesInfo.tables[currentTable][index].type // adiciona o tipo
-                p.dataset.fieldName = tablesInfo.tables[currentTable][index].name // e o nome do campo
-                tableLineContainer.append(p) // adiciona no tableLineContainer
-            }
-
-            // add the tableLineContainer to the tableContainer e ajusta a quantiadde de colunas no css
-            tableLineContainer.style.setProperty("--num-columns", (Object.keys(dataToStore).length))
-            document.querySelector("#table").append(tableLineContainer)
-
-            
+            renderizarTabela(currentTable)
+            // document.querySelector("#table").append(createLine({,...dataToStore}))
             alert("Dados criados com sucesso!");
         }else{
             alert(`Erro: ${response.message}`)
         }
     
-
-
     })
-    
 }
 
-function createLine(){
+function createLine(lineInfo){
+     // cria o tableLineContainer
+    const tableLineContainer = document.createElement("div")
+    tableLineContainer.classList.add("table-line")
+    tableLineContainer.lineToEdit = lineInfo.id
 
+    // cria o buttonsContainer
+    const buttonsContainer = document.createElement("div")
+    buttonsContainer.classList.add("btnsContainer")
+    
+    // cria deleteButton
+    const deleteButton = document.createElement("button")
+    deleteButton.classList.add("btn", "delete")
+    deleteButton.innerHTML = "X" // TODO: colocar um icone talvez
+    deleteButton.addEventListener("click", () => {
+        handleDelete(tableLineContainer)
+    }) // no clique ele passa o editType e a linha a ser editada
+    buttonsContainer.append(deleteButton)
+
+    // cria editButton
+    const editButton = document.createElement("button")
+    editButton.classList.add("btn", "edit")
+    editButton.innerHTML = "E" // TODDO: colocar um icone talvez
+    editButton.addEventListener("click", ()=>{
+        handleEdit(tableLineContainer)
+    }) // no clique ele passa o editType e a linha a ser editada
+    buttonsContainer.append(editButton)
+
+    // adiciona o buttonsContainer no tableLineContainer
+    tableLineContainer.append(buttonsContainer)
+
+    for(let key in lineInfo){
+        const p = document.createElement("p")
+        p.innerHTML = `${lineInfo[key]}`
+        const index = tablesInfo.tables[currentTable].findIndex(obj => obj.name === key)
+        p.dataset.dataType = tablesInfo.tables[currentTable][index].type // adiciona o tipo
+        p.dataset.fieldName = tablesInfo.tables[currentTable][index].name // e o nome do campo
+        tableLineContainer.append(p) // adiciona no tableLineContainer
+    }
+
+    // add the tableLineContainer to the tableContainer e ajusta a quantiadde de colunas no css
+    tableLineContainer.style.setProperty("--num-columns", (Object.keys(lineInfo).length))
+
+    return tableLineContainer
+}
+
+function showModal(title){
+    // aciona o modal
+    const modalOverlay = document.querySelector("#modal-overlay")
+    modalOverlay.classList.add("show")
+    
+    // muda o titulo
+    const modalTitle = document.querySelector("#modal-content > h2")
+    modalTitle.innerHTML = title
+
+    // limpa e adiciona os campos pra editar no form
+    const modalForm = document.querySelector("#modal-content > form")
+    modalForm.innerHTML = ""
+    const tableFields = tablesInfo.tables[currentTable]
+    for(const field of tableFields){
+        // se nn for um p ou for um id/senha, continua
+        if(field.name === "id" || field.name === "password") continue
+        const fieldLabel = document.createElement("label") // cria um label com o dataset do valor
+        fieldLabel.innerHTML = field.name
+        const inputField = document.createElement("input") 
+        inputField.name = field.name
+        switch(field.type){
+            case 'boolean':
+                inputField.type = "checkbox"
+                break;
+            case 'integer':
+                inputField.type = "number"
+                break;
+        }
+        
+        modalForm.append(fieldLabel)
+        modalForm.append(inputField)
+    }
+
+    // cria e adiciona o botão de cancelar
+    const buttonsContainer = document.createElement("div")
+    buttonsContainer.classList.add("buttonsContainer")
+    const cancelButton = document.createElement("button")
+    cancelButton.classList.add("btn", "cancel")
+    cancelButton.innerHTML = "Cancelar"
+    cancelButton.addEventListener("click", (e)=>{
+        e.preventDefault()
+        modalOverlay.classList.remove("show")
+    })
+    buttonsContainer.append(cancelButton)
+    
+    const submitButton = document.createElement("button")
+    submitButton.classList.add("btn", "submit")
+    submitButton.innerHTML = "Confirmar"
+
+    buttonsContainer.append(submitButton)
+    modalForm.append(buttonsContainer)
 }

@@ -1,5 +1,10 @@
 .flex-container{
     display: flex;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    height: 600px;
 }
 
 #table-list{
@@ -12,7 +17,9 @@
     flex-direction: column;
     width: 100%;
     overflow: auto;
-    background-color: var(--bg-color2);
+    border: 2px solid var(--primary-color);
+    border-radius: 0px 10px 10px 0px;
+    /* background-color: var(--bg-color2); */
 }
 
 #table > p{
@@ -24,6 +31,7 @@
 .table-line.header{
     background-color: var(--primary-color);
     color: var(--title-color);
+    font-weight: 600;
 }
 
 .table-line{
@@ -32,11 +40,25 @@
     width: fit-content;
     grid-template-columns: 150px repeat(var(--num-columns, auto-fill), 250px);
     align-items: center;
+    background-color: var(--bg-color1);
 }
 
 .table-line > p{
-    padding: 10px;
+    padding: 20px;
     overflow: hidden;
+    text-wrap: nowrap;
+}
+
+.table-line > p:hover{
+    white-space: normal;
+    overflow: visible;
+    word-wrap: break-word;
+    background-color: var(--bg-color1);
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 15px;
+    margin: -15px;
 }
 
 .table-line > .btnsContainer{
@@ -44,10 +66,6 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
-}
-
-.table-line:nth-child(even){
-    background-color: var(--bg-color1);
 }
 
 #table-list > .btn{
@@ -112,3 +130,17 @@
     color: var(--primary-color);
 }
 
+
+.btn.edit{
+    background-color: var(--bg-color2);
+}
+
+.btn.add{
+    margin: 20px;
+    background-color: green;
+    color: white;
+}
+
+.btn.add:hover{
+    background-color: rgb(0, 70, 0);
+}
