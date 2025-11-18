@@ -24,7 +24,17 @@
     --text-color: rgb(94, 93, 93);
     --border-color: rgb(255, 255, 255, 0);
 
+    --cart-bg: #ffffff;
+    --cart-bg-light: #f4f4f4;
+    --cart-bg-hover: #e6e6e6;
 
+    --cart-text-primary: #1a1a1a;
+    --cart-text-secondary: #555555;
+
+    --cart-accent: #dd3434;           
+    --cart-border: rgba(0, 0, 0, 0.15);
+
+    --cart-font: var(--font-primary);
 
     /*Definição das fontes principais*/
     --font-primary: 'ITC Officina Serif Std Book'; 
@@ -42,7 +52,18 @@
     --text-color: rgb(158, 158, 158);
     --border-color: rgb(255, 255, 255, 0);
 
- 
+        --cart-bg: #1d1d1d;
+    --cart-bg-light: #2a2a2a;
+    --cart-bg-hover: #333333;
+
+    --cart-text-primary: #ffffff;
+    --cart-text-secondary: #b3b3b3;
+
+    --cart-accent: #ff5555;           /* Levemente mais vibrante pro escuro */
+    --cart-border: rgba(255, 255, 255, 0.15);
+
+    --cart-font: var(--font-primary);
+
 }
 
 /* Modo de alto contraste */
@@ -54,6 +75,16 @@
     --text-color: white;
     --border-color: white;
 
-    /* apoie se */
+    --cart-bg: black;
+    --cart-bg-light: black;
+    --cart-bg-hover: #222222;
+
+    --cart-text-primary: yellow;
+    --cart-text-secondary: white;
+
+    --cart-accent: yellow;
+    --cart-border: yellow;
+
+    --cart-font: var(--font-primary);
     
 }

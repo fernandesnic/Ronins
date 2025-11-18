@@ -48,28 +48,48 @@ export async function adicionarEquipe() {
         const staff = data.staff
         adicionarJogadores(jogadores)
         adicionarStaff(staff)
-    }catch{}
+    }catch(error){
+        console.error("ERRO DENTRO DE adicionarEquipe:", error);
+    }
     
 }
 
 
-export async function adicionarJogadores(jogadores){
+export async function adicionarJogadores(jogadores) {
     const playerContainer = document.querySelector("#player-container");
-    if(!playerContainer){
-        console.error('Container #player-container não encontrado. Certifique-se que equipe() foi inserido no DOM antes de chamar adicionarEquipe().');
+    if (!playerContainer) {
+        console.error('Container #player-container não encontrado.');
         return;
     }
-    try{
+
+    try {
         if (!jogadores || jogadores.length === 0) {
             playerContainer.innerHTML += "<p>Nenhum jogador encontrado.</p>";
             return;
         }
+
         jogadores.forEach(item => {
-            if(!item.on_team){
-                return
+            if (!item.on_team) {
+                return;
             }
+
+            let premiacoesHtml = ''; 
+
+            if (item.premiacoes && item.premiacoes.length > 0) {
+                
+                premiacoesHtml += '<h4 class="premiacao-title">Premiações:</h4>';
+                premiacoesHtml += '<ul class="premiacao-list">';
+                
+                premiacoesHtml += item.premiacoes
+                    .map(premio => `<li>${premio.ano} - ${premio.descricao}</li>`)
+                    .join('');
+                
+                premiacoesHtml += '</ul>';
+            }
+
             const div = document.createElement("div");
             div.classList.add("card", "player");
+            
             div.innerHTML = `
                 <img src="assets/photos/jogadores/${item.foto}" alt="Jogador: ${item.nome}">
                 <div class="card-content">
@@ -77,17 +97,20 @@ export async function adicionarJogadores(jogadores){
                     <p>Número da camisa: ${item.numero_camisa}</p>
                     <p>Classificação: ${item.classificacao}</p>
                     <p>Nacionalidade: ${item.nacionalidade}</p>
+                    
+                    ${premiacoesHtml}
+
                 </div>
-            `
+            `;
+            
             playerContainer.appendChild(div);
         });
-    }catch(error){
-        console.error("Erro ao buscar e adicionar jogadores:", error);
+
+    } catch (error) {
+        console.error("ERRO DENTRO DE adicionarJogadores:", error);
         playerContainer.innerHTML += `<p style="color: red;">Falha ao carregar jogadores. (${error.message})</p>`;
     }
-    
 }
-
 export async function adicionarStaff(staff){
     const comissaoContainer = document.querySelector("#comissao-container");
     if(!comissaoContainer){

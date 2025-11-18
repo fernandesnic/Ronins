@@ -19,3 +19,314 @@
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
+
+#produto-detalhe {
+    padding: 40px 0;
+    background: var(--bg-color);
+    font-family: var(--font-primary);
+}
+
+/* Link Voltar */
+.link-voltar {
+    color: var(--cart-text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: opacity .2s;
+}
+
+.link-voltar:hover {
+    opacity: 0.6;
+}
+
+/* GRID PRINCIPAL */
+.produto-detalhe-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background: var(--cart-bg-light);
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 16px;
+}
+
+/* IMAGEM */
+.produto-detalhe-imagem {
+    width: 100%;
+    padding: 10px;
+    background: var(--cart-bg);
+    border-radius: 16px;
+    border: 1px solid var(--cart-border);
+}
+
+.produto-detalhe-imagem img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+}
+
+/* INFO */
+.produto-detalhe-info h2 {
+    color: var(--cart-text-primary);
+    margin-bottom: 10px;
+    font-size: 1.9rem;
+    font-weight: 700;
+}
+
+#detalhe-desc {
+    color: var(--cart-text-secondary);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* PREÇO */
+.detalhe-preco span {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--cart-text-primary);
+}
+
+/* FORMULÁRIO DE OPÇÕES */
+.detalhe-opcoes {
+    margin: 25px 0;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--cart-text-secondary);
+}
+
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--cart-border);
+    background: var(--cart-bg);
+    color: var(--cart-text-primary);
+    font-size: 1rem;
+    transition: background .2s, border .2s;
+}
+
+.form-group select:disabled {
+    opacity: 0.5;
+}
+
+/* ESTOQUE */
+.detalhe-estoque {
+    margin: 10px 0 20px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* BOTÃO */
+#detalhe-add-cart {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background: var(--cart-accent);
+    color: #fff;
+    transition: opacity .2s, transform .1s;
+}
+
+#detalhe-add-cart:disabled {
+    background: var(--cart-border);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+#detalhe-add-cart:not(:disabled):hover {
+    opacity: 0.85;
+}
+
+#detalhe-add-cart:not(:disabled):active {
+    transform: scale(0.97);
+}
+
+/* ============================
+    SEÇÃO DE PRODUTOS
+============================= */
+
+.section-produtos {
+    padding: 40px 0;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* ============================
+    GRID DE PRODUTOS
+============================= */
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+/* ============================
+    ESTADOS
+============================= */
+
+.loading-text,
+.empty-text,
+.error-text {
+    text-align: center;
+    font-size: 1rem;
+    padding: 40px 0;
+    color: #555;
+}
+
+.error-text {
+    color: #dd3434;
+    font-weight: 600;
+}
+
+/* ============================
+    CARD DO PRODUTO
+============================= */
+
+.product-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* ============================
+    IMAGEM DO PRODUTO
+============================= */
+
+.product-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+/* ============================
+    TEXTO DO CARD
+============================= */
+
+.card-content {
+    padding: 15px;
+}
+
+.product-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 10px;
+}
+
+/* ============================
+    BOTÃO "VER DETALHES"
+============================= */
+
+.product-btn {
+    width: 100%;
+    text-align: center;
+}
+
+/* ============================
+    DARK MODE
+============================= */
+
+.dark-mode .section-title {
+    color: #fff;
+}
+
+.dark-mode .section-subtitle {
+    color: #c9c9c9;
+}
+
+.dark-mode .product-card {
+    background: #1a1a1a;
+    border-color: rgba(255,255,255,0.15);
+}
+
+.dark-mode .product-card:hover {
+    box-shadow: 0 8px 25px rgba(255,255,255,0.1);
+}
+
+.dark-mode .product-title {
+    color: #fff;
+}
+
+.dark-mode .loading-text,
+.dark-mode .empty-text {
+    color: #c9c9c9;
+}
+
+.dark-mode .error-text {
+    color: #ff5555;
+}
+
+/* ============================
+    MODO ALTO CONTRASTE
+============================= */
+
+.high-contrast .product-card {
+    background: #000;
+    border: 2px solid #ffff00;
+}
+
+.high-contrast .product-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.high-contrast .product-title {
+    color: #ffff00;
+}
+
+.high-contrast .section-title {
+    color: #ffff00;
+}
+
+.high-contrast .section-subtitle {
+    color: #fff;
+}
+
+.high-contrast .loading-text,
+.high-contrast .empty-text {
+    color: #fff;
+}
+
+.high-contrast .error-text {
+    color: #ffff00;
+}
+
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+    .produto-detalhe-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}

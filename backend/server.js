@@ -4,6 +4,7 @@ import privateRoutes from "./routes/private/private.js"
 import vendasRoutes from "./routes/private/vendas.js";
 import authRoutes from "./routes/auth.js"
 import auth from "./middlewares/auth.js";
+import enderecoRouter from "./routes/enderecoRoutes.js";
 import cors from "cors";
 
 // --- 1. INICIALIZAR O APP ---
@@ -37,5 +38,21 @@ app.use("/api/auth", authRoutes);
 app.use("/api/public", publicRoutes);
 app.use("/api/vendas", auth, vendasRoutes) 
 app.use("/api/private", auth, privateRoutes)
+app.use("/api/v1/endereco", auth, enderecoRouter)
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  
+  const message = err.message || "Algo deu errado no servidor";
+
+  console.error("[ERRO NA API]:", err.message);
+
+  res.status(statusCode).json({
+    status: 'error',
+    message: message
+  });
+});
+
+
 
 app.listen(PORT, () => console.log("Server is running on port", PORT));
