@@ -1,0 +1,146 @@
+#messages-list{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    background-color: var(--bg-color1);
+   
+}
+
+
+#search-options{
+    /* display: flex; */
+    display: none;
+    justify-content: space-between;
+    font-size: 125%;
+    padding-right: 20px;
+    text-wrap: nowrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#search-options > #filtro-status{
+    width: 100%;
+}
+
+#messages-list > #scroll{
+    width: 400px;
+    height: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x:hidden;
+    scrollbar-width:thin;
+}
+
+#messages-list > #scroll > .btn{
+    height: max-content;
+    flex-shrink: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    text-align: start;
+    transition: 0.05s;
+}
+
+#messages-list > #scroll > .btn.novo{
+    border-left: solid 7px green;
+    font-weight: 900;
+}
+
+#messages-list > #scroll > .btn.active{
+    transform: translateX(20px);
+    background-color: var(--bg-color2);
+}
+
+#messages-list > #scroll > .btn > p{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-wrap: nowrap;
+}
+
+#messages-list > #scroll > .btn > .message-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+
+#messages-list > #scroll > .btn > .message-header > p{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-wrap: nowrap;
+    color: var(--title-color);
+
+}
+
+
+
+#messages-list > #scroll > .btn > .message-header > .message-owner{
+    font-size: 150%;
+}
+
+#messages-list > #scroll > .btn > .message-header > .message-date{
+    min-width: fit-content;
+}
+
+#message-container{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 100%;
+    gap: 30px;
+}
+
+#message-container > #header{
+    display: flex;
+    width: 100%;
+    align-items: start;
+    justify-content: space-between;
+    height: fit-content;
+}
+
+#owner > h4{
+    text-align: start;
+}
+
+#message-container > #content{
+    font-size: 150%;
+    min-height: 450px;
+    flex-shrink: 0;
+}
+
+#message-container h3{
+    margin: 0;
+    text-align: start;
+}
+
+.flex-container{
+    height: fit-content;
+}
+
+.btn.marcar-lido{
+    background-color: green;
+    color: var(--primary-color);
+    align-self: flex-end;
+}
+
+.btn.marcar-lido:hover{
+    background-color: rgb(0, 70, 0);
+    color: var(--primary-color);
+}
+
+.btn.remover-lido{
+    background-color: rgb(255, 49, 49);
+    color: var(--primary-color);
+    align-self: flex-end;
+}
+
+.btn.remover-lido:hover{
+    background-color: rgb(134, 21, 21);
+    color: var(--primary-color);
+}

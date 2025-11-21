@@ -46,10 +46,11 @@
 .table-line > p{
     padding: 20px;
     overflow: hidden;
+    text-overflow: ellipsis;
     text-wrap: nowrap;
 }
 
-.table-line > p:hover{
+.table-line:not(.header) > p:hover{
     white-space: normal;
     overflow: visible;
     word-wrap: break-word;

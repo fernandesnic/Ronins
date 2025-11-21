@@ -23,6 +23,7 @@ import { produtoDetalhe, initProdutoDetalhe } from './componentes/produtoDetalhe
 import { BACKEND_URL } from './url.js'; 
 import { vendas, initVendasPage } from './componentes/ADMIN/vendas.js'
 import { adicionarBotoes, ADMINtableManager } from './componentes/ADMIN/tableManager.js';
+import { adicionarMensagens, mensagens } from './componentes/ADMIN/mensagens.js';
 
 
 const main = document.querySelector("#app");
@@ -115,6 +116,11 @@ const router = async() => {
             case "#ADMINtableManager":
                 main.innerHTML = await ADMINtableManager();
                 await adicionarBotoes();
+                break;
+            case "#mensagens":
+                main.innerHTML = mensagens();
+                adicionarMensagens();
+                break;
         }
 
         try{
