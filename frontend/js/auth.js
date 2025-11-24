@@ -129,6 +129,8 @@ export function updateHeaderActions() {
 
             const buttons = [
                 { label: 'Admin', hash: '#ADMINtableManager' },
+                { label: 'Emails', hash: '#mensagens' },
+
             ];
 
             buttons.forEach(item => {
