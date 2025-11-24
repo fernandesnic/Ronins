@@ -16,159 +16,156 @@ import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
 import { users, adicionarUsuarios, setupModalListeners } from './componentes/ADMIN/users.js'
 import { ADMINequipe, ADMINadicionarJogador, setupModalListenersEquipe } from './componentes/ADMIN/equipe.js'
 import { setupContatoForm } from './componentes/contatoHandler.js';
-// --- MUDANÇA 1: Importar a função de LÓGICA (init) que vamos criar ---
 import { produtoDetalhe, initProdutoDetalhe } from './componentes/produtoDetalhe.js'; 
-
-// Pede o export com o NOME "BACKEND_URL"
 import { BACKEND_URL } from './url.js'; 
 import { vendas, initVendasPage } from './componentes/ADMIN/vendas.js'
 import { adicionarBotoes, ADMINtableManager } from './componentes/ADMIN/tableManager.js';
 import { adicionarMensagens, mensagens } from './componentes/ADMIN/mensagens.js';
 
+// IMPORTANTE: Atualizar header sempre
+import { updateHeaderActions } from './auth.js';
 
 const main = document.querySelector("#app");
 const landing_page = home() + sobre() + contato()
 
-const router = async() => {
+const router = async () => {
+
     const hash = window.location.hash;
-    try{
-        // Tenta rolar para âncoras (ex: #sobre)
-        const element = document.querySelector(hash);
-        element.scrollIntoView()
+
+    // --- Rota de produto dinâmica (#produto/123) ---
+    if (hash.startsWith('#produto/')) {
+        const id = hash.split('/')[1];
+
+        main.innerHTML = produtoDetalhe();
+        await initProdutoDetalhe(id);
+
+        updateHeaderActions();
+        return;
     }
-    catch{
-        scroll({
-            "top": 0, 
-            "behavior": "instant"
-        });
 
-       
-        if (hash.startsWith('#produto/')) {
-            const id = hash.split('/')[1]; 
-            
-            main.innerHTML = produtoDetalhe(); 
-            
-             await initProdutoDetalhe(id); 
-            
-            return; 
-        }
+    switch (hash) {
+        case '#home':
+        case '#sobre':
+        default:
+            main.innerHTML = landing_page;
+            setupContatoForm();
+            break;
 
-        switch(hash){
-            case '#home':
-            case '#sobre':
-            default:
-                main.innerHTML = landing_page;
-                setupContatoForm(); 
-                break;
-            case '#contato':
-                main.innerHTML = contato(); 
-                setupContatoForm();       
-                break;
-            case '#produtos':
-                main.innerHTML = produtos();
-                await adicionarProdutos();
-                break;
-            case '#galeriatrofeus':
-                main.innerHTML = galeriatrofeus();
-                await adicionarTrofeus();
-                break;
-            case '#trofeus':
-                main.innerHTML = galeriatrofeus();
-                break;
-            case '#checkout':
-                main.innerHTML = checkout();
-                requestAnimationFrame(() => {
-                    initCheckout();
-                });
-                break;
-            case '#apoiase':
-                main.innerHTML = apoiase();
-                break;
-            case '#equipe':
-                main.innerHTML = equipe();
-                await adicionarEquipe();
-                break;
-            case '#login':
-                main.innerHTML = login();
-                setupLoginForm(); 
-                break;
-            case '#cadastro':
-                main.innerHTML = cadastro();
-                setupCadastroForm(); 
-                break;
-            case '#calendario':
-                main.innerHTML = calendario();
-                break;
-            case '#users':
-                main.innerHTML = users();
-                setupModalListeners();   
-                await adicionarUsuarios(); 
-                break;
-            case '#ADMINequipe':
-                main.innerHTML = ADMINequipe();
-                await ADMINadicionarJogador();
-                setupModalListenersEquipe(); 
-                break;
-            case "#vendas":
-                main.innerHTML = vendas();
-                await initVendasPage();
-                break;
-            case "#ADMINtableManager":
-                main.innerHTML = await ADMINtableManager();
-                await adicionarBotoes();
-                break;
-            case "#mensagens":
-                main.innerHTML = mensagens();
-                adicionarMensagens();
-                break;
-        }
+        case '#contato':
+            main.innerHTML = contato();
+            setupContatoForm();
+            break;
 
-        try{
-            const element = document.querySelector(hash);
-            element.scrollIntoView()
-        }
-        catch{
-            return null
-        }
+        case '#produtos':
+            main.innerHTML = produtos();
+            await adicionarProdutos();
+            break;
+
+        case '#galeriatrofeus':
+        case '#trofeus':
+            main.innerHTML = galeriatrofeus();
+            await adicionarTrofeus();
+            break;
+
+        case '#checkout':
+            main.innerHTML = checkout();
+            requestAnimationFrame(initCheckout);
+            break;
+
+        case '#apoiase':
+            main.innerHTML = apoiase();
+            break;
+
+        case '#equipe':
+            main.innerHTML = equipe();
+            await adicionarEquipe();
+            break;
+
+        case '#login':
+            main.innerHTML = login();
+            setupLoginForm();
+            break;
+
+        case '#cadastro':
+            main.innerHTML = cadastro();
+            setupCadastroForm();
+            break;
+
+        case '#calendario':
+            main.innerHTML = calendario();
+            break;
+
+        case '#users':
+            main.innerHTML = users();
+            setupModalListeners();
+            await adicionarUsuarios();
+            break;
+
+        case '#ADMINequipe':
+            main.innerHTML = ADMINequipe();
+            await ADMINadicionarJogador();
+            setupModalListenersEquipe();
+            break;
+
+        case "#vendas":
+            main.innerHTML = vendas();
+            await initVendasPage();
+            break;
+
+        case "#ADMINtableManager":
+            main.innerHTML = await ADMINtableManager();
+            await adicionarBotoes();
+            break;
+
+        case "#mensagens":
+            main.innerHTML = mensagens();
+            adicionarMensagens();
+            break;
     }
+
+    // Atualiza os botões do header em TODA troca de rota
+    updateHeaderActions();
+
+    // Scroll seguro
+    try {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+    } catch { }
 };
 
-// --- Funções para Configurar Formulários ---
-
+// Setup do Login
 function setupLoginForm() {
-    const loginForm = main.querySelector('.login-container form');
-    const registerLink = main.querySelector('.register-link a');
+    const form = main.querySelector('.login-container form');
+    const link = main.querySelector('.register-link a');
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLoginSubmit);
-    }
-    if (registerLink) {
-        registerLink.addEventListener('click', (e) => {
+    if (form) form.addEventListener('submit', handleLoginSubmit);
+    if (link) {
+        link.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.hash = '#cadastro'; // Navega para a página de cadastro
+            window.location.hash = '#cadastro';
         });
     }
 }
 
+// Setup do Cadastro
 function setupCadastroForm() {
-    const cadastroForm = main.querySelector('.cadastro-container form');
-    const loginLink = main.querySelector('#link-to-login');
+    const form = main.querySelector('.cadastro-container form');
+    const link = main.querySelector('#link-to-login');
 
-    if (cadastroForm) {
-        cadastroForm.addEventListener('submit', handleCadastroSubmit);
-    }
-    if (loginLink) {
-        loginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.hash = '#login'; // Navega para a página de login
-        });
-    }
+    if (form) form.addEventListener('submit', handleCadastroSubmit);
+    if (link) {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.hash = '#login';
+        });
+    }
 }
 
-// Quando a página carregar pela primeira vez:
+// Carregar página inicial
 window.addEventListener("DOMContentLoaded", () => {
     router();
+    updateHeaderActions(); // garante header certo ao abrir o site
 });
 
-// Quando o link (hash) mudar, chama o router novamente
+// Quando mudar o hash
 window.addEventListener("hashchange", router);

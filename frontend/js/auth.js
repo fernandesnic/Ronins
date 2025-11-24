@@ -1,145 +1,154 @@
 // --- Configuração ---
-import { BACKEND_URL } from './url.js'; 
+import { BACKEND_URL } from './url.js';
 
 // --- Funções de Feedback ---
 function showMessage(message, isError = false) {
-    // NOTA: 'alert()' é bloqueado em alguns ambientes.
-    // Considere trocar por um <p id="feedback-message">
-    alert(message);
+    alert(message); 
 }
 
 // --- Funções de Submissão (Comunicação com Backend) ---
 export async function handleLoginSubmit(event) {
-    event.preventDefault();
-    const email = document.getElementById('login-email')?.value;
-    const password = document.getElementById('login-pass')?.value;
+    event.preventDefault();
+    const email = document.getElementById('login-email')?.value;
+    const password = document.getElementById('login-pass')?.value;
 
-    if (!email || !password) return showMessage('Por favor, preencha e-mail e senha.', true);
+    if (!email || !password) return showMessage('Por favor, preencha e-mail e senha.', true);
 
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        });
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+        });
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'Erro ao fazer login.');
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Erro ao fazer login.');
 
-        // Salva os dados da sessão
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userData', JSON.stringify(data.user));
-        showMessage('Login realizado com sucesso!');
-        window.location.hash = '#home';
-        window.location.reload(); 
-    } catch (error) {
-        showMessage(error.message, true);
-    }
+        // Salva os dados da sessão
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('userData', JSON.stringify(data.user));
+
+        showMessage('Login realizado com sucesso!');
+
+        // Atualiza header instantaneamente
+        updateHeaderActions();
+        window.location.hash = '#home';
+
+    } catch (error) {
+        showMessage(error.message, true);
+    }
 }
 
 export async function handleCadastroSubmit(event) {
-    event.preventDefault();
-    const firstName = document.getElementById('firstname')?.value || '';
-    const lastName = document.getElementById('lastname')?.value || '';
-    const email = document.getElementById('cadastro-email')?.value;
-    const password = document.getElementById('cadastro-password')?.value;
-    const nome = `${firstName} ${lastName}`.trim();
-    
+    event.preventDefault();
+    const firstName = document.getElementById('firstname')?.value || '';
+    const lastName = document.getElementById('lastname')?.value || '';
+    const email = document.getElementById('cadastro-email')?.value;
+    const password = document.getElementById('cadastro-password')?.value;
+    const nome = `${firstName} ${lastName}`.trim();
+
     if (!nome || !email || !password) {
-        showMessage('Por favor, preencha nome, e-mail e senha.', true);
-        return;
-    }
+        showMessage('Por favor, preencha nome, e-mail e senha.', true);
+        return;
+    }
 
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/auth/cadastro`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome, email, password }),
-        });
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/auth/cadastro`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, email, password }),
+        });
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'Erro ao realizar o cadastro.');
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Erro ao realizar o cadastro.');
 
-        showMessage('Cadastro realizado com sucesso! Redirecionando para o login...');
-        window.location.hash = '#login';
-    } catch (error) {
-        showMessage(error.message, true);
-    }
+        showMessage('Cadastro realizado com sucesso! Redirecionando para o login...');
+        window.location.hash = '#login';
+
+    } catch (error) {
+        showMessage(error.message, true);
+    }
 }
 
 // --- Funções de Estado de Autenticação (UI) ---
 export function isUserLoggedIn() {
-    return !!localStorage.getItem('authToken');
+    return !!localStorage.getItem('authToken');
 }
 
 function getCurrentUser() {
-    const userData = localStorage.getItem('userData');
-    return userData ? JSON.parse(userData) : null;
+    try {
+        const userData = localStorage.getItem('userData');
+        return userData ? JSON.parse(userData) : null;
+    } catch {
+        return null;
+    }
 }
 
 function isUserAdmin() {
-    const user = getCurrentUser();
-    return !!(user && user.is_admin);
+    const user = getCurrentUser();
+    if (!user) return false;
+
+    return (
+        user.is_admin === true ||
+        user.isAdmin === true ||
+        user.admin === true ||
+        user.role === 'admin' ||
+        (Array.isArray(user.roles) && user.roles.includes('admin'))
+    );
 }
 
 export function logout(event) {
-    if (event) event.preventDefault();
-    localStorage.removeItem('userData');
-    localStorage.removeItem('authToken');
-    showMessage('Você foi desconectado.');
-    window.location.hash = '#home';
-    window.location.reload(); // Força a atualização do header
+    if (event) event.preventDefault();
+    localStorage.removeItem('userData');
+    localStorage.removeItem('authToken');
+
+    showMessage('Você foi desconectado.');
+    updateHeaderActions();
+    window.location.hash = '#home';
 }
 
 /**
- * Atualiza o botão de login/sair e adiciona o botão Users se for admin.
- */
+ * Atualiza o botão de login/sair e adiciona o botão Users se for admin.
+ */
 export function updateHeaderActions() {
-    const 
-loginButton = document.querySelector('.btn-login');
-    if (!loginButton) return;
+    const loginButton = document.getElementById('btn-login');
+    if (!loginButton) return;
 
-    const loginLI = loginButton.closest('li');
-    const menuList = loginLI ? loginLI.parentElement : null;
-    if (!menuList) return;
+    const menuList = loginButton.closest('ul');
+    if (!menuList) return;
 
-    // Remove botões admin antigos se existirem
-    const oldAdminButtons = menuList.querySelectorAll('.admin-button-li');
-    oldAdminButtons.forEach(btn => btn.remove());
+    // Remove botões admin antigos
+    menuList.querySelectorAll('.admin-button-li').forEach(btn => btn.remove());
 
-    const newLoginButton = loginButton.cloneNode(true);
-    loginLI.replaceChild(newLoginButton, loginButton);
+    const logged = isUserLoggedIn();
 
-    if (isUserLoggedIn()) {
-        // Se for admin, insere botões antes do li do login
-        if (isUserAdmin()) {
-            // Botão Users
-            const usersLI = document.createElement('li');
-            usersLI.className = 'admin-button-li';
-            usersLI.innerHTML = '<a href="#users" class="btn">Users</a>';
-            menuList.insertBefore(usersLI, loginLI);
+    if (logged) {
 
-            // Botão Vendas
-            const vendasLI = document.createElement('li');
-            vendasLI.className = 'admin-button-li';
-            vendasLI.innerHTML = '<a href="#vendas" class="btn">Vendas</a>';
-            menuList.insertBefore(vendasLI, loginLI);
-            
-            // Botão Admin Equipe 
-            const equipeLI = document.createElement('li');
-            equipeLI.className = 'admin-button-li';
-            equipeLI.innerHTML = '<a href="#ADMINequipe" class="btn">Equipe</a>';
-            menuList.insertBefore(equipeLI, loginLI);
-        }
+        // Botões de admin
+        if (isUserAdmin()) {
 
-        // Adiciona o listener de 'Sair' no *novo* botão
-        newLoginButton.textContent = 'Sair';
-        newLoginButton.setAttribute('href', '#');
-        newLoginButton.addEventListener('click', logout);
-    } else {
-        // Adiciona o listener de 'Login' no *novo* botão
-        newLoginButton.textContent = 'Login';
-        newLoginButton.setAttribute('href', '#login');
-        // Não precisa de listener, o 'href' já faz o trabalho
-    }
+            const buttons = [
+                { label: 'Admin', hash: '#ADMINtableManager' },
+            ];
+
+            buttons.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'admin-button-li';
+                li.innerHTML = `<a href="${item.hash}" class="btn">${item.label}</a>`;
+                menuList.insertBefore(li, loginButton.parentElement);
+            });
+        }
+
+        // Transformar botão em "Sair"
+        loginButton.textContent = "Sair";
+        loginButton.href = "#";
+        loginButton.onclick = logout;
+
+    } else {
+
+        // Mostrar login
+        loginButton.textContent = "Login";
+        loginButton.href = "#login";
+
+    }
 }
