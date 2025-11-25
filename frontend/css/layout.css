@@ -48,7 +48,7 @@ header.scrolled .logo-absolute img{
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 1rem; /* Espaçamento entre os botões */
+    gap: 1rem; 
 }
 
 .header-actions .btn {
@@ -213,9 +213,9 @@ nav ul li a {
     transition: color 0.3s;
 }
 
-header.scrolled .admin-btn-li a{
-    height: 0.5rem;
-}
+
+
+
 
 #header-btns{
     display: flex;
@@ -225,12 +225,13 @@ header.scrolled .admin-btn-li a{
 }
 
 .btn-login {
-    position: absolute; /* Remove o botão do fluxo do menu */
-    right: 2rem; /* Posiciona no canto direito */
-    top: 50%; /* Centraliza verticalmente */
-    transform: translateY(-50%); /* Ajuste fino para centralização vertical perfeita */
-    margin-left: auto; /* MÁGICA: Empurra este item específico para o extremo direito */
+    position: absolute;
+    right: 2rem;
+    top: 50%; 
+    transform: translateY(-50%); 
+    margin-left: auto; 
 }
+
 
 nav ul li a:hover {
     color: var(--text-color);

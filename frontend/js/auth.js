@@ -134,7 +134,7 @@ export function updateHeaderActions() {
             ];
 
             buttons.forEach(item => {
-                const li = document.createElement('li');
+                const li = document.createElement('ul');
                 li.className = 'admin-button-li';
                 li.innerHTML = `<a href="${item.hash}" class="btn">${item.label}</a>`;
                 menuList.insertBefore(li, loginButton.parentElement);
