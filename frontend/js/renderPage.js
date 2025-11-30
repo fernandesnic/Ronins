@@ -8,7 +8,7 @@ import { home } from "./componentes/home.js";
 import { contato } from "./componentes/contato.js";
 import { galeriatrofeus, adicionarTrofeus } from './componentes/galeriatrofeus.js'
 import { checkout, initCheckout } from './componentes/checkout.js';
-import { apoiase } from './componentes/apoiase.js'
+import { apoiase, adicionarApoiadores, setupApoiaseListeners } from './componentes/apoiase.js'
 import { login } from './componentes/login.js'
 import { cadastro } from './componentes/cadastro.js'
 import { calendario } from './componentes/calendario.js'
@@ -73,6 +73,8 @@ const router = async () => {
 
         case '#apoiase':
             main.innerHTML = apoiase();
+            setupApoiaseListeners();
+            await adicionarApoiadores();
             break;
 
         case '#equipe':

@@ -13,6 +13,23 @@ export function setupContatoForm() {
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
+        
+        // Validação básica
+        if (!data.name || !data.email || !data.message) {
+            alert('Por favor, preencha todos os campos.');
+            submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+            return;
+        }
+        
+        // Validação de email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(data.email)) {
+            alert('Por favor, insira um e-mail válido.');
+            submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+            return;
+        }
 
         const originalButtonText = submitButton.textContent;
         submitButton.textContent = 'Enviando...';

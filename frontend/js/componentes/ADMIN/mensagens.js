@@ -56,7 +56,6 @@ export async function adicionarMensagens(){
     });
     const dados = await response.json().catch(() => ({}));
     if(!response.ok){
-        console.log(dados.error)
         return
     }
 
@@ -92,7 +91,6 @@ export async function adicionarMensagens(){
         }
 
         const lido = !(currentMessage.dataset.lido === 'true')
-        console.log(currentMessage.dataset.lido === 'true')
         const response = await fetch(`${BACKEND_URL}/api/private/mensagem/update/mensagem/${currentMessage.dataset.id}`, {
             method: 'PUT',
             headers: {

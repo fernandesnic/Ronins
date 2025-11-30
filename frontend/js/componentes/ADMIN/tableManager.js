@@ -1,6 +1,5 @@
 import { BACKEND_URL } from '../../url.js'; 
 
-
 export async function ADMINtableManager(){
     await getPrismaInfo()
     
@@ -11,7 +10,7 @@ export async function ADMINtableManager(){
             <aside id="table-list">
             </aside>
             <section id="table">
-                <p>Seleciona alguma tabela</p>         
+                <p>Selecione uma tabela ao lado</p>         
             </section>        
         </div>
     </section> 
@@ -19,18 +18,14 @@ export async function ADMINtableManager(){
         <div id="modal-content">
             <h2></h2>
             <form>
-
-            </form>
+                </form>
         </div>
     </div>
-    
     `
 }
 
-
 // armazena os metadados das tabelas (tipo e nome das colunas)
 let tablesInfo = {}
-
 // armazena a tabela selecionada
 let currentTable = null
 
@@ -38,12 +33,7 @@ let currentTable = null
 async function getPrismaInfo(){
     try{
         const token = localStorage.getItem('authToken');
-        if (!token) {
-            const p = document.createElement('p');
-            p.textContent = "Usuário não autenticado.";
-            usersContainer.appendChild(p);
-            return;
-        }
+        if (!token) return;
 
         const response = await fetch(`${BACKEND_URL}/api/private/tablemanager/list`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -57,349 +47,381 @@ async function getPrismaInfo(){
 // função que adiciona os botões de seleção de tabela
 export async function adicionarBotoes(){
     const tableList = document.querySelector("#table-list")
-    if (!tableList){
-        console.error('Container #table-list não encontrado.');
-        return;
-    }
+    if (!tableList) return;
 
     try{
-        const tables = tablesInfo.tables
-        // pra cada valor ele adiciona um botão
+        const tables = tablesInfo.tables || {}
         for(let key in tables){
             const tableButton = document.createElement("button")
             tableButton.classList.add("btn")
             tableButton.innerHTML = `${key}`
-            tableButton.dataset.table = key // guarda no botão o nome da tablea correspondente
+            tableButton.dataset.table = key 
             tableButton.addEventListener("click", ()=>{
                 renderizarTabela(tableButton.dataset.table)
-            }) // linka o botão com o renderizarTabela, e passa a tabela correspondente
+            }) 
             tableList.append(tableButton)
         }
     }catch(error){
-        console.error("Erro ao buscar e adicionar tabelas:", error);
-        tableList.innerHTML += `<p style="color: red;">Falha ao carregar tabelas. (${error.message})</p>`;
+        console.error("Erro ao buscar tabelas:", error);
+        tableList.innerHTML += `<p style="color: red;">Erro ao carregar menu.</p>`;
     }
 }
 
 export async function renderizarTabela(tableName){
     const tableContainer = document.querySelector("#table")
-    if (!tableContainer){
-        console.error('Container #table não encontrado.');
-        return;
-    }
+    if (!tableContainer) return;
     
     try{
-        // pega as colunas da tabela selecionada
         const tableFields = tablesInfo.tables[tableName]
-        // atualiza o currentTable pra tabela selecionada
-        currentTable = tableName
-
-        // limpa o container
-        tableContainer.innerHTML = ""
+        if (!tableFields) {
+            tableContainer.innerHTML = '<p style="color: red;">Tabela não encontrada.</p>';
+            return;
+        }
         
-        // ------------------------ ADICIONA O HEADER TABELA -------------------------------
+        currentTable = tableName
+        
+        // 1. Limpa e mostra Loading
+        tableContainer.innerHTML = '<p>Carregando dados...</p>'
+        
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            tableContainer.innerHTML = "<p>Usuário não autenticado.</p>";
+            return;
+        }
 
-        // cria o header da tabela
+        // 2. Busca dados
+        const response = await fetch(`${BACKEND_URL}/api/private/tablemanager/list/${tableName}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({}));
+            tableContainer.innerHTML = `<p style="color: red;">Erro: ${error.error || error.message || 'Desconhecido'}</p>`;
+            return;
+        }
+        
+        const data = await response.json();
+        
+        // 3. Limpa Loading
+        tableContainer.innerHTML = ""; 
 
-
+        // 4. Cria Header
         const tableHeader = document.createElement("div")
         tableHeader.classList.add("table-line","header")
-        tableHeader.style.setProperty("--num-columns", Object.keys(tableFields).length)
+        // Conta apenas campos visíveis na definição
+        tableHeader.style.setProperty("--num-columns", tableFields.length) 
+        
         const addButton = document.createElement("button")
         addButton.classList.add("btn", "add")
         addButton.innerHTML = "Adicionar"
-        addButton.addEventListener("click", ()=>{
-            handleCreate()
-        })
+        addButton.addEventListener("click", () => handleCreate())
+        
         tableHeader.append(addButton)
+        
         for(let field of tableFields){
             const p = document.createElement("p")
             p.innerHTML = `${field.name}`
             tableHeader.append(p)
         }
-        //adiciona o header e botão
         tableContainer.append(tableHeader)
 
-
-        // checa o token
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-            const p = document.createElement('p');
-            p.textContent = "Usuário não autenticado.";
-            tableContainer.appendChild(p);
+        // 5. Cria Linhas
+        if (!data.data || data.data.length === 0) {
+            const emptyMsg = document.createElement('p');
+            emptyMsg.textContent = 'Nenhum dado encontrado.';
+            tableContainer.append(emptyMsg);
             return;
         }
-
-        // ----------------------- ADICIONA OS VALORES CADASTRADOS --------------------------
-
-        // busca os valores no banco de dados
-        const response = await fetch(`${BACKEND_URL}/api/private/tablemanager/list/${tableName}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await response.json().catch(() => ({}));
         
-        // pra cada linha adiciona os valores
         data.data.forEach( line => {
-            tableContainer.append(createLine(line))
+            // Passa os metadados da tabela para a função saber o que desenhar
+            tableContainer.append(createLine(line, tableFields))
         });
+
     }catch(error){
-        console.error(`Erro em renderizarTabela(${tableName})`, error)
+        console.error(`Erro renderizarTabela(${tableName})`, error)
     }
 }
 
-
-async function handleEdit(tableLineContainer){
-    showModal("Editar", tableLineContainer.children)
-    const modalForm = document.querySelector("#modal-content > form")
+// Função unificada para abrir modal e processar dados
+// Função unificada para abrir modal e processar dados
+// Função unificada para abrir modal e processar dados
+function openFormModal(title, initialValues = null, onConfirmCallback) {
     const modalOverlay = document.querySelector("#modal-overlay")
-    const submitButton = document.querySelector("#modal-content > form > div > .btn.submit")
-    submitButton.addEventListener("click", async (e) => {
-        e.preventDefault();
-        const modalOverlay = document.querySelector("#modal-overlay")
-        modalOverlay.classList.remove("show")
-        const modalForm = document.querySelector("#modal-content > form")
-        let dataToStore = {}
-        for(const input of modalForm.children){
-            if(input.tagName !== "INPUT") continue
-            switch(input.type){
-                case "checkbox":
-                    dataToStore[input.name] = input.checked 
-                    break;
-                case "number":
-                    dataToStore[input.name] = parseInt(input.value)
-                    break;
-                default:
-                    dataToStore[input.name] = input.value
-                    break;
-            }
-        }
-        // pede confirmação
-        if (!confirm('Confirma atualização dos dados?')) return;
-
-        // checa o token
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-            const p = document.createElement('p');
-            p.textContent = "Usuário não autenticado.";
-            tableContainer.appendChild(p);
-            return;
-        }
-        
-        // faz a mudança
-        const response = await fetch(`${BACKEND_URL}/api/private/tablemanager/update/${currentTable}/${tableLineContainer.lineToEdit}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataToStore)
-        });
-
-
-
-        if(response.ok){
-            for(const field of tableLineContainer.children){
-                if(field.tagName !== "P") continue;
-                if(dataToStore[field.dataset.fieldName] === undefined) continue;
-                field.innerHTML = dataToStore[field.dataset.fieldName]
-            }
-            alert("Dados modificados com sucesso!");
-        }else{
-            alert(`Erro: ${response.message}`)
-        }
+    const modalContent = document.querySelector("#modal-content")
+    const modalTitle = modalContent.querySelector("h2")
+    const modalForm = modalContent.querySelector("form")
     
-
-    })
-
-    for(const inputField of modalForm.children){
-        if(inputField.tagName !== "INPUT") continue
-        const array = [...tableLineContainer.children]
-        const inputValue = array.find((element) => element.dataset.fieldName == inputField.name)
-        tablesInfo.tables[currentTable]
-        switch(inputField.type){
-            case "checkbox":
-                inputField.checked = inputValue.innerHTML == "true"
-                break;
-            default:
-                inputField.value = inputValue.innerHTML
-                break;
-        }
-        
-    }
-}
-
-async function handleDelete(tableLineContainer){
-    // pede confirmação
-    if (!confirm('Confirma exclusão dos dados?')) return;
-
-    // checa o token
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-        const p = document.createElement('p');
-        p.textContent = "Usuário não autenticado.";
-        usersContainer.appendChild(p);
-        return;
-    }
-
-    // remove a linha
-    const lineremoved = await fetch(`${BACKEND_URL}/api/private/tablemanager/delete/${currentTable}/${tableLineContainer.lineToEdit}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-    });
-    tableLineContainer.remove()
-}
-
-async function handleCreate(){
-    showModal("Criar")
-    const submitButton = document.querySelector("#modal-content > form > div > .btn.submit")
-    submitButton.addEventListener("click", async (e)=>{
-        e.preventDefault()
-        const modalOverlay = document.querySelector("#modal-overlay")
-        modalOverlay.classList.remove("show")
-        const modalForm = document.querySelector("#modal-content > form")
-        let dataToStore = {}
-        for(const input of modalForm.children){
-            if(input.tagName !== "INPUT") continue
-            switch(input.type){
-                case "checkbox":
-                    dataToStore[input.name] = input.checked 
-                    break;
-                default:
-                    dataToStore[input.name] = input.value
-                    break;
-            }
-        }
-        
-        // pede confirmação
-        if (!confirm('Confirma criação dos dados?')) return;
-
-        // checa o token
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-            const p = document.createElement('p');
-            p.textContent = "Usuário não autenticado.";
-            tableContainer.appendChild(p);
-            return;
-        }
-        
-        // faz a mudança
-        const response = await fetch(`${BACKEND_URL}/api/private/tablemanager/create/${currentTable}/`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataToStore)
-        });
-
-
-
-        if(response.ok){
-            renderizarTabela(currentTable)
-            // document.querySelector("#table").append(createLine({,...dataToStore}))
-            alert("Dados criados com sucesso!");
-        }else{
-            alert(`Erro: ${response.message}`)
-        }
-    
-    })
-}
-
-function createLine(lineInfo){
-     // cria o tableLineContainer
-    const tableLineContainer = document.createElement("div")
-    tableLineContainer.classList.add("table-line")
-    tableLineContainer.lineToEdit = lineInfo.id
-
-    // cria o buttonsContainer
-    const buttonsContainer = document.createElement("div")
-    buttonsContainer.classList.add("btnsContainer")
-    
-    // cria deleteButton
-    const deleteButton = document.createElement("button")
-    deleteButton.classList.add("btn", "delete")
-    deleteButton.innerHTML = "X" // TODO: colocar um icone talvez
-    deleteButton.addEventListener("click", () => {
-        handleDelete(tableLineContainer)
-    }) // no clique ele passa o editType e a linha a ser editada
-    buttonsContainer.append(deleteButton)
-
-    // cria editButton
-    const editButton = document.createElement("button")
-    editButton.classList.add("btn", "edit")
-    editButton.innerHTML = "E" // TODDO: colocar um icone talvez
-    editButton.addEventListener("click", ()=>{
-        handleEdit(tableLineContainer)
-    }) // no clique ele passa o editType e a linha a ser editada
-    buttonsContainer.append(editButton)
-
-    // adiciona o buttonsContainer no tableLineContainer
-    tableLineContainer.append(buttonsContainer)
-
-    for(let key in lineInfo){
-        const p = document.createElement("p")
-        p.innerHTML = `${lineInfo[key]}`
-        const index = tablesInfo.tables[currentTable].findIndex(obj => obj.name === key)
-        p.dataset.dataType = tablesInfo.tables[currentTable][index].type // adiciona o tipo
-        p.dataset.fieldName = tablesInfo.tables[currentTable][index].name // e o nome do campo
-        tableLineContainer.append(p) // adiciona no tableLineContainer
-    }
-
-    // add the tableLineContainer to the tableContainer e ajusta a quantiadde de colunas no css
-    tableLineContainer.style.setProperty("--num-columns", (Object.keys(lineInfo).length))
-
-    return tableLineContainer
-}
-
-function showModal(title){
-    // aciona o modal
-    const modalOverlay = document.querySelector("#modal-overlay")
-    modalOverlay.classList.add("show")
-    
-    // muda o titulo
-    const modalTitle = document.querySelector("#modal-content > h2")
+    // 1. Configura UI básica
     modalTitle.innerHTML = title
+    modalForm.innerHTML = "" // Limpa campos antigos
+    modalOverlay.classList.add("show")
 
-    // limpa e adiciona os campos pra editar no form
-    const modalForm = document.querySelector("#modal-content > form")
-    modalForm.innerHTML = ""
+    // 2. Gera os campos baseados na DEFINIÇÃO da tabela
     const tableFields = tablesInfo.tables[currentTable]
+    
     for(const field of tableFields){
-        // se nn for um p ou for um id/senha, continua
-        if(field.name === "id" || field.name === "password") continue
-        const fieldLabel = document.createElement("label") // cria um label com o dataset do valor
-        fieldLabel.innerHTML = field.name
-        const inputField = document.createElement("input") 
-        inputField.name = field.name
-        switch(field.type){
-            case 'boolean':
-                inputField.type = "checkbox"
-                break;
-            case 'integer':
-                inputField.type = "number"
-                break;
+        // Pula campos automáticos ou sensíveis
+        if(field.name === "id" || field.name === "password" || field.name === "createdAt") continue
+        
+        const container = document.createElement("div")
+        const fieldLabel = document.createElement("label")
+        fieldLabel.innerHTML = field.name.replace(/_/g, " ")
+        
+        // --- LOGICA DE CRIAÇÃO DE INPUTS ---
+        let inputField;
+
+        // A. Se for o campo FOTO (ou qualquer array de texto), cria um TEXTAREA
+        if (field.name === 'foto' || field.name === 'fotos') {
+            inputField = document.createElement("textarea");
+            inputField.name = field.name;
+            inputField.rows = 4; // Altura da caixa
+            inputField.placeholder = "Cole um link por linha...";
+            
+            // Se tiver valores iniciais (Edição)
+            if(initialValues && initialValues[field.name]) {
+                const val = initialValues[field.name];
+                // Se for um array, junta com quebra de linha pra mostrar pro usuário
+                if(Array.isArray(val)){
+                    inputField.value = val.join("\n");
+                } else {
+                    inputField.value = val; // Se for string única
+                }
+            }
+        } 
+        // B. Inputs normais
+        else {
+            inputField = document.createElement("input");
+            inputField.name = field.name;
+
+            // Lógica de Datas
+            if (field.name.toLowerCase() === 'data' || field.name.includes('date')) {
+                inputField.type = "datetime-local"; 
+                if(initialValues && initialValues[field.name]) {
+                    try {
+                         const dateVal = new Date(initialValues[field.name]);
+                         const isoLocal = new Date(dateVal.getTime() - (dateVal.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+                         inputField.value = isoLocal;
+                    } catch(e) { console.log("Erro format data", e) }
+                }
+            } 
+            // Lógica de Números/Checkbox/Texto
+            else {
+                switch(field.type){
+                    case 'boolean':
+                        inputField.type = "checkbox"
+                        container.style.flexDirection = "row";
+                        container.style.gap = "10px";
+                        inputField.style.width = "auto";
+                        if(initialValues) inputField.checked = initialValues[field.name] === true
+                        break;
+                    case 'integer': case 'float': case 'decimal':
+                        inputField.type = "number"
+                        if(initialValues) inputField.value = initialValues[field.name] || ""
+                        break;
+                    default:
+                        inputField.type = "text"
+                        if(initialValues) inputField.value = initialValues[field.name] || ""
+                        break;
+                }
+            }
         }
         
-        modalForm.append(fieldLabel)
-        modalForm.append(inputField)
+        container.append(fieldLabel, inputField)
+        modalForm.append(container)
     }
 
-    // cria e adiciona o botão de cancelar
+    // 3. Botões de Ação
     const buttonsContainer = document.createElement("div")
-    buttonsContainer.classList.add("buttonsContainer")
+    buttonsContainer.style.display = "flex"; 
+    buttonsContainer.style.justifyContent = "flex-end";
+    buttonsContainer.style.gap = "10px";
+    buttonsContainer.style.marginTop = "15px";
+    
     const cancelButton = document.createElement("button")
     cancelButton.classList.add("btn", "cancel")
     cancelButton.innerHTML = "Cancelar"
-    cancelButton.addEventListener("click", (e)=>{
+    cancelButton.onclick = (e) => {
         e.preventDefault()
         modalOverlay.classList.remove("show")
-    })
-    buttonsContainer.append(cancelButton)
-    
+    }
+
     const submitButton = document.createElement("button")
     submitButton.classList.add("btn", "submit")
     submitButton.innerHTML = "Confirmar"
+    
+    // --- LÓGICA DE ENVIO ---
+    submitButton.onclick = async (e) => {
+        e.preventDefault()
+        
+        let dataToStore = {}
+        const inputs = modalForm.querySelectorAll("input, textarea") // Pega inputs E textareas
+        
+        for(const input of inputs){
+            // 1. Tratamento para FOTOS (Textarea -> Array)
+            if (input.tagName === "TEXTAREA" && (input.name === 'foto' || input.name === 'fotos')) {
+                // Pega o texto, quebra nas linhas (\n), remove espaços e linhas vazias
+                const links = input.value.split('\n').map(link => link.trim()).filter(link => link !== "");
+                
+                // Se tiver links, manda o array. Se vazio, manda null
+                dataToStore[input.name] = links.length > 0 ? links : null;
+            }
+            // 2. Checkbox
+            else if (input.type === "checkbox") {
+                dataToStore[input.name] = input.checked
+            } 
+            // 3. Números
+            else if (input.type === "number") {
+                dataToStore[input.name] = input.value === "" ? null : Number(input.value);
+            } 
+            // 4. Datas
+            else if (input.type === "datetime-local") {
+                dataToStore[input.name] = input.value ? new Date(input.value).toISOString() : null;
+            } 
+            // 5. Texto normal
+            else {
+                dataToStore[input.name] = input.value;
+            }
+        }
 
-    buttonsContainer.append(submitButton)
+        if (!confirm('Confirma a ação?')) return;
+
+        submitButton.disabled = true;
+        submitButton.textContent = 'Processando...';
+
+        try {
+            await onConfirmCallback(dataToStore);
+            modalOverlay.classList.remove("show")
+            await renderizarTabela(currentTable)
+        } catch (error) {
+            console.error(error);
+            alert("Erro: " + (error.message || "Erro desconhecido"))
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Confirmar';
+        }
+    }
+
+    buttonsContainer.append(cancelButton, submitButton)
     modalForm.append(buttonsContainer)
+}
+
+// ---------------- FUNÇÕES DE AÇÃO ----------------
+
+async function handleCreate(){
+    openFormModal("Criar Novo Registro", null, async (dataToStore) => {
+        const token = localStorage.getItem('authToken');
+        const response = await fetch(`${BACKEND_URL}/api/private/tablemanager/create/${currentTable}/`, {
+            method: 'POST',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(dataToStore)
+        });
+
+        if(!response.ok) {
+            const err = await response.json();
+            throw new Error(err.message || "Falha ao criar");
+        }
+        alert("Criado com sucesso!");
+    });
+}
+
+async function handleEdit(lineId, currentData){
+    openFormModal("Editar Registro", currentData, async (dataToStore) => {
+        const token = localStorage.getItem('authToken');
+        const response = await fetch(`${BACKEND_URL}/api/private/tablemanager/update/${currentTable}/${lineId}`, {
+            method: 'PUT',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(dataToStore)
+        });
+
+        if(!response.ok) {
+            const err = await response.json();
+            throw new Error(err.message || "Falha ao atualizar");
+        }
+        alert("Atualizado com sucesso!");
+    });
+}
+
+async function handleDelete(lineId, elementToRemove){
+    if (!confirm('Tem certeza que deseja excluir?')) return;
+
+    const token = localStorage.getItem('authToken');
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/private/tablemanager/delete/${currentTable}/${lineId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+            elementToRemove.remove();
+            alert('Excluído com sucesso!');
+        } else {
+            const result = await response.json();
+            alert(`Erro: ${result.message || 'Falha ao excluir'}`);
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Erro de conexão.');
+    }
+}
+
+// ---------------- UTILITÁRIOS ----------------
+
+function createLine(lineInfo, tableFields){
+    const tableLineContainer = document.createElement("div")
+    tableLineContainer.classList.add("table-line")
+    
+    // Container de botões
+    const buttonsContainer = document.createElement("div")
+    buttonsContainer.classList.add("btnsContainer")
+    
+    const deleteButton = document.createElement("button")
+    deleteButton.classList.add("btn", "delete")
+    deleteButton.innerHTML = "X"
+    deleteButton.onclick = () => handleDelete(lineInfo.id, tableLineContainer)
+    buttonsContainer.append(deleteButton)
+
+    const editButton = document.createElement("button")
+    editButton.classList.add("btn", "edit")
+    editButton.innerHTML = "E"
+    // Passamos o ID e o Objeto inteiro da linha para facilitar o preenchimento do form
+    editButton.onclick = () => handleEdit(lineInfo.id, lineInfo)
+    buttonsContainer.append(editButton)
+
+    tableLineContainer.append(buttonsContainer)
+
+    // Renderiza APENAS os campos que estão na definição da tabela
+    for(let fieldDef of tableFields){
+        const p = document.createElement("p")
+        
+        // Pega o valor baseado no nome definido no schema
+        let value = lineInfo[fieldDef.name]
+
+        // Tratamento simples para valores
+        if (typeof value === 'object' && value !== null) {
+            p.innerHTML = "[Obj]" 
+        } else if (value === null || value === undefined) {
+            p.innerHTML = "-" 
+        } else {
+            // Se for string de data ISO grande, corta pra ficar bonito na tabela
+            if(typeof value === 'string' && value.includes('T') && value.length > 20 && !isNaN(Date.parse(value))){
+                value = new Date(value).toLocaleDateString('pt-BR');
+            }
+            p.innerHTML = value.toString()
+        }
+        
+        p.dataset.fieldName = fieldDef.name
+        tableLineContainer.append(p)
+    }
+
+    // Ajusta CSS Grid
+    tableLineContainer.style.setProperty("--num-columns", tableFields.length)
+
+    return tableLineContainer
 }

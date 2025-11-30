@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 const apoiadorOptions = {
-  modelName: 'apoiador',
+  modelName: 'apoiadores',
   idType: 'int' 
 };
 

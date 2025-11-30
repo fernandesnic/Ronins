@@ -145,3 +145,34 @@
 .btn.add:hover{
     background-color: rgb(0, 70, 0);
 }
+
+/* Estilo do Modal de Formulário */
+#modal-content form div {
+    display: flex;
+    flex-direction: column; /* Coloca o texto em cima do input */
+    margin-bottom: 15px;    /* Espaço entre os campos */
+    text-align: left;       /* Alinha texto à esquerda */
+}
+
+#modal-content label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    text-transform: capitalize; /* Deixa a primeira letra maiúscula */
+}
+
+#modal-content input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 100%; /* Ocupa a largura toda disponível */
+    box-sizing: border-box; /* Garante que o padding não estoure a largura */
+}
+
+#modal-content input:focus {
+    outline: none;
+    border-color: #007bff; /* Cor de destaque ao clicar */
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+}

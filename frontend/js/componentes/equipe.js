@@ -38,7 +38,6 @@ export async function adicionarEquipe() {
         const response = await fetch(`${BACKEND_URL}/api/public/equipe`);
 
         const data = await response.json().catch(() => ({}));
-        console.log(data)
         if (!response.ok) {
             const msg = data?.error || `Erro na API: ${response.status}`;
             throw new Error(msg);

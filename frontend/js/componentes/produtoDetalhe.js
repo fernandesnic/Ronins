@@ -155,8 +155,16 @@ export async function initProdutoDetalhe(id) {
 
     } catch (error) {
         console.error("Erro ao carregar produto:", error);
-        document.getElementById('produto-detalhe').innerHTML = 
-            `<div class="container"><p style="color: red;">Erro: ${error.message}</p></div>`;
+        // Mostra mensagem de erro ao usuário
+        const container = document.querySelector('#produto-detalhe');
+        if (container) {
+            container.innerHTML = `
+                <div class="container" style="text-align: center; padding: 40px;">
+                    <p style="color: var(--text-color); margin-bottom: 20px;">Erro ao carregar produto. Tente novamente mais tarde.</p>
+                    <a href="#produtos" class="btn">Voltar para Loja</a>
+                </div>
+            `;
+        }
     }
 
     function resetarSelecao() {

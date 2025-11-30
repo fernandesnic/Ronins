@@ -9,10 +9,30 @@ function showMessage(message, isError = false) {
 // --- Funções de Submissão (Comunicação com Backend) ---
 export async function handleLoginSubmit(event) {
     event.preventDefault();
-    const email = document.getElementById('login-email')?.value;
-    const password = document.getElementById('login-pass')?.value;
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-pass');
+    const submitButton = event.target.querySelector('button[type="submit"]');
+    
+    const email = emailInput?.value?.trim();
+    const password = passwordInput?.value;
 
-    if (!email || !password) return showMessage('Por favor, preencha e-mail e senha.', true);
+    if (!email || !password) {
+        showMessage('Por favor, preencha e-mail e senha.', true);
+        return;
+    }
+
+    // Validação básica de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showMessage('Por favor, insira um e-mail válido.', true);
+        return;
+    }
+
+    // Desabilita botão durante o processo
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Entrando...';
+    }
 
     try {
         const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
@@ -36,20 +56,52 @@ export async function handleLoginSubmit(event) {
 
     } catch (error) {
         showMessage(error.message, true);
+    } finally {
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Entrar';
+        }
     }
 }
 
 export async function handleCadastroSubmit(event) {
     event.preventDefault();
-    const firstName = document.getElementById('firstname')?.value || '';
-    const lastName = document.getElementById('lastname')?.value || '';
-    const email = document.getElementById('cadastro-email')?.value;
-    const password = document.getElementById('cadastro-password')?.value;
+    const firstName = document.getElementById('firstname')?.value?.trim() || '';
+    const lastName = document.getElementById('lastname')?.value?.trim() || '';
+    const emailInput = document.getElementById('cadastro-email');
+    const passwordInput = document.getElementById('cadastro-password');
+    const submitButton = event.target.querySelector('button[type="submit"]');
+    
+    const email = emailInput?.value?.trim();
+    const password = passwordInput?.value;
     const nome = `${firstName} ${lastName}`.trim();
 
     if (!nome || !email || !password) {
         showMessage('Por favor, preencha nome, e-mail e senha.', true);
         return;
+    }
+
+    // Validações
+    if (nome.length < 2) {
+        showMessage('O nome deve ter pelo menos 2 caracteres.', true);
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showMessage('Por favor, insira um e-mail válido.', true);
+        return;
+    }
+
+    if (password.length < 6) {
+        showMessage('A senha deve ter pelo menos 6 caracteres.', true);
+        return;
+    }
+
+    // Desabilita botão durante o processo
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Cadastrando...';
     }
 
     try {
@@ -67,6 +119,11 @@ export async function handleCadastroSubmit(event) {
 
     } catch (error) {
         showMessage(error.message, true);
+    } finally {
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Cadastrar';
+        }
     }
 }
 
@@ -75,7 +132,7 @@ export function isUserLoggedIn() {
     return !!localStorage.getItem('authToken');
 }
 
-function getCurrentUser() {
+export function getCurrentUser() {
     try {
         const userData = localStorage.getItem('userData');
         return userData ? JSON.parse(userData) : null;
@@ -134,6 +191,7 @@ export function updateHeaderActions() {
 
             const buttons = [
                 { label: 'Admin', hash: '#ADMINtableManager' },
+                { label: 'Vendas', hash: '#vendas' },
                 { label: 'Emails', hash: '#mensagens' },
             ];
 
@@ -142,14 +200,24 @@ export function updateHeaderActions() {
                 // Para desktop - dentro do #header-btns
                 const btnDiv = document.createElement('div');
                 btnDiv.className = 'admin-button-li';
-                btnDiv.innerHTML = `<a href="${item.hash}" class="btn">${item.label}</a>`;
+                const link = document.createElement('a');
+                link.href = item.hash;
+                link.className = 'btn';
+                link.textContent = item.label;
+                link.setAttribute('aria-label', `Ir para página de ${item.label}`);
+                btnDiv.appendChild(link);
                 headerBtns.insertBefore(btnDiv, loginButton);
                 
                 // Para mobile - dentro do menuList
                 if (menuList) {
                     const li = document.createElement('li');
                     li.className = 'admin-button-li';
-                    li.innerHTML = `<a href="${item.hash}" class="btn">${item.label}</a>`;
+                    const mobileLink = document.createElement('a');
+                    mobileLink.href = item.hash;
+                    mobileLink.className = 'btn';
+                    mobileLink.textContent = item.label;
+                    mobileLink.setAttribute('aria-label', `Ir para página de ${item.label}`);
+                    li.appendChild(mobileLink);
                     // Insere antes do botão de tema
                     const themeButton = menuList.querySelector('#theme-switch')?.parentElement;
                     if (themeButton) {

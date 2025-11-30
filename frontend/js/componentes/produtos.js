@@ -78,11 +78,13 @@ export async function adicionarProdutos() {
 
     } catch (error) {
         console.error("Erro ao carregar produtos:", error);
-
-        container.innerHTML = `
-            <p class="error-text">
-                Erro ao carregar produtos. Tente novamente mais tarde.
-            </p>
-        `;
+        // Mostra mensagem de erro ao usuário
+        if (container) {
+            container.innerHTML = `
+                <p class="error-text">
+                    Erro ao carregar produtos. Tente novamente mais tarde.
+                </p>
+            `;
+        }
     }
 }
