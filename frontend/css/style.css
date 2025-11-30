@@ -22,7 +22,6 @@
 @import url('pages/calendario.css');
 @import url('pages/equipe.css');
 
-@import url('pages/ADMIN/users.css');
 @import url('pages/ADMIN/vendas.css');
 @import url('pages/galeriatrofeus.css');
 @import url('pages/ADMIN/tableManager.css');
@@ -186,5 +185,4 @@ a:hover{
     gap: 15px;
     align-items: center;
     justify-content: center;
-    align-items: center;
 }

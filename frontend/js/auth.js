@@ -120,9 +120,7 @@ export function updateHeaderActions() {
     const menuList = document.querySelector('.menu ul');
     
     // Remove botões admin antigos de ambos os lugares
-    if (headerBtns) {
-        headerBtns.querySelectorAll('.admin-button-li').forEach(btn => btn.remove());
-    }
+    headerBtns.querySelectorAll('.admin-button-li').forEach(btn => btn.remove());
     if (menuList) {
         menuList.querySelectorAll('.admin-button-li').forEach(btn => btn.remove());
     }

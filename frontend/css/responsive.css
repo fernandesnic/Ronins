@@ -197,7 +197,7 @@
     }
 }
 
-/* Responsividade Geral - Mobile */
+/* Responsividade Geral - Mobile (consolidado) */
 @media (max-width: 768px) {
     .products-grid {
         gap: 20px;
@@ -207,25 +207,6 @@
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 30px;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        text-align: center;
-    }
-
-    .footer-logo {
-        grid-column: 1;
-    }
-
-    .footer-links,
-    .footer-contact {
-        text-align: center;
-    }
-
-    .footer-contact .contact-item {
-        justify-content: center;
     }
 
     nav ul {
@@ -244,10 +225,8 @@
         padding: 12px 24px;
         font-size: 0.9rem;
     }
-}
 
-/* Responsividade Causa */
-@media (max-width: 768px) {
+    /* Responsividade Causa */
     #causa h2 {
         font-size: 2rem; 
     }
@@ -255,10 +234,8 @@
     #causa li {
         font-size: 1rem; 
     }
-}
 
-/* Responsividade Footer */
-@media (max-width: 768px) {
+    /* Responsividade Footer */
     footer {
         padding: 40px 0 20px;
     }
@@ -269,8 +246,21 @@
         text-align: center;
     }
 
+    .footer-logo {
+        grid-column: 1;
+    }
+
     .footer-logo img {
         height: 120px;
+    }
+
+    .footer-links,
+    .footer-contact {
+        text-align: center;
+    }
+
+    .footer-contact .contact-item {
+        justify-content: center;
     }
 
     .footer-social {

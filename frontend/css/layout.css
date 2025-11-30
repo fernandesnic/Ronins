@@ -44,43 +44,7 @@ header.scrolled .logo-absolute img{
 }
 
 /* Estilos para os botões de ação no cabeçalho */
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem; 
-}
-
-.header-actions .btn {
-    padding: 0.4rem 0.9rem;
-    font-size: 0.9rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.header-actions .btn-login {
-    background-color: transparent;
-    border: 2px solid var(--title-color);
-    color: var(--title-color);
-}
-
-.header-actions .btn-login:hover {
-    background-color: var(--title-color);
-    color: var(--bg-color1);
-}
-
-.header-actions .btn-register {
-    background-color: var(--title-color);
-    border: 2px solid var(--title-color);
-    color: var(--bg-color1);
-}
-
-.header-actions .btn-register:hover {
-    background-color: transparent;
-    color: var(--title-color);
-}
+/* Nota: .header-actions foi substituído por #header-btns, mantido para compatibilidade */
 
 
 .logo-absolute a:last-child{

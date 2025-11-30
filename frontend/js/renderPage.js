@@ -13,8 +13,7 @@ import { login } from './componentes/login.js'
 import { cadastro } from './componentes/cadastro.js'
 import { calendario } from './componentes/calendario.js'
 import { handleLoginSubmit, handleCadastroSubmit } from './auth.js';
-import { users, adicionarUsuarios, setupModalListeners } from './componentes/ADMIN/users.js'
-import { ADMINequipe, ADMINadicionarJogador, setupModalListenersEquipe } from './componentes/ADMIN/equipe.js'
+// Páginas users e ADMINequipe removidas - funcionalidade disponível no tableManager
 import { setupContatoForm } from './componentes/contatoHandler.js';
 import { produtoDetalhe, initProdutoDetalhe } from './componentes/produtoDetalhe.js'; 
 import { BACKEND_URL } from './url.js'; 
@@ -93,18 +92,6 @@ const router = async () => {
 
         case '#calendario':
             main.innerHTML = calendario();
-            break;
-
-        case '#users':
-            main.innerHTML = users();
-            setupModalListeners();
-            await adicionarUsuarios();
-            break;
-
-        case '#ADMINequipe':
-            main.innerHTML = ADMINequipe();
-            await ADMINadicionarJogador();
-            setupModalListenersEquipe();
             break;
 
         case "#vendas":
