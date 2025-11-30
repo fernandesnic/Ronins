@@ -114,11 +114,18 @@ export function updateHeaderActions() {
     const loginButton = document.getElementById('btn-login');
     if (!loginButton) return;
 
-    const menuList = loginButton.closest('ul');
-    if (!menuList) return;
+    const headerBtns = document.getElementById('header-btns');
+    if (!headerBtns) return;
 
-    // Remove botões admin antigos
-    menuList.querySelectorAll('.admin-button-li').forEach(btn => btn.remove());
+    const menuList = document.querySelector('.menu ul');
+    
+    // Remove botões admin antigos de ambos os lugares
+    if (headerBtns) {
+        headerBtns.querySelectorAll('.admin-button-li').forEach(btn => btn.remove());
+    }
+    if (menuList) {
+        menuList.querySelectorAll('.admin-button-li').forEach(btn => btn.remove());
+    }
 
     const logged = isUserLoggedIn();
 
@@ -130,14 +137,29 @@ export function updateHeaderActions() {
             const buttons = [
                 { label: 'Admin', hash: '#ADMINtableManager' },
                 { label: 'Emails', hash: '#mensagens' },
-
             ];
 
+            // Insere os botões admin no #header-btns (desktop) e no menuList (mobile)
             buttons.forEach(item => {
-                const li = document.createElement('ul');
-                li.className = 'admin-button-li';
-                li.innerHTML = `<a href="${item.hash}" class="btn">${item.label}</a>`;
-                menuList.insertBefore(li, loginButton.parentElement);
+                // Para desktop - dentro do #header-btns
+                const btnDiv = document.createElement('div');
+                btnDiv.className = 'admin-button-li';
+                btnDiv.innerHTML = `<a href="${item.hash}" class="btn">${item.label}</a>`;
+                headerBtns.insertBefore(btnDiv, loginButton);
+                
+                // Para mobile - dentro do menuList
+                if (menuList) {
+                    const li = document.createElement('li');
+                    li.className = 'admin-button-li';
+                    li.innerHTML = `<a href="${item.hash}" class="btn">${item.label}</a>`;
+                    // Insere antes do botão de tema
+                    const themeButton = menuList.querySelector('#theme-switch')?.parentElement;
+                    if (themeButton) {
+                        menuList.insertBefore(li, themeButton);
+                    } else {
+                        menuList.appendChild(li);
+                    }
+                }
             });
         }
 
@@ -151,6 +173,7 @@ export function updateHeaderActions() {
         // Mostrar login
         loginButton.textContent = "Login";
         loginButton.href = "#login";
+        if (loginButton.onclick) loginButton.onclick = null;
 
     }
 }

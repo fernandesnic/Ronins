@@ -207,3 +207,69 @@
     border-bottom: 2px solid var(--title-color); /* Destaque com a cor do tema */
     padding-bottom: 2px;
 }
+
+/* Responsividade */
+@media (max-width: 820px) {
+    .apoie-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .apoie-option-card {
+        padding: 25px;
+    }
+
+    .apoie-option-card h3 {
+        font-size: 1.8rem;
+    }
+
+    .apoie-option-card .price {
+        font-size: 2.8rem;
+    }
+
+    .pix-details img {
+        max-width: 180px;
+        height: 180px;
+    }
+
+    .socios-wall {
+        padding: 20px;
+        gap: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .apoie-option-card {
+        padding: 20px;
+    }
+
+    .apoie-option-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .apoie-option-card .price {
+        font-size: 2.2rem;
+    }
+
+    .pix-details {
+        padding: 20px;
+    }
+
+    .pix-details img {
+        max-width: 150px;
+        height: 150px;
+    }
+
+    .pix-details .pix-key {
+        font-size: 0.9rem;
+    }
+
+    .socios-wall {
+        padding: 15px;
+        gap: 8px 15px;
+    }
+
+    .socio-nome {
+        font-size: 1rem;
+    }
+}

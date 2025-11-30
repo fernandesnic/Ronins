@@ -328,5 +328,48 @@
     .produto-detalhe-grid {
         grid-template-columns: 1fr;
         gap: 25px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .produto-detalhe-grid {
+        padding: 15px;
+    }
+
+    .produto-detalhe-info h2 {
+        font-size: 1.6rem;
+    }
+
+    .detalhe-preco span {
+        font-size: 1.5rem;
+    }
+
+    #detalhe-desc {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .produto-detalhe-grid {
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .produto-detalhe-imagem {
+        padding: 5px;
+    }
+
+    .produto-detalhe-info h2 {
+        font-size: 1.4rem;
+    }
+
+    .detalhe-preco span {
+        font-size: 1.3rem;
+    }
+
+    #detalhe-add-cart {
+        padding: 12px;
+        font-size: 1rem;
     }
 }

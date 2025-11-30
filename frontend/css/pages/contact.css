@@ -153,11 +153,83 @@
 @media (max-width: 900px) {
     .contact-grid {
         grid-template-columns: 1fr;
+        gap: 40px;
     }
     .contact-details {
         order: 1;
+        padding: 25px;
     }
     .contact-form {
         order: 2;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    #contato {
+        padding: 50px 0;
+    }
+
+    #contato h2 {
+        font-size: 1.8rem;
+    }
+
+    .contact-details {
+        padding: 20px;
+    }
+
+    .contact-details h3 {
+        font-size: 1.3rem;
+    }
+
+    .contact-item {
+        margin-bottom: 15px;
+    }
+
+    .contact-item i {
+        font-size: 1.4rem;
+    }
+
+    .contact-item a,
+    .contact-item p {
+        font-size: 1rem;
+    }
+
+    .contact-form {
+        padding: 25px;
+    }
+
+    .social-links a i {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #contato h2 {
+        font-size: 1.5rem;
+    }
+
+    .contact-details {
+        padding: 15px;
+    }
+
+    .contact-details h3 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .contact-form {
+        padding: 20px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    .contact-form button.btn {
+        padding: 14px;
+        font-size: 1rem;
     }
 }

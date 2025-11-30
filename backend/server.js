@@ -10,7 +10,7 @@ import cors from "cors";
 // --- 1. INICIALIZAR O APP ---
 // 'app' deve ser criado antes de ser usado.
 const app = express();
-const PORT = 3000;
+const PORT = 3000; 
 
 // --- 2. CONFIGURAR O CORS ---
 const allowedOrigins = [

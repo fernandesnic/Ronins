@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     // Atualiza ano no footer
-    const yearSpan = document.querySelector('.copyright');
+    const yearSpan = document.querySelector('.copyright p');
     if (yearSpan) {
-        yearSpan.innerHTML = `&copy; ${new Date().getFullYear()} Ronins Rugby. Todos os direitos reservados.`;
+        yearSpan.innerHTML = `&copy; ${new Date().getFullYear()} Ronins Quad Rugby. Todos os direitos reservados.`;
     }
 });
